@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Beckhoff_EL5002_Test" Id="{3f66eb0f-880b-0c90-275b-9c5cb40a6134}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL5002_Test EXTENDS TcUnit.FB_TestSuite
+VAR
+	fbDevice : FB_Beckhoff_EL5002;
+	nStatusExpected : UINT;
+	nStatusResult : UINT;
+	bValueExpected : UDINT;
+	bValueResult : UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TEST('nStatusIn1');
+nStatusExpected := 175;
+fbDevice.nStatusIn1 := nStatusExpected;
+fbDevice();
+nStatusResult := fbDevice.GetStatus1();
+AssertEquals(Expected := nStatusExpected,
+             Actual := nStatusResult,
+             Message := 'nStatusIn1 value is not correct');	
+TEST_FINISHED();
+
+
+TEST('nStatusIn2');
+nStatusExpected := 176;
+fbDevice.nStatusIn2 := nStatusExpected;
+fbDevice();
+nStatusResult := fbDevice.GetStatus2();
+AssertEquals(Expected := nStatusExpected,
+             Actual := nStatusResult,
+             Message := 'nStatusIn2 value is not correct');	
+TEST_FINISHED();
+
+
+TEST('nValue1');
+bValueExpected := 177;
+fbDevice.nValue1 := bValueExpected;
+fbDevice();
+bValueResult := fbDevice.GetValue1();
+AssertEquals(Expected := bValueExpected,
+             Actual := bValueResult,
+             Message := 'nValue1 value is not correct');	
+TEST_FINISHED();
+
+TEST('nValue2');
+bValueExpected := 178;
+fbDevice.nValue2 := bValueExpected;
+fbDevice();
+bValueResult := fbDevice.GetValue2();
+AssertEquals(Expected := bValueExpected,
+             Actual := bValueResult,
+             Message := 'nValue2 value is not correct');	
+TEST_FINISHED();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

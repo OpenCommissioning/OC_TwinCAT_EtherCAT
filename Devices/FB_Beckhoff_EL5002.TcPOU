@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Beckhoff_EL5002" Id="{b65436a4-4cee-0a05-0903-f96a8daf9383}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL5002
+VAR_INPUT
+	nStatusIn1	: UINT;
+	nValue1		: UDINT;
+	nStatusIn2	: UINT;
+	nValue2		: UDINT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	nStatus1	AT %Q* : UINT;
+	nCounter1	AT %Q* : UDINT;	
+	nStatus2	AT %Q* : UINT;
+	nCounter2	AT %Q* : UDINT;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nStatus1 := nStatusIn1;
+nCounter1 := nValue1;
+nStatus2 := nStatusIn2;
+nCounter2 := nValue2;]]></ST>
+    </Implementation>
+    <Method Name="GetStatus1" Id="{21f52b04-e187-0d1f-162b-301d8d95e4b0}">
+      <Declaration><![CDATA[METHOD INTERNAL GetStatus1 : UINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetStatus1 := nStatus1;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetStatus2" Id="{b4b5ce1e-10fb-03e8-06be-3ee71a85def9}">
+      <Declaration><![CDATA[METHOD INTERNAL GetStatus2 : UINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetStatus2 := nStatus2;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetValue1" Id="{6dd92fb8-e150-05c5-178e-9ac33f880ab7}">
+      <Declaration><![CDATA[METHOD INTERNAL GetValue1 : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetValue1 := nCounter1;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetValue2" Id="{a0f4c396-a26a-0b6a-3d7f-3f2c5388a6a7}">
+      <Declaration><![CDATA[METHOD INTERNAL GetValue2 : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetValue2 := nCounter2;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

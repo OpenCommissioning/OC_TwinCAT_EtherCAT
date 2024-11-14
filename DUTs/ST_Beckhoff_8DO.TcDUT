@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_8DO" Id="{5f0ccb6d-1892-0114-28ed-e0fc89f160b0}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Beckhoff_8DO :
+STRUCT
+	bOut1	AT %I* : BIT;
+	bOut2	AT %I* : BIT;
+	bOut3	AT %I* : BIT;
+	bOut4	AT %I* : BIT;
+	bOut5	AT %I* : BIT;
+	bOut6	AT %I* : BIT;
+	bOut7	AT %I* : BIT;
+	bOut8	AT %I* : BIT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

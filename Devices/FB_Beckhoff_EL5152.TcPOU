@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Beckhoff_EL5152" Id="{08baf088-2cf3-00bf-18c7-0387cec0c836}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL5152
+VAR_INPUT
+	nValue1		: UINT;
+	nValue2		: UINT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	nControl1		AT %I* : UINT;
+	nSetCounter1	AT %I* : UINT;
+	nControl2		AT %I* : UINT;
+	nSetCounter2	AT %I* : UINT;
+	
+	nStatus1		AT %Q* : UINT;
+	nCounter1		AT %Q* : UINT;	
+	nPeriod1    	AT %Q* : UDINT;
+	nStatus2		AT %Q* : UINT;
+	nCounter2		AT %Q* : UINT;
+	nPeriod2    	AT %Q* : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nStatus1.2 := nControl1.2;
+nStatus2.2 := nControl2.2;
+
+nCounter1 := nValue1;
+nCounter2 := nValue2;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

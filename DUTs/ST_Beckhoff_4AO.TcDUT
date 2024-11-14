@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_4AO" Id="{c2e955e8-933a-08e0-1430-49b9eba782fc}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Beckhoff_4AO :
+STRUCT
+	nAnalogOut1	AT %I* : UINT;
+	nAnalogOut2	AT %I* : UINT;
+	nAnalogOut3	AT %I* : UINT;
+	nAnalogOut4	AT %I* : UINT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

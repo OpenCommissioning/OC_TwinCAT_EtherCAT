@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_EtherCAT_2AI" Id="{5a491430-0ada-0f03-0e2c-e5525b7a28af}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EtherCAT_2AI
+VAR_INPUT		
+	nAnalogIn1	: INT;
+	nAnalogIn2	: INT;
+END_VAR
+VAR
+	nStatus1	AT %Q* : UINT;
+	nValue1		AT %Q* : INT;
+	nStatus2	AT %Q* : UINT;
+	nValue2		AT %Q* : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nStatus1 := 0;
+nValue1 := nAnalogIn1;
+
+nStatus2 := 0;
+nValue2 := nAnalogIn2;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

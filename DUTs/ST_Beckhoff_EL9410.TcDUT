@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_EL9410" Id="{a883e3ae-c1b9-03c6-09ae-289e9e6f27cf}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Beckhoff_EL9410 :
+STRUCT
+	bUsUndervoltage	AT %Q* : BIT;
+	bUpUndervoltage	AT %Q* : BIT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_CoE402" Id="{1f04b177-76c9-03b8-0ee4-3a549c9c04a4}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_CoE402 :
+STRUCT
+	nControlWord	AT %I* : UINT;
+	nTargetValue	AT %I* : DINT;
+	nStatusWord		AT %Q* : UINT;
+	nActualValue	AT %Q* : DINT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

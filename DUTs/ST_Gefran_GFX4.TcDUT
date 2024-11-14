@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Gefran_GFX4" Id="{96a2a7e9-5958-0d09-2ee6-4df6a97635fe}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Gefran_GFX4 :
+STRUCT
+	nProcessVariable1	AT %Q* : INT;
+	nControllerStatus1	AT %Q* : UINT;	
+	nOutputPower1		AT %Q* : INT;
+	nProcessVariable2	AT %Q* : INT;
+	nControllerStatus2	AT %Q* : UINT;	
+	nOutputPower2		AT %Q* : INT;
+	nProcessVariable3	AT %Q* : INT;
+	nControllerStatus3	AT %Q* : UINT;	
+	nOutputPower3		AT %Q* : INT;
+	nProcessVariable4	AT %Q* : INT;
+	nControllerStatus4	AT %Q* : UINT;	
+	nOutputPower4		AT %Q* : INT;
+	nLocalSetpoint1		AT %I* : INT;
+	nLocalSetpoint2		AT %I* : INT;
+	nLocalSetpoint3		AT %I* : INT;
+	nLocalSetpoint4		AT %I* : INT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
