@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_EL5002" Id="{72162118-bb8b-0a46-1b28-8a3c745eac43}">
+    <Declaration><![CDATA[TYPE ST_Beckhoff_EL5002 :
+STRUCT
+	nStatus1	AT %Q* : UINT;
+	nCounter1	AT %Q* : UDINT;	
+	nStatus2	AT %Q* : UINT;
+	nCounter2	AT %Q* : UDINT;	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

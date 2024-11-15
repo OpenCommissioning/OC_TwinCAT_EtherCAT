@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="3ce69d09-553f-492a-9b59-08bcfbdc0020">ST_BECKHOFF_4AO_1</Type>
+      <From>ST_Beckhoff_4AO_1</From>
+      <To>ST_Beckhoff_4AI</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="3c08fa32-e612-4804-b2fd-234899f9fb99">ST_BECKHOFF_4AI_1</Type>
+      <From>ST_Beckhoff_4AI_1</From>
+      <To>ST_Beckhoff_2AI</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="482b05b9-9a22-40e6-a57b-8bc75c9b4d4a">ST_BECKHOFF_EL3403_1</Type>
+      <From>ST_Beckhoff_EL3403_1</From>
+      <To>ST_Beckhoff_EL5002</To>
+    </RenamedType>
+  </Renames>
+</Refactors>

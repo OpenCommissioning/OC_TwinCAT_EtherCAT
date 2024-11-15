@@ -42,7 +42,16 @@
     <Compile Include="DUTs\ST_Baumer_Encoder.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\ST_Beckhoff_4AI.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\ST_Beckhoff_2AI.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\ST_Beckhoff_EL3403.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\ST_Beckhoff_EL5002.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\ST_CoE402.TcDUT">
@@ -84,28 +93,16 @@
     <Compile Include="DUTs\ST_SEW_SimMovitrac.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Devices\FB_Beckhoff_EL5002.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Devices\FB_Beckhoff_EL5152.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\FB_Beckhoff_EL6001.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Devices\FB_Beckhoff_EL3403.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Devices\FB_EtherCAT_2AI.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Devices\FB_EtherCAT_4AI.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tests\Devices\FB_Beckhoff_EL5002_Test.TcPOU">
+    <Compile Include="Tests\Devices\FB_Beckhoff_EL5152_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\PRG_TEST.TcPOU">

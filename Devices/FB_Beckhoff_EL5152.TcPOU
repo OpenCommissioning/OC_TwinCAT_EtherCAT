@@ -6,8 +6,6 @@ VAR_INPUT
 	nValue1		: UINT;
 	nValue2		: UINT;
 END_VAR
-VAR_OUTPUT
-END_VAR
 VAR
 	nControl1		AT %I* : UINT;
 	nSetCounter1	AT %I* : UINT;
@@ -29,5 +27,115 @@ nStatus2.2 := nControl2.2;
 nCounter1 := nValue1;
 nCounter2 := nValue2;]]></ST>
     </Implementation>
+    <Property Name="Control1" Id="{5c550402-bb0e-0ef9-0fec-73e14d2bbe4d}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Control1 : UINT]]></Declaration>
+      <Set Name="Set" Id="{5ba60a83-acbe-0e98-31b5-a65c95cf5871}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nControl1 := Control1;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Control2" Id="{f58e2f72-8d03-0b2d-15ce-8c78cfb46d19}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Control2 : UINT]]></Declaration>
+      <Set Name="Set" Id="{5db5adfd-c3a6-0ac0-1eea-674a8bd0d24d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nControl2 := Control2;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Counter1" Id="{03127839-0093-03b2-0a6f-88166eb755f6}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Counter1 : UINT]]></Declaration>
+      <Get Name="Get" Id="{1ff40a2f-399d-0c65-15d8-0c3b4f2bcaeb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Counter1 := nCounter1;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Counter2" Id="{1854e639-ce6e-0901-076f-d57c64553137}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Counter2 : UINT]]></Declaration>
+      <Get Name="Get" Id="{3a7e0597-34bc-0eb5-0cc1-6255b4e03aaa}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Counter2 := nCounter2;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Period1" Id="{1edf4574-7688-0a50-3510-8b9139b06165}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Period1 : UDINT]]></Declaration>
+      <Get Name="Get" Id="{bf0a7ae9-cbb6-0e81-047c-08773cbf0346}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Period1 := nPeriod1;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Period2" Id="{09c7bfb3-9853-026e-3a6b-f81044b48193}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Period2 : UDINT]]></Declaration>
+      <Get Name="Get" Id="{56d16da8-379c-07e3-0b55-a85960b1f340}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Period2 := nPeriod2;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SetCounter1" Id="{c25386e8-0be0-089c-3d08-5b0e80051126}">
+      <Declaration><![CDATA[PROPERTY INTERNAL SetCounter1 : UINT]]></Declaration>
+      <Set Name="Set" Id="{b6324605-4dbc-0558-0ebc-4a9b3bcfda61}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nSetCounter1 := SetCounter1;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="SetCounter2" Id="{0e828313-bfa5-07ef-21f8-30993f027f98}">
+      <Declaration><![CDATA[PROPERTY INTERNAL SetCounter2 : UINT]]></Declaration>
+      <Set Name="Set" Id="{a771431d-a0ee-034f-3d38-dbb5266e4a22}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nSetCounter2 := SetCounter2;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Status1" Id="{aa2f335b-fbd1-0d43-01b9-27a2839cbdf2}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Status1 : UINT]]></Declaration>
+      <Get Name="Get" Id="{967fca19-9e28-02b2-0a65-10b2dc3c998f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status1 := nStatus1;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Status2" Id="{82aa976b-c4e4-0291-378f-ade7c5039ac7}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Status2 : UINT]]></Declaration>
+      <Get Name="Get" Id="{e014c008-b064-08f2-2379-4678fa2c02cc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Status2 := nStatus2;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
   </POU>
 </TcPlcObject>
