@@ -84,9 +84,6 @@
     <Compile Include="DUTs\ST_Beckhoff_8DO.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\ST_Festo_CPX_FB37.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\ST_Gefran_GFX4.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -134,6 +131,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcUnit">
       <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
