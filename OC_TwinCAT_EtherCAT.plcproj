@@ -39,6 +39,12 @@
     <DocFormat>reStructuredText</DocFormat>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Devices\FB_Beckhoff_EL6001\E_Beckhoff_EL6001_State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\FB_Beckhoff_EL6001\FB_Beckhoff_EL6001.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\ST_Baumer_Encoder.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -93,13 +99,13 @@
     <Compile Include="Devices\FB_Beckhoff_EL5152.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Devices\FB_Beckhoff_EL6001.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Devices\FB_Beckhoff_EL5152_Test.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\Devices\FB_Beckhoff_EL6001_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\PRG_TEST.TcPOU">
@@ -107,6 +113,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Devices\FB_Beckhoff_EL6001" />
     <Folder Include="DUTs" />
     <Folder Include="Devices" />
     <Folder Include="Tests" />
