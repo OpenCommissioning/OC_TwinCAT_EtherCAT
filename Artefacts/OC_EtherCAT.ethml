@@ -44,356 +44,356 @@ $NAME$ : FB_Beckhoff_4AI;]]>
 	</Device>
 	<Device ProductDescription="EP3314">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nStatus1 := TIIB($BOXNO$)^TC Inputs Channel 1^Status;
-.nValue1 := TIIB($BOXNO$)^TC Inputs Channel 1^Value;
-.nStatus2 := TIIB($BOXNO$)^TC Inputs Channel 2^Status;
-.nValue2 := TIIB($BOXNO$)^TC Inputs Channel 2^Value;
-.nStatus3 := TIIB($BOXNO$)^TC Inputs Channel 3^Status;
-.nValue3 := TIIB($BOXNO$)^TC Inputs Channel 3^Value;
-.nStatus4 := TIIB($BOXNO$)^TC Inputs Channel 4^Status;
-.nValue4 := TIIB($BOXNO$)^TC Inputs Channel 4^Value'}
-$NAME$ : FB_Beckhoff_4AI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nStatus1 := TIIB($BOXNO$)^TC Inputs Channel 1^Status;
+			.nValue1 := TIIB($BOXNO$)^TC Inputs Channel 1^Value;
+			.nStatus2 := TIIB($BOXNO$)^TC Inputs Channel 2^Status;
+			.nValue2 := TIIB($BOXNO$)^TC Inputs Channel 2^Value;
+			.nStatus3 := TIIB($BOXNO$)^TC Inputs Channel 3^Status;
+			.nValue3 := TIIB($BOXNO$)^TC Inputs Channel 3^Value;
+			.nStatus4 := TIIB($BOXNO$)^TC Inputs Channel 4^Status;
+			.nValue4 := TIIB($BOXNO$)^TC Inputs Channel 4^Value'}
+			$NAME$ : FB_Beckhoff_4AI;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL3202">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nStatus1 := TIIB($BOXNO$)^RTD Inputs Channel 1^Status;
-.nValue1 := TIIB($BOXNO$)^RTD Inputs Channel 1^Value;
-.nStatus2 := TIIB($BOXNO$)^RTD Inputs Channel 2^Status;
-.nValue2 := TIIB($BOXNO$)^RTD Inputs Channel 2^Value'}
-$NAME$ : FB_Beckhoff_2AI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nStatus1 := TIIB($BOXNO$)^RTD Inputs Channel 1^Status;
+			.nValue1 := TIIB($BOXNO$)^RTD Inputs Channel 1^Value;
+			.nStatus2 := TIIB($BOXNO$)^RTD Inputs Channel 2^Status;
+			.nValue2 := TIIB($BOXNO$)^RTD Inputs Channel 2^Value'}
+			$NAME$ : FB_Beckhoff_2AI;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL3403">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nCurrent1 := TIIB($BOXNO$)^PM Inputs Channel 1^Current;
-.nVoltage1 := TIIB($BOXNO$)^PM Inputs Channel 1^Voltage;
-.nActivePower1 := TIIB($BOXNO$)^PM Inputs Channel 1^Active power;
-.nCurrent2 := TIIB($BOXNO$)^PM Inputs Channel 2^Current;
-.nVoltage2 := TIIB($BOXNO$)^PM Inputs Channel 2^Voltage;
-.nActivePower2 := TIIB($BOXNO$)^PM Inputs Channel 2^Active power;
-.nCurrent3 := TIIB($BOXNO$)^PM Inputs Channel 3^Current;
-.nVoltage3 := TIIB($BOXNO$)^PM Inputs Channel 3^Voltage;
-.nActivePower3 := TIIB($BOXNO$)^PM Inputs Channel 3^Active power;'}
-$NAME$ : ST_Beckhoff_EL3403;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nCurrent1 := TIIB($BOXNO$)^PM Inputs Channel 1^Current;
+			.nVoltage1 := TIIB($BOXNO$)^PM Inputs Channel 1^Voltage;
+			.nActivePower1 := TIIB($BOXNO$)^PM Inputs Channel 1^Active power;
+			.nCurrent2 := TIIB($BOXNO$)^PM Inputs Channel 2^Current;
+			.nVoltage2 := TIIB($BOXNO$)^PM Inputs Channel 2^Voltage;
+			.nActivePower2 := TIIB($BOXNO$)^PM Inputs Channel 2^Active power;
+			.nCurrent3 := TIIB($BOXNO$)^PM Inputs Channel 3^Current;
+			.nVoltage3 := TIIB($BOXNO$)^PM Inputs Channel 3^Voltage;
+			.nActivePower3 := TIIB($BOXNO$)^PM Inputs Channel 3^Active power;'}
+			$NAME$ : ST_Beckhoff_EL3403;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL4004">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nAnalogOut1 := TIIB($BOXNO$)^AO Outputs Channel 1^Analog output;
-.nAnalogOut2 := TIIB($BOXNO$)^AO Outputs Channel 2^Analog output;
-.nAnalogOut3 := TIIB($BOXNO$)^AO Outputs Channel 3^Analog output;
-.nAnalogOut4 := TIIB($BOXNO$)^AO Outputs Channel 4^Analog output'}
-$NAME$ : ST_Beckhoff_4AO;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nAnalogOut1 := TIIB($BOXNO$)^AO Outputs Channel 1^Analog output;
+			.nAnalogOut2 := TIIB($BOXNO$)^AO Outputs Channel 2^Analog output;
+			.nAnalogOut3 := TIIB($BOXNO$)^AO Outputs Channel 3^Analog output;
+			.nAnalogOut4 := TIIB($BOXNO$)^AO Outputs Channel 4^Analog output'}
+			$NAME$ : ST_Beckhoff_4AO;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL4034">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nAnalogOut1 := TIIB($BOXNO$)^AO Outputs Channel 1^Analog output;
-.nAnalogOut2 := TIIB($BOXNO$)^AO Outputs Channel 2^Analog output;
-.nAnalogOut3 := TIIB($BOXNO$)^AO Outputs Channel 3^Analog output;
-.nAnalogOut4 := TIIB($BOXNO$)^AO Outputs Channel 4^Analog output'}
-$NAME$ : ST_Beckhoff_4AO;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nAnalogOut1 := TIIB($BOXNO$)^AO Outputs Channel 1^Analog output;
+			.nAnalogOut2 := TIIB($BOXNO$)^AO Outputs Channel 2^Analog output;
+			.nAnalogOut3 := TIIB($BOXNO$)^AO Outputs Channel 3^Analog output;
+			.nAnalogOut4 := TIIB($BOXNO$)^AO Outputs Channel 4^Analog output'}
+			$NAME$ : ST_Beckhoff_4AO;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL5152">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nControl1 := TIIB($BOXNO$)^ENC Control compact Channel 1^Control;
-.nSetCounter1 := TIIB($BOXNO$)^ENC Control compact Channel 1^Set counter value;
-.nControl2 := TIIB($BOXNO$)^ENC Control compact Channel 2^Control;
-.nSetCounter2 := TIIB($BOXNO$)^ENC Control compact Channel 2^Set counter value;
-.nStatus1 := TIIB($BOXNO$)^ENC Status compact Channel 1^Status;
-.nCounter1 := TIIB($BOXNO$)^ENC Status compact Channel 1^Counter value;
-.nPeriod1 := TIIB($BOXNO$)^ENC Period Channel 1^Period value;
-.nStatus2 := TIIB($BOXNO$)^ENC Status compact Channel 2^Status;
-.nCounter2 := TIIB($BOXNO$)^ENC Status compact Channel 2^Counter value;
-.nPeriod2 := TIIB($BOXNO$)^ENC Period Channel 2^Period value'}
-$NAME$ : FB_Beckhoff_EL5152;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nControl1 := TIIB($BOXNO$)^ENC Control compact Channel 1^Control;
+			.nSetCounter1 := TIIB($BOXNO$)^ENC Control compact Channel 1^Set counter value;
+			.nControl2 := TIIB($BOXNO$)^ENC Control compact Channel 2^Control;
+			.nSetCounter2 := TIIB($BOXNO$)^ENC Control compact Channel 2^Set counter value;
+			.nStatus1 := TIIB($BOXNO$)^ENC Status compact Channel 1^Status;
+			.nCounter1 := TIIB($BOXNO$)^ENC Status compact Channel 1^Counter value;
+			.nPeriod1 := TIIB($BOXNO$)^ENC Period Channel 1^Period value;
+			.nStatus2 := TIIB($BOXNO$)^ENC Status compact Channel 2^Status;
+			.nCounter2 := TIIB($BOXNO$)^ENC Status compact Channel 2^Counter value;
+			.nPeriod2 := TIIB($BOXNO$)^ENC Period Channel 2^Period value'}
+			$NAME$ : FB_Beckhoff_EL5152;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL6001">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nControl := TIIB($BOXNO$)^COM Outputs^Ctrl;
-.nDataOut[0] := TIIB($BOXNO$)^COM Outputs^Data Out 0;
-.nDataOut[1] := TIIB($BOXNO$)^COM Outputs^Data Out 1;
-.nDataOut[2] := TIIB($BOXNO$)^COM Outputs^Data Out 2;
-.nDataOut[3] := TIIB($BOXNO$)^COM Outputs^Data Out 3;
-.nDataOut[4] := TIIB($BOXNO$)^COM Outputs^Data Out 4;
-.nDataOut[5] := TIIB($BOXNO$)^COM Outputs^Data Out 5;
-.nDataOut[6] := TIIB($BOXNO$)^COM Outputs^Data Out 6;
-.nDataOut[7] := TIIB($BOXNO$)^COM Outputs^Data Out 7;
-.nDataOut[8] := TIIB($BOXNO$)^COM Outputs^Data Out 8;
-.nDataOut[9] := TIIB($BOXNO$)^COM Outputs^Data Out 9;
-.nDataOut[10] := TIIB($BOXNO$)^COM Outputs^Data Out 10;
-.nDataOut[11] := TIIB($BOXNO$)^COM Outputs^Data Out 11;
-.nDataOut[12] := TIIB($BOXNO$)^COM Outputs^Data Out 12;
-.nDataOut[13] := TIIB($BOXNO$)^COM Outputs^Data Out 13;
-.nDataOut[14] := TIIB($BOXNO$)^COM Outputs^Data Out 14;
-.nDataOut[15] := TIIB($BOXNO$)^COM Outputs^Data Out 15;
-.nDataOut[16] := TIIB($BOXNO$)^COM Outputs^Data Out 16;
-.nDataOut[17] := TIIB($BOXNO$)^COM Outputs^Data Out 17;
-.nDataOut[18] := TIIB($BOXNO$)^COM Outputs^Data Out 18;
-.nDataOut[19] := TIIB($BOXNO$)^COM Outputs^Data Out 19;
-.nDataOut[20] := TIIB($BOXNO$)^COM Outputs^Data Out 20;
-.nDataOut[21] := TIIB($BOXNO$)^COM Outputs^Data Out 21;
-.nStatus := TIIB($BOXNO$)^COM Inputs^Status;
-.nDataIn[0] := TIIB($BOXNO$)^COM Inputs^Data In 0;
-.nDataIn[1] := TIIB($BOXNO$)^COM Inputs^Data In 1;
-.nDataIn[2] := TIIB($BOXNO$)^COM Inputs^Data In 2;
-.nDataIn[3] := TIIB($BOXNO$)^COM Inputs^Data In 3;
-.nDataIn[4] := TIIB($BOXNO$)^COM Inputs^Data In 4;
-.nDataIn[5] := TIIB($BOXNO$)^COM Inputs^Data In 5;
-.nDataIn[6] := TIIB($BOXNO$)^COM Inputs^Data In 6;
-.nDataIn[7] := TIIB($BOXNO$)^COM Inputs^Data In 7;
-.nDataIn[8] := TIIB($BOXNO$)^COM Inputs^Data In 8;
-.nDataIn[9] := TIIB($BOXNO$)^COM Inputs^Data In 9;
-.nDataIn[10] := TIIB($BOXNO$)^COM Inputs^Data In 10;
-.nDataIn[11] := TIIB($BOXNO$)^COM Inputs^Data In 11;
-.nDataIn[12] := TIIB($BOXNO$)^COM Inputs^Data In 12;
-.nDataIn[13] := TIIB($BOXNO$)^COM Inputs^Data In 13;
-.nDataIn[14] := TIIB($BOXNO$)^COM Inputs^Data In 14;
-.nDataIn[15] := TIIB($BOXNO$)^COM Inputs^Data In 15;
-.nDataIn[16] := TIIB($BOXNO$)^COM Inputs^Data In 16;
-.nDataIn[17] := TIIB($BOXNO$)^COM Inputs^Data In 17;
-.nDataIn[18] := TIIB($BOXNO$)^COM Inputs^Data In 18;
-.nDataIn[19] := TIIB($BOXNO$)^COM Inputs^Data In 19;
-.nDataIn[20] := TIIB($BOXNO$)^COM Inputs^Data In 20;
-.nDataIn[21] := TIIB($BOXNO$)^COM Inputs^Data In 21'}
-$NAME$ : FB_Beckhoff_EL6001;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nControl := TIIB($BOXNO$)^COM Outputs^Ctrl;
+			.nDataOut[0] := TIIB($BOXNO$)^COM Outputs^Data Out 0;
+			.nDataOut[1] := TIIB($BOXNO$)^COM Outputs^Data Out 1;
+			.nDataOut[2] := TIIB($BOXNO$)^COM Outputs^Data Out 2;
+			.nDataOut[3] := TIIB($BOXNO$)^COM Outputs^Data Out 3;
+			.nDataOut[4] := TIIB($BOXNO$)^COM Outputs^Data Out 4;
+			.nDataOut[5] := TIIB($BOXNO$)^COM Outputs^Data Out 5;
+			.nDataOut[6] := TIIB($BOXNO$)^COM Outputs^Data Out 6;
+			.nDataOut[7] := TIIB($BOXNO$)^COM Outputs^Data Out 7;
+			.nDataOut[8] := TIIB($BOXNO$)^COM Outputs^Data Out 8;
+			.nDataOut[9] := TIIB($BOXNO$)^COM Outputs^Data Out 9;
+			.nDataOut[10] := TIIB($BOXNO$)^COM Outputs^Data Out 10;
+			.nDataOut[11] := TIIB($BOXNO$)^COM Outputs^Data Out 11;
+			.nDataOut[12] := TIIB($BOXNO$)^COM Outputs^Data Out 12;
+			.nDataOut[13] := TIIB($BOXNO$)^COM Outputs^Data Out 13;
+			.nDataOut[14] := TIIB($BOXNO$)^COM Outputs^Data Out 14;
+			.nDataOut[15] := TIIB($BOXNO$)^COM Outputs^Data Out 15;
+			.nDataOut[16] := TIIB($BOXNO$)^COM Outputs^Data Out 16;
+			.nDataOut[17] := TIIB($BOXNO$)^COM Outputs^Data Out 17;
+			.nDataOut[18] := TIIB($BOXNO$)^COM Outputs^Data Out 18;
+			.nDataOut[19] := TIIB($BOXNO$)^COM Outputs^Data Out 19;
+			.nDataOut[20] := TIIB($BOXNO$)^COM Outputs^Data Out 20;
+			.nDataOut[21] := TIIB($BOXNO$)^COM Outputs^Data Out 21;
+			.nStatus := TIIB($BOXNO$)^COM Inputs^Status;
+			.nDataIn[0] := TIIB($BOXNO$)^COM Inputs^Data In 0;
+			.nDataIn[1] := TIIB($BOXNO$)^COM Inputs^Data In 1;
+			.nDataIn[2] := TIIB($BOXNO$)^COM Inputs^Data In 2;
+			.nDataIn[3] := TIIB($BOXNO$)^COM Inputs^Data In 3;
+			.nDataIn[4] := TIIB($BOXNO$)^COM Inputs^Data In 4;
+			.nDataIn[5] := TIIB($BOXNO$)^COM Inputs^Data In 5;
+			.nDataIn[6] := TIIB($BOXNO$)^COM Inputs^Data In 6;
+			.nDataIn[7] := TIIB($BOXNO$)^COM Inputs^Data In 7;
+			.nDataIn[8] := TIIB($BOXNO$)^COM Inputs^Data In 8;
+			.nDataIn[9] := TIIB($BOXNO$)^COM Inputs^Data In 9;
+			.nDataIn[10] := TIIB($BOXNO$)^COM Inputs^Data In 10;
+			.nDataIn[11] := TIIB($BOXNO$)^COM Inputs^Data In 11;
+			.nDataIn[12] := TIIB($BOXNO$)^COM Inputs^Data In 12;
+			.nDataIn[13] := TIIB($BOXNO$)^COM Inputs^Data In 13;
+			.nDataIn[14] := TIIB($BOXNO$)^COM Inputs^Data In 14;
+			.nDataIn[15] := TIIB($BOXNO$)^COM Inputs^Data In 15;
+			.nDataIn[16] := TIIB($BOXNO$)^COM Inputs^Data In 16;
+			.nDataIn[17] := TIIB($BOXNO$)^COM Inputs^Data In 17;
+			.nDataIn[18] := TIIB($BOXNO$)^COM Inputs^Data In 18;
+			.nDataIn[19] := TIIB($BOXNO$)^COM Inputs^Data In 19;
+			.nDataIn[20] := TIIB($BOXNO$)^COM Inputs^Data In 20;
+			.nDataIn[21] := TIIB($BOXNO$)^COM Inputs^Data In 21'}
+			$NAME$ : FB_Beckhoff_EL6001;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL9110">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '.bPowerOk := TIIB($BOXNO$)^PowerOK^Input'}
-$NAME$ : ST_Beckhoff_EL9110;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '.bPowerOk := TIIB($BOXNO$)^PowerOK^Input'}
+			$NAME$ : ST_Beckhoff_EL9110;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL9410">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bUsUndervoltage := TIIB($BOXNO$)^Status Us^Undervoltage;
-.bUpUndervoltage := TIIB($BOXNO$)^Status Up^Undervoltage'}
-$NAME$ : ST_Beckhoff_EL9410;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bUsUndervoltage := TIIB($BOXNO$)^Status Us^Undervoltage;
+			.bUpUndervoltage := TIIB($BOXNO$)^Status Up^Undervoltage'}
+			$NAME$ : ST_Beckhoff_EL9410;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EP1008-0002">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
-.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
-.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
-.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
-.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
-.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
-.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
-.bIn8 := TIIB($BOXNO$)^Channel 8^Input'}
-$NAME$ : ST_Beckhoff_8DI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
+			.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
+			.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
+			.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
+			.bIn8 := TIIB($BOXNO$)^Channel 8^Input'}
+			$NAME$ : ST_Beckhoff_8DI;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EP2338-0002">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
-.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
-.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
-.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
-.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
-.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
-.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
-.bIn8 := TIIB($BOXNO$)^Channel 8^Input;
-.bOut1 := TIIB($BOXNO$)^Channel 9^Output;
-.bOut2 := TIIB($BOXNO$)^Channel 10^Output;
-.bOut3 := TIIB($BOXNO$)^Channel 11^Output;
-.bOut4 := TIIB($BOXNO$)^Channel 12^Output;
-.bOut5 := TIIB($BOXNO$)^Channel 13^Output;
-.bOut6 := TIIB($BOXNO$)^Channel 14^Output;
-.bOut7 := TIIB($BOXNO$)^Channel 15^Output;
-.bOut8 := TIIB($BOXNO$)^Channel 16^Output'}
-$NAME$ : ST_Beckhoff_8DI_8DO;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
+			.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
+			.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
+			.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
+			.bIn8 := TIIB($BOXNO$)^Channel 8^Input;
+			.bOut1 := TIIB($BOXNO$)^Channel 9^Output;
+			.bOut2 := TIIB($BOXNO$)^Channel 10^Output;
+			.bOut3 := TIIB($BOXNO$)^Channel 11^Output;
+			.bOut4 := TIIB($BOXNO$)^Channel 12^Output;
+			.bOut5 := TIIB($BOXNO$)^Channel 13^Output;
+			.bOut6 := TIIB($BOXNO$)^Channel 14^Output;
+			.bOut7 := TIIB($BOXNO$)^Channel 15^Output;
+			.bOut8 := TIIB($BOXNO$)^Channel 16^Output'}
+			$NAME$ : ST_Beckhoff_8DI_8DO;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EP2308-0002">
 		<Declaration>
 			<![CDATA[{attribute 'TcLinkTo' := '
-.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
-.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
-.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
-.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
-.bOut1 := TIIB($BOXNO$)^Channel 9^Output;
-.bOut2 := TIIB($BOXNO$)^Channel 10^Output;
-.bOut3 := TIIB($BOXNO$)^Channel 11^Output;
-.bOut4 := TIIB($BOXNO$)^Channel 12^Output;
-$NAME$ : ST_Beckhoff_4DI_4DO;]]>
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
+			.bOut1 := TIIB($BOXNO$)^Channel 9^Output;
+			.bOut2 := TIIB($BOXNO$)^Channel 10^Output;
+			.bOut3 := TIIB($BOXNO$)^Channel 11^Output;
+			.bOut4 := TIIB($BOXNO$)^Channel 12^Output;
+			$NAME$ : ST_Beckhoff_4DI_4DO;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EP3174-0002">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nStatus1 := TIIB($BOXNO$)^AI Standard Channel 1^Status;
-.nValue1 := TIIB($BOXNO$)^AI Standard Channel 1^Value;
-.nStatus2 := TIIB($BOXNO$)^AI Standard Channel 2^Status;
-.nValue2 := TIIB($BOXNO$)^AI Standard Channel 2^Value;
-.nStatus3 := TIIB($BOXNO$)^AI Standard Channel 3^Status;
-.nValue3 := TIIB($BOXNO$)^AI Standard Channel 3^Value;
-.nStatus4 := TIIB($BOXNO$)^AI Standard Channel 4^Status;
-.nValue4 := TIIB($BOXNO$)^AI Standard Channel 4^Value'}
-$NAME$ : FB_Beckhoff_4AI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nStatus1 := TIIB($BOXNO$)^AI Standard Channel 1^Status;
+			.nValue1 := TIIB($BOXNO$)^AI Standard Channel 1^Value;
+			.nStatus2 := TIIB($BOXNO$)^AI Standard Channel 2^Status;
+			.nValue2 := TIIB($BOXNO$)^AI Standard Channel 2^Value;
+			.nStatus3 := TIIB($BOXNO$)^AI Standard Channel 3^Status;
+			.nValue3 := TIIB($BOXNO$)^AI Standard Channel 3^Value;
+			.nStatus4 := TIIB($BOXNO$)^AI Standard Channel 4^Status;
+			.nValue4 := TIIB($BOXNO$)^AI Standard Channel 4^Value'}
+			$NAME$ : FB_Beckhoff_4AI;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL1809">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
-.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
-.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
-.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
-.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
-.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
-.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
-.bIn8 := TIIB($BOXNO$)^Channel 8^Input;
-.bIn9 := TIIB($BOXNO$)^Channel 9^Input;
-.bIn10 := TIIB($BOXNO$)^Channel 10^Input;
-.bIn11 := TIIB($BOXNO$)^Channel 11^Input;
-.bIn12 := TIIB($BOXNO$)^Channel 12^Input;
-.bIn13 := TIIB($BOXNO$)^Channel 13^Input;
-.bIn14 := TIIB($BOXNO$)^Channel 14^Input;
-.bIn15 := TIIB($BOXNO$)^Channel 15^Input;
-.bIn16 := TIIB($BOXNO$)^Channel 16^Input'}
-$NAME$ : ST_Beckhoff_16DI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
+			.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
+			.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
+			.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
+			.bIn8 := TIIB($BOXNO$)^Channel 8^Input;
+			.bIn9 := TIIB($BOXNO$)^Channel 9^Input;
+			.bIn10 := TIIB($BOXNO$)^Channel 10^Input;
+			.bIn11 := TIIB($BOXNO$)^Channel 11^Input;
+			.bIn12 := TIIB($BOXNO$)^Channel 12^Input;
+			.bIn13 := TIIB($BOXNO$)^Channel 13^Input;
+			.bIn14 := TIIB($BOXNO$)^Channel 14^Input;
+			.bIn15 := TIIB($BOXNO$)^Channel 15^Input;
+			.bIn16 := TIIB($BOXNO$)^Channel 16^Input'}
+			$NAME$ : ST_Beckhoff_16DI;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL2809">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bOut1 := TIIB($BOXNO$)^Channel 1^Output;
-.bOut2 := TIIB($BOXNO$)^Channel 2^Output;
-.bOut3 := TIIB($BOXNO$)^Channel 3^Output;
-.bOut4 := TIIB($BOXNO$)^Channel 4^Output;
-.bOut5 := TIIB($BOXNO$)^Channel 5^Output;
-.bOut6 := TIIB($BOXNO$)^Channel 6^Output;
-.bOut7 := TIIB($BOXNO$)^Channel 7^Output;
-.bOut8 := TIIB($BOXNO$)^Channel 8^Output;
-.bOut9 := TIIB($BOXNO$)^Channel 9^Output;
-.bOut10 := TIIB($BOXNO$)^Channel 10^Output;
-.bOut11 := TIIB($BOXNO$)^Channel 11^Output;
-.bOut12 := TIIB($BOXNO$)^Channel 12^Output;
-.bOut13 := TIIB($BOXNO$)^Channel 13^Output;
-.bOut14 := TIIB($BOXNO$)^Channel 14^Output;
-.bOut15 := TIIB($BOXNO$)^Channel 15^Output;
-.bOut16 := TIIB($BOXNO$)^Channel 16^Output'}
-$NAME$ : ST_Beckhoff_16DO;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bOut1 := TIIB($BOXNO$)^Channel 1^Output;
+			.bOut2 := TIIB($BOXNO$)^Channel 2^Output;
+			.bOut3 := TIIB($BOXNO$)^Channel 3^Output;
+			.bOut4 := TIIB($BOXNO$)^Channel 4^Output;
+			.bOut5 := TIIB($BOXNO$)^Channel 5^Output;
+			.bOut6 := TIIB($BOXNO$)^Channel 6^Output;
+			.bOut7 := TIIB($BOXNO$)^Channel 7^Output;
+			.bOut8 := TIIB($BOXNO$)^Channel 8^Output;
+			.bOut9 := TIIB($BOXNO$)^Channel 9^Output;
+			.bOut10 := TIIB($BOXNO$)^Channel 10^Output;
+			.bOut11 := TIIB($BOXNO$)^Channel 11^Output;
+			.bOut12 := TIIB($BOXNO$)^Channel 12^Output;
+			.bOut13 := TIIB($BOXNO$)^Channel 13^Output;
+			.bOut14 := TIIB($BOXNO$)^Channel 14^Output;
+			.bOut15 := TIIB($BOXNO$)^Channel 15^Output;
+			.bOut16 := TIIB($BOXNO$)^Channel 16^Output'}
+			$NAME$ : ST_Beckhoff_16DO;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL6021">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nControl := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Ctrl;
-.nDataOut[0] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 0;
-.nDataOut[1] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 1;
-.nDataOut[2] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 2;
-.nDataOut[3] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 3;
-.nDataOut[4] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 4;
-.nDataOut[5] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 5;
-.nDataOut[6] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 6;
-.nDataOut[7] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 7;
-.nDataOut[8] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 8;
-.nDataOut[9] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 9;
-.nDataOut[10] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 10;
-.nDataOut[11] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 11;
-.nDataOut[12] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 12;
-.nDataOut[13] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 13;
-.nDataOut[14] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 14;
-.nDataOut[15] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 15;
-.nDataOut[16] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 16;
-.nDataOut[17] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 17;
-.nDataOut[18] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 18;
-.nDataOut[19] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 19;
-.nDataOut[20] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 20;
-.nDataOut[21] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 21;
-.nStatus := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Status;
-.nDataIn[0] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 0;
-.nDataIn[1] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 1;
-.nDataIn[2] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 2;
-.nDataIn[3] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 3;
-.nDataIn[4] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 4;
-.nDataIn[5] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 5;
-.nDataIn[6] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 6;
-.nDataIn[7] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 7;
-.nDataIn[8] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 8;
-.nDataIn[9] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 9;
-.nDataIn[10] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 10;
-.nDataIn[11] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 11;
-.nDataIn[12] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 12;
-.nDataIn[13] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 13;
-.nDataIn[14] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 14;
-.nDataIn[15] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 15;
-.nDataIn[16] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 16;
-.nDataIn[17] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 17;
-.nDataIn[18] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 18;
-.nDataIn[19] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 19;
-.nDataIn[20] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 20;
-.nDataIn[21] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 21'}
-$NAME$ : FB_Beckhoff_EL6001;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nControl := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Ctrl;
+			.nDataOut[0] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 0;
+			.nDataOut[1] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 1;
+			.nDataOut[2] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 2;
+			.nDataOut[3] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 3;
+			.nDataOut[4] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 4;
+			.nDataOut[5] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 5;
+			.nDataOut[6] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 6;
+			.nDataOut[7] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 7;
+			.nDataOut[8] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 8;
+			.nDataOut[9] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 9;
+			.nDataOut[10] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 10;
+			.nDataOut[11] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 11;
+			.nDataOut[12] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 12;
+			.nDataOut[13] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 13;
+			.nDataOut[14] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 14;
+			.nDataOut[15] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 15;
+			.nDataOut[16] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 16;
+			.nDataOut[17] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 17;
+			.nDataOut[18] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 18;
+			.nDataOut[19] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 19;
+			.nDataOut[20] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 20;
+			.nDataOut[21] := TIIB($BOXNO$)^COM RxPDO-Map Outputs^Data Out 21;
+			.nStatus := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Status;
+			.nDataIn[0] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 0;
+			.nDataIn[1] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 1;
+			.nDataIn[2] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 2;
+			.nDataIn[3] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 3;
+			.nDataIn[4] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 4;
+			.nDataIn[5] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 5;
+			.nDataIn[6] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 6;
+			.nDataIn[7] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 7;
+			.nDataIn[8] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 8;
+			.nDataIn[9] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 9;
+			.nDataIn[10] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 10;
+			.nDataIn[11] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 11;
+			.nDataIn[12] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 12;
+			.nDataIn[13] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 13;
+			.nDataIn[14] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 14;
+			.nDataIn[15] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 15;
+			.nDataIn[16] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 16;
+			.nDataIn[17] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 17;
+			.nDataIn[18] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 18;
+			.nDataIn[19] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 19;
+			.nDataIn[20] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 20;
+			.nDataIn[21] := TIIB($BOXNO$)^COM TxPDO-Map Inputs^Data In 21'}
+			$NAME$ : FB_Beckhoff_EL6001;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="MOVITRAC">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.PI1 := TIIB($BOXNO$)^InputData1 (Standard 3 PI)^PI 0001;
-.PI2 := TIIB($BOXNO$)^InputData1 (Standard 3 PI)^PI 0002;
-.PI3 := TIIB($BOXNO$)^InputData1 (Standard 3 PI)^PI 0003;
-.PO1 := TIIB($BOXNO$)^OutputData1  (Standard 3 PO)^PO 0001;
-.PO2 := TIIB($BOXNO$)^OutputData1  (Standard 3 PO)^PO 0002;
-.PO3 := TIIB($BOXNO$)^OutputData1  (Standard 3 PO)^PO 0003'}
-$NAME$ : ST_SEW_SimMovitrac;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.PI1 := TIIB($BOXNO$)^InputData1 (Standard 3 PI)^PI 0001;
+			.PI2 := TIIB($BOXNO$)^InputData1 (Standard 3 PI)^PI 0002;
+			.PI3 := TIIB($BOXNO$)^InputData1 (Standard 3 PI)^PI 0003;
+			.PO1 := TIIB($BOXNO$)^OutputData1  (Standard 3 PO)^PO 0001;
+			.PO2 := TIIB($BOXNO$)^OutputData1  (Standard 3 PO)^PO 0002;
+			.PO3 := TIIB($BOXNO$)^OutputData1  (Standard 3 PO)^PO 0003'}
+			$NAME$ : ST_SEW_SimMovitrac;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="BAUMER EtherCAT">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nPosition := TIIB($BOXNO$)^Inputs^Position;
-.nWarnings := TIIB($BOXNO$)^Inputs^Warnings;
-.nSystemTime := TIIB($BOXNO$)^Inputs^System Time'}
-$NAME$ : ST_Baumer_Encoder;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nPosition := TIIB($BOXNO$)^Inputs^Position;
+			.nWarnings := TIIB($BOXNO$)^Inputs^Warnings;
+			.nSystemTime := TIIB($BOXNO$)^Inputs^System Time'}
+			$NAME$ : ST_Baumer_Encoder;]]>
 		</Declaration>
 	</Device>		
 	<Device ProductDescription="SIM2007D EtherCAT Drive">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nControlWord := TIIB($BOXNO$)^Outputs^Control Word;
-.nTargetValue := TIIB($BOXNO$)^Outputs^Target Position;
-.nStatusWord := TIIB($BOXNO$)^Inputs^Status Word;
-.nActualValue := TIIB($BOXNO$)^Inputs^Position Actual Value'}
-$NAME$ : ST_CoE402;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nControlWord := TIIB($BOXNO$)^Outputs^Control Word;
+			.nTargetValue := TIIB($BOXNO$)^Outputs^Target Position;
+			.nStatusWord := TIIB($BOXNO$)^Inputs^Status Word;
+			.nActualValue := TIIB($BOXNO$)^Inputs^Position Actual Value'}
+			$NAME$ : ST_CoE402;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="GFX4">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nProcessVariable1 := TIIB($BOXNO$)^Zone 1 Input^Process variable 1;
-.nControllerStatus1 := TIIB($BOXNO$)^Zone 1 Input^Controller status 1;
-.nOutputPower1 := TIIB($BOXNO$)^Zone 1 Input^Output power 1;
-.nLocalSetpoint1 := TIIB($BOXNO$)^Zone 1 Output^Local setpoint 1;
-.nProcessVariable2 := TIIB($BOXNO$)^Zone 2 Input^Process variable 2;
-.nControllerStatus2 := TIIB($BOXNO$)^Zone 2 Input^Controller status 2;
-.nOutputPower2 := TIIB($BOXNO$)^Zone 2 Input^Output power 2;
-.nLocalSetpoint2 := TIIB($BOXNO$)^Zone 2 Output^Local setpoint 2;
-.nProcessVariable3 := TIIB($BOXNO$)^Zone 3 Input^Process variable 3;
-.nControllerStatus3 := TIIB($BOXNO$)^Zone 3 Input^Controller status 3;
-.nOutputPower3 := TIIB($BOXNO$)^Zone 3 Input^Output power 3;
-.nLocalSetpoint3 := TIIB($BOXNO$)^Zone 3 Output^Local setpoint 3;
-.nProcessVariable4 := TIIB($BOXNO$)^Zone 4 Input^Process variable 4;
-.nControllerStatus4 := TIIB($BOXNO$)^Zone 4 Input^Controller status 4;
-.nOutputPower4 := TIIB($BOXNO$)^Zone 4 Input^Output power 4;
-.nLocalSetpoint4 := TIIB($BOXNO$)^Zone 4 Output^Local setpoint 4'}
-$NAME$ : ST_Gefran_GFX4;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nProcessVariable1 := TIIB($BOXNO$)^Zone 1 Input^Process variable 1;
+			.nControllerStatus1 := TIIB($BOXNO$)^Zone 1 Input^Controller status 1;
+			.nOutputPower1 := TIIB($BOXNO$)^Zone 1 Input^Output power 1;
+			.nLocalSetpoint1 := TIIB($BOXNO$)^Zone 1 Output^Local setpoint 1;
+			.nProcessVariable2 := TIIB($BOXNO$)^Zone 2 Input^Process variable 2;
+			.nControllerStatus2 := TIIB($BOXNO$)^Zone 2 Input^Controller status 2;
+			.nOutputPower2 := TIIB($BOXNO$)^Zone 2 Input^Output power 2;
+			.nLocalSetpoint2 := TIIB($BOXNO$)^Zone 2 Output^Local setpoint 2;
+			.nProcessVariable3 := TIIB($BOXNO$)^Zone 3 Input^Process variable 3;
+			.nControllerStatus3 := TIIB($BOXNO$)^Zone 3 Input^Controller status 3;
+			.nOutputPower3 := TIIB($BOXNO$)^Zone 3 Input^Output power 3;
+			.nLocalSetpoint3 := TIIB($BOXNO$)^Zone 3 Output^Local setpoint 3;
+			.nProcessVariable4 := TIIB($BOXNO$)^Zone 4 Input^Process variable 4;
+			.nControllerStatus4 := TIIB($BOXNO$)^Zone 4 Input^Controller status 4;
+			.nOutputPower4 := TIIB($BOXNO$)^Zone 4 Input^Output power 4;
+			.nLocalSetpoint4 := TIIB($BOXNO$)^Zone 4 Output^Local setpoint 4'}
+			$NAME$ : ST_Gefran_GFX4;]]>
 		</Declaration>
 	</Device>
 </Ethercat>
