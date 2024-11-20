@@ -1,11 +1,8 @@
 name: Release
 
 on:
-  workflow_dispatch:
-
-#on:
-#  push:
-#    branches: [master]
+  push:
+    branches: [master]
 
 jobs:
   Build:
@@ -22,7 +19,7 @@ jobs:
         id: project_version
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
-            xml-file: "OC_TwinCAT_EtherCAT.plcproj"
+            xml-file: "OC_EtherCAT.plcproj"
             xpath: "//*[local-name()='ProjectVersion']"
       
       - name: Get Semantic Version
