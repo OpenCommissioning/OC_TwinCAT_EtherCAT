@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.0.0...v1.0.1) (2024-11-20)
+
+
+### Bug Fixes
+
+* Library artifact typo ([c822791](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/c82279132aa1c29d44a6a769b2884f876f84e695))
+
 # 1.0.0 (2024-11-20)
 
 
