@@ -23,7 +23,8 @@
       "@semantic-release/github",
       {
         "assets": [
-          { "path": "_Libraries/Open Commissioning/OC_EtherCAT/OC_EtherCAT.library", "label": "OC_EtherCAT.library"}
+          { "path": "Artefacts/OC_EtherCAT.library", "label": "OC_EtherCAT.library"},
+          { "path": "Artefacts/OC_EtherCAT.ethml", "label": "OC_EtherCAT.ethml"}
         ]
       }
     ],
