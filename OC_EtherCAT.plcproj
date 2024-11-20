@@ -142,7 +142,7 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OC_TwinCAT_EtherCAT.tmc">
+    <None Include="OC_EtherCAT.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
