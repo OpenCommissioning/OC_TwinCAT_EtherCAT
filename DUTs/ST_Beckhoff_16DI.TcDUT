@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_16DI" Id="{586abb98-4320-08b6-34d2-86d8a2532cc2}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Beckhoff_16DI :
+STRUCT
+	bIn1	AT %Q* : BIT;
+	bIn2	AT %Q* : BIT;
+	bIn3	AT %Q* : BIT;
+	bIn4	AT %Q* : BIT;
+	bIn5	AT %Q* : BIT;
+	bIn6	AT %Q* : BIT;
+	bIn7	AT %Q* : BIT;
+	bIn8	AT %Q* : BIT;
+	bIn9	AT %Q* : BIT;
+	bIn10	AT %Q* : BIT;
+	bIn11	AT %Q* : BIT;
+	bIn12	AT %Q* : BIT;
+	bIn13	AT %Q* : BIT;
+	bIn14	AT %Q* : BIT;
+	bIn15	AT %Q* : BIT;
+	bIn16	AT %Q* : BIT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

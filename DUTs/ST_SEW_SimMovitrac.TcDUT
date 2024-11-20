@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_SEW_SimMovitrac" Id="{f48f3ca7-4335-07cf-202f-76ec654585ff}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE ST_SEW_SimMovitrac :
+STRUCT
+	PI1		AT %Q* : WORD;
+	PI2		AT %Q* : WORD;
+	PI3		AT %Q* : WORD;
+	PO1		AT %I* : WORD;
+	PO2		AT %I* : WORD;
+	PO3		AT %I* : WORD;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

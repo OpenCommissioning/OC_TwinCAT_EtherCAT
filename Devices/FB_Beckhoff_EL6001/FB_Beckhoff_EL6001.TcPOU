@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Beckhoff_EL6001" Id="{bb75b897-d30a-02f1-3a96-629f2f38e7fc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL6001
+VAR_INPUT
+	bSend				: BOOL;
+	nLength				: UINT;
+	pDataIn				: POINTER TO BYTE; //Data to send
+	pDataOut			: POINTER TO BYTE; //Received data when nDataAvailable > 0.
+END_VAR
+VAR_OUTPUT
+	bBusy				: BOOL;
+	nDataAvailable		: INT; //Received bytes. Only available for one cycle.
+END_VAR
+VAR
+	nControl			AT %I* : UINT;
+	nDataOut			AT %I* : ARRAY[0..21] OF USINT;
+	nStatus				AT %Q* : UINT;
+	nDataIn				AT %Q* : ARRAY[0..21] OF USINT;
+END_VAR
+VAR
+	nControlByte		: BYTE;
+	nOutLength			: BYTE;	
+	bTransmitRequest	: BOOL;
+	bReceiveAccecpted	: BOOL;
+	bInitRequest		: BOOL;
+	bSendContinuous		: BOOL;
+	
+	bTransmitAccepted	: BOOL;
+	bReceiveRequest		: BOOL;
+	bInitAccepted		: BOOL;
+	bBufferFull			: BOOL;
+	bParityError		: BOOL;
+	bFramingError		: BOOL;
+	bOverrunError		: BOOL;
+	nInLength			: BYTE;
+	
+	nPendingLength		: UINT;
+	nOffsetNext			: UINT;
+	
+	eState				: E_Beckhoff_EL6001_State;
+	trigSend			: R_TRIG;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* Receive control word *)
+	bTransmitRequest 	:= nControl.0 <> nControlByte.0;
+	bReceiveAccecpted 	:= nControl.1 <> nControlByte.1;
+	bInitRequest		:= nControl = 4;
+	bSendContinuous		:= nControl.3 AND NOT nControlByte.0;	
+	nControlByte 		:= F_GetLByte(nControl);
+	nOutLength 			:= F_GetHByte(nControl);
+
+(* Initialize *)
+	IF bInitRequest THEN
+		eState := E_Beckhoff_EL6001_State.INIT;			
+	END_IF
+	
+CASE eState OF
+	E_Beckhoff_EL6001_State.INIT:
+		bTransmitAccepted 	:= FALSE;
+		bReceiveRequest		:= FALSE;
+		bInitAccepted		:= TRUE;
+		bBufferFull			:= FALSE;
+		bParityError		:= FALSE;
+		bFramingError		:= FALSE;
+		bOverrunError		:= FALSE;
+		nInLength			:= 0;
+		nDataAvailable		:= 0;
+		
+		// -> INIT_READY
+		IF nControl = 0 THEN
+			bInitAccepted := FALSE;		
+			eState := E_Beckhoff_EL6001_State.READY;
+		END_IF
+
+	E_Beckhoff_EL6001_State.READY:
+		nDataAvailable := 0;
+
+		// -> TRANSMIT
+		IF bTransmitRequest AND nOutLength > 0 AND nOutLength < 23 THEN
+			eState := E_Beckhoff_EL6001_State.TRANSMIT;
+			RETURN;
+		END_IF
+		
+		trigSend(CLK := bSend);
+		
+		// -> RECEIVE
+		IF trigSend.Q AND nLength > 0 AND pDataIn <> 0 THEN
+			bReceiveRequest := NOT bReceiveRequest;
+			nPendingLength := nLength;
+			nInLength := UINT_TO_BYTE(MIN(22, nPendingLength));
+			memcpy(ADR(nDataIn), pDataIn, nInLength);		
+			eState := E_Beckhoff_EL6001_State.RECEIVE;
+		END_IF	
+		
+	E_Beckhoff_EL6001_State.TRANSMIT:
+		IF pDataOut <> 0 THEN
+			memcpy(pDataOut, ADR(nDataOut), nOutLength);
+		END_IF
+		bTransmitAccepted := NOT bTransmitAccepted;
+		nDataAvailable := nOutLength;
+		eState := E_Beckhoff_EL6001_State.READY;
+		
+	E_Beckhoff_EL6001_State.RECEIVE:
+		IF bReceiveAccecpted THEN
+			nOffsetNext := nInLength;
+			nPendingLength := nPendingLength - nOffsetNext;
+			IF nPendingLength = 0 THEN
+				eState := E_Beckhoff_EL6001_State.READY;
+			END_IF
+			IF nPendingLength > 0 THEN
+				bReceiveRequest := NOT bReceiveRequest;
+				nInLength := UINT_TO_BYTE(MIN(22, nPendingLength));
+				memcpy(ADR(nDataIn), pDataIn + nOffsetNext, nInLength);
+				eState := E_Beckhoff_EL6001_State.RECEIVE;
+			END_IF				
+		END_IF
+	
+END_CASE
+
+bBusy := eState <> E_Beckhoff_EL6001_State.READY;
+	
+(* Send status word *)
+	nStatus.0			:= bTransmitAccepted;
+	nStatus.1			:= bReceiveRequest;
+	nStatus.2			:= bInitAccepted;
+	nStatus.3			:= bBufferFull;
+	nStatus.4			:= bParityError;
+	nStatus.5			:= bFramingError;
+	nStatus.6			:= bOverrunError;
+	memcpy(ADR(nStatus) + 1, ADR(nInLength), 1);	]]></ST>
+    </Implementation>
+    <Property Name="BufferFull" Id="{54fc5f01-7ef6-0838-0de2-78c7b8e9dbbd}">
+      <Declaration><![CDATA[PROPERTY INTERNAL BufferFull : BOOl]]></Declaration>
+      <Get Name="Get" Id="{a0c00af7-6d29-069a-2438-dc38801035d0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferFull := bBufferFull;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Control" Id="{b1d7e69d-b5cc-055f-20ff-83a8cad214c0}">
+      <Declaration><![CDATA[PROPERTY INTERNAL Control : UINT]]></Declaration>
+      <Set Name="Set" Id="{930ce6ca-c539-0225-0c3e-78f6f9864c63}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nControl := Control;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="FramingError" Id="{d34b9bae-c6e5-0074-24f0-022274623719}">
+      <Declaration><![CDATA[PROPERTY INTERNAL FramingError : BOOl]]></Declaration>
+      <Get Name="Get" Id="{375e1ba2-7ac0-0f72-25f4-de1a0ad00f5e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FramingError := bFramingError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="InitAccepted" Id="{4a287564-4600-0772-322f-7d54abb63293}">
+      <Declaration><![CDATA[PROPERTY INTERNAL InitAccepted : BOOl]]></Declaration>
+      <Get Name="Get" Id="{e07dfdb4-028c-0f9d-1027-3ce8da95487a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InitAccepted := bInitAccepted;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="InitRequest" Id="{63116725-bdef-0e58-228b-8ccd9ab1931b}">
+      <Declaration><![CDATA[PROPERTY INTERNAL InitRequest : BOOl]]></Declaration>
+      <Get Name="Get" Id="{cbf20064-28cc-00ea-34df-34af21d3cce7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InitRequest := bInitRequest;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="OverrunError" Id="{e1279c53-3c29-0e09-10bb-068478397907}">
+      <Declaration><![CDATA[PROPERTY INTERNAL OverrunError : BOOl]]></Declaration>
+      <Get Name="Get" Id="{fd5ccd71-b150-0bad-2733-8049d0506416}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[OverrunError := bOverrunError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ParityError" Id="{9a65d923-fd86-02fc-3be2-1368a916a2ee}">
+      <Declaration><![CDATA[PROPERTY INTERNAL ParityError : BOOl]]></Declaration>
+      <Get Name="Get" Id="{b1a720be-8eb0-0ddd-0f64-0143ec069c3d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ParityError := bParityError;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReceiveAccepted" Id="{202d1267-eb50-0165-0089-6c7132e32c71}">
+      <Declaration><![CDATA[PROPERTY INTERNAL ReceiveAccepted : BOOl]]></Declaration>
+      <Get Name="Get" Id="{07c80c11-ad5b-0fe3-3857-2a15282627ed}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReceiveAccepted := bReceiveAccecpted;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReceiveRequest" Id="{b03fd983-3887-05d3-376e-ce22316204b4}">
+      <Declaration><![CDATA[PROPERTY INTERNAL ReceiveRequest : BOOl]]></Declaration>
+      <Get Name="Get" Id="{e3da3d4d-5a91-0930-257f-167af316556d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReceiveRequest := bReceiveRequest;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SendContinuous" Id="{5f9eacaf-e430-002c-08f9-9b013cfe54f3}">
+      <Declaration><![CDATA[PROPERTY INTERNAL SendContinuous : BOOl]]></Declaration>
+      <Get Name="Get" Id="{bbb6b8a8-fc6b-0339-373f-6c8d64994cdb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SendContinuous := bSendContinuous;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="State" Id="{dd239896-031b-046b-24a2-7de6d3491e68}">
+      <Declaration><![CDATA[PROPERTY INTERNAL State : E_Beckhoff_EL6001_State]]></Declaration>
+      <Get Name="Get" Id="{033ac0ea-1528-0a96-00a5-7db3ee4938b5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State := eState;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d6f07111-7648-0d63-0143-425547e5ffb8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[eState := State;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="TransmitAccepted" Id="{db4fba86-20fe-07a0-0d42-2a1b6505cf1c}">
+      <Declaration><![CDATA[PROPERTY INTERNAL TransmitAccepted : BOOl]]></Declaration>
+      <Get Name="Get" Id="{9a692b08-79ea-0dd4-3296-2c6be2d76f29}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TransmitAccepted := bTransmitAccepted;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="TransmitRequest" Id="{3504c9f1-237a-07c3-22fb-2488582ca15a}">
+      <Declaration><![CDATA[PROPERTY INTERNAL TransmitRequest : BOOl]]></Declaration>
+      <Get Name="Get" Id="{48a0f684-53d7-0d47-338b-91c2b20a2d5e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TransmitRequest := bTransmitRequest;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_EL3403" Id="{2b8655c8-3454-0aa9-12bf-775a1ffb6527}">
+    <Declaration><![CDATA[TYPE ST_Beckhoff_EL3403 :
+STRUCT
+	nCurrent1		AT %Q* : UINT;
+	nVoltage1		AT %Q* : UINT;
+	nActivePower1	AT %Q* : UINT;
+	nCurrent2		AT %Q* : UINT;
+	nVoltage2		AT %Q* : UINT;
+	nActivePower2	AT %Q* : UINT;	
+	nCurrent3		AT %Q* : UINT;
+	nVoltage3		AT %Q* : UINT;
+	nActivePower3	AT %Q* : UINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

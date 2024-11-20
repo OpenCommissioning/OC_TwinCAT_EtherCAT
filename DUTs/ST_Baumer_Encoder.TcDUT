@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Baumer_Encoder" Id="{185bc327-ca86-0d08-1404-ad7607b1b8f0}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'}
+TYPE ST_Baumer_Encoder :
+STRUCT
+	nPosition		AT %Q*	:	UDINT;
+	nWarnings		AT %Q*	:	UINT;
+	nSystemTime		AT %Q*	:	UDINT; 
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

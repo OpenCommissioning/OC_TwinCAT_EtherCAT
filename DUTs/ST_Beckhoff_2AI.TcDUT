@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Beckhoff_2AI" Id="{0635de93-c7bb-02a4-0cae-22b3b13c1a90}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Beckhoff_2AI :
+STRUCT
+	nStatus1	AT %Q* : UINT;
+	nValue1		AT %Q* : INT;
+	nStatus2	AT %Q* : UINT;
+	nValue2		AT %Q* : INT;
+	nStatus3	AT %Q* : UINT;
+	nValue3		AT %Q* : INT;
+	nStatus4	AT %Q* : UINT;
+	nValue4		AT %Q* : INT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>
