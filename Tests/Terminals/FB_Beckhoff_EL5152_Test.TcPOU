@@ -3,49 +3,49 @@
   <POU Name="FB_Beckhoff_EL5152_Test" Id="{41eadc21-428a-091f-0416-55b3c1826864}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL5152_Test EXTENDS TcUnit.FB_TestSuite
 VAR
-	fbDevice : FB_Beckhoff_EL5152;
-	nExpected : UINT;
-	nResult : UINT;
+	_fbDevice 	: FB_Beckhoff_EL5152;
+	_nExpected 	: UINT;
+	_nResult 	: UINT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[TEST('nCounter1');
-nExpected := 111;
-fbDevice.nValue1 := nExpected;
-fbDevice();
-nResult := fbDevice.Counter1;
-AssertEquals(Expected := nExpected,
-             Actual := nResult,
+_nExpected := 111;
+_fbDevice.nValue1 := _nExpected;
+_fbDevice();
+_nResult := _fbDevice.Counter1;
+AssertEquals(Expected := _nExpected,
+             Actual := _nResult,
              Message := 'nCounter1 value is not correct');	
 TEST_FINISHED();
 
 TEST('nCounter2');
-nExpected := 112;
-fbDevice.nValue2 := nExpected;
-fbDevice();
-nResult := fbDevice.Counter2;
-AssertEquals(Expected := nExpected,
-             Actual := nResult,
+_nExpected := 112;
+_fbDevice.nValue2 := _nExpected;
+_fbDevice();
+_nResult := _fbDevice.Counter2;
+AssertEquals(Expected := _nExpected,
+             Actual := _nResult,
              Message := 'nCounter2 value is not correct');	
 TEST_FINISHED();
 
 
 TEST('nStatus1');
-nExpected := 4;
-fbDevice.Control1 := nExpected;
-fbDevice();
-nResult := fbDevice.Status1;
-AssertEquals(Expected := nExpected,
-             Actual := nResult,
+_nExpected := 4;
+_fbDevice.Control1 := _nExpected;
+_fbDevice();
+_nResult := _fbDevice.Status1;
+AssertEquals(Expected := _nExpected,
+             Actual := _nResult,
              Message := 'nStatus1 value is not correct');	
 TEST_FINISHED();
 
 TEST('nStatus2');
-nExpected := 4;
-fbDevice.Control2 := nExpected;
-fbDevice();
-nResult := fbDevice.Status2;
-AssertEquals(Expected := nExpected,
-             Actual := nResult,
+_nExpected := 4;
+_fbDevice.Control2 := _nExpected;
+_fbDevice();
+_nResult := _fbDevice.Status2;
+AssertEquals(Expected := _nExpected,
+             Actual := _nResult,
              Message := 'nStatus2 value is not correct');	
 TEST_FINISHED();
 

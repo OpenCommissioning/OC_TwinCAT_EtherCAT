@@ -8,127 +8,130 @@ VAR_INPUT
 	pDataIn				: POINTER TO BYTE; //Data to send
 	pDataOut			: POINTER TO BYTE; //Received data when nDataAvailable > 0.
 END_VAR
+
 VAR_OUTPUT
 	bBusy				: BOOL;
 	nDataAvailable		: INT; //Received bytes. Only available for one cycle.
 END_VAR
+
 VAR
 	nControl			AT %I* : UINT;
 	nDataOut			AT %I* : ARRAY[0..21] OF USINT;
 	nStatus				AT %Q* : UINT;
 	nDataIn				AT %Q* : ARRAY[0..21] OF USINT;
 END_VAR
+
 VAR
-	nControlByte		: BYTE;
-	nOutLength			: BYTE;	
-	bTransmitRequest	: BOOL;
-	bReceiveAccecpted	: BOOL;
-	bInitRequest		: BOOL;
-	bSendContinuous		: BOOL;
+	_nControlByte			: BYTE;
+	_nOutLength				: BYTE;	
+	_bTransmitRequest		: BOOL;
+	_bReceiveAccecpted		: BOOL;
+	_bInitRequest			: BOOL;
+	_bSendContinuous		: BOOL;
 	
-	bTransmitAccepted	: BOOL;
-	bReceiveRequest		: BOOL;
-	bInitAccepted		: BOOL;
-	bBufferFull			: BOOL;
-	bParityError		: BOOL;
-	bFramingError		: BOOL;
-	bOverrunError		: BOOL;
-	nInLength			: BYTE;
+	_bTransmitAccepted		: BOOL;
+	_bReceiveRequest		: BOOL;
+	_bInitAccepted			: BOOL;
+	_bBufferFull			: BOOL;
+	_bParityError			: BOOL;
+	_bFramingError			: BOOL;
+	_bOverrunError			: BOOL;
+	_nInLength				: BYTE;
 	
-	nPendingLength		: UINT;
-	nOffsetNext			: UINT;
+	_nPendingLength			: UINT;
+	_nOffsetNext			: UINT;
 	
-	eState				: E_Beckhoff_EL6001_State;
-	trigSend			: R_TRIG;
+	_eState					: E_Beckhoff_EL6001_State;
+	_trigSend				: R_TRIG;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[(* Receive control word *)
-	bTransmitRequest 	:= nControl.0 <> nControlByte.0;
-	bReceiveAccecpted 	:= nControl.1 <> nControlByte.1;
-	bInitRequest		:= nControl = 4;
-	bSendContinuous		:= nControl.3 AND NOT nControlByte.0;	
-	nControlByte 		:= F_GetLByte(nControl);
-	nOutLength 			:= F_GetHByte(nControl);
+	_bTransmitRequest 	:= nControl.0 <> _nControlByte.0;
+	_bReceiveAccecpted 	:= nControl.1 <> _nControlByte.1;
+	_bInitRequest		:= nControl = 4;
+	_bSendContinuous		:= nControl.3 AND NOT _nControlByte.0;	
+	_nControlByte 		:= F_GetLByte(nControl);
+	_nOutLength 			:= F_GetHByte(nControl);
 
 (* Initialize *)
-	IF bInitRequest THEN
-		eState := E_Beckhoff_EL6001_State.INIT;			
+	IF _bInitRequest THEN
+		_eState := E_Beckhoff_EL6001_State.INIT;			
 	END_IF
 	
-CASE eState OF
+CASE _eState OF
 	E_Beckhoff_EL6001_State.INIT:
-		bTransmitAccepted 	:= FALSE;
-		bReceiveRequest		:= FALSE;
-		bInitAccepted		:= TRUE;
-		bBufferFull			:= FALSE;
-		bParityError		:= FALSE;
-		bFramingError		:= FALSE;
-		bOverrunError		:= FALSE;
-		nInLength			:= 0;
+		_bTransmitAccepted 	:= FALSE;
+		_bReceiveRequest		:= FALSE;
+		_bInitAccepted		:= TRUE;
+		_bBufferFull			:= FALSE;
+		_bParityError		:= FALSE;
+		_bFramingError		:= FALSE;
+		_bOverrunError		:= FALSE;
+		_nInLength			:= 0;
 		nDataAvailable		:= 0;
 		
 		// -> INIT_READY
 		IF nControl = 0 THEN
-			bInitAccepted := FALSE;		
-			eState := E_Beckhoff_EL6001_State.READY;
+			_bInitAccepted := FALSE;		
+			_eState := E_Beckhoff_EL6001_State.READY;
 		END_IF
 
 	E_Beckhoff_EL6001_State.READY:
 		nDataAvailable := 0;
 
 		// -> TRANSMIT
-		IF bTransmitRequest AND nOutLength > 0 AND nOutLength < 23 THEN
-			eState := E_Beckhoff_EL6001_State.TRANSMIT;
+		IF _bTransmitRequest AND _nOutLength > 0 AND _nOutLength < 23 THEN
+			_eState := E_Beckhoff_EL6001_State.TRANSMIT;
 			RETURN;
 		END_IF
 		
-		trigSend(CLK := bSend);
+		_trigSend(CLK := bSend);
 		
 		// -> RECEIVE
-		IF trigSend.Q AND nLength > 0 AND pDataIn <> 0 THEN
-			bReceiveRequest := NOT bReceiveRequest;
-			nPendingLength := nLength;
-			nInLength := UINT_TO_BYTE(MIN(22, nPendingLength));
-			memcpy(ADR(nDataIn), pDataIn, nInLength);		
-			eState := E_Beckhoff_EL6001_State.RECEIVE;
+		IF _trigSend.Q AND nLength > 0 AND pDataIn <> 0 THEN
+			_bReceiveRequest := NOT _bReceiveRequest;
+			_nPendingLength := nLength;
+			_nInLength := UINT_TO_BYTE(MIN(22, _nPendingLength));
+			memcpy(ADR(nDataIn), pDataIn, _nInLength);		
+			_eState := E_Beckhoff_EL6001_State.RECEIVE;
 		END_IF	
 		
 	E_Beckhoff_EL6001_State.TRANSMIT:
 		IF pDataOut <> 0 THEN
-			memcpy(pDataOut, ADR(nDataOut), nOutLength);
+			memcpy(pDataOut, ADR(nDataOut), _nOutLength);
 		END_IF
-		bTransmitAccepted := NOT bTransmitAccepted;
-		nDataAvailable := nOutLength;
-		eState := E_Beckhoff_EL6001_State.READY;
+		_bTransmitAccepted := NOT _bTransmitAccepted;
+		nDataAvailable := _nOutLength;
+		_eState := E_Beckhoff_EL6001_State.READY;
 		
 	E_Beckhoff_EL6001_State.RECEIVE:
-		IF bReceiveAccecpted THEN
-			nOffsetNext := nInLength;
-			nPendingLength := nPendingLength - nOffsetNext;
-			IF nPendingLength = 0 THEN
-				eState := E_Beckhoff_EL6001_State.READY;
+		IF _bReceiveAccecpted THEN
+			_nOffsetNext := _nInLength;
+			_nPendingLength := _nPendingLength - _nOffsetNext;
+			IF _nPendingLength = 0 THEN
+				_eState := E_Beckhoff_EL6001_State.READY;
 			END_IF
-			IF nPendingLength > 0 THEN
-				bReceiveRequest := NOT bReceiveRequest;
-				nInLength := UINT_TO_BYTE(MIN(22, nPendingLength));
-				memcpy(ADR(nDataIn), pDataIn + nOffsetNext, nInLength);
-				eState := E_Beckhoff_EL6001_State.RECEIVE;
+			IF _nPendingLength > 0 THEN
+				_bReceiveRequest := NOT _bReceiveRequest;
+				_nInLength := UINT_TO_BYTE(MIN(22, _nPendingLength));
+				memcpy(ADR(nDataIn), pDataIn + _nOffsetNext, _nInLength);
+				_eState := E_Beckhoff_EL6001_State.RECEIVE;
 			END_IF				
 		END_IF
 	
 END_CASE
 
-bBusy := eState <> E_Beckhoff_EL6001_State.READY;
+bBusy := _eState <> E_Beckhoff_EL6001_State.READY;
 	
 (* Send status word *)
-	nStatus.0			:= bTransmitAccepted;
-	nStatus.1			:= bReceiveRequest;
-	nStatus.2			:= bInitAccepted;
-	nStatus.3			:= bBufferFull;
-	nStatus.4			:= bParityError;
-	nStatus.5			:= bFramingError;
-	nStatus.6			:= bOverrunError;
-	memcpy(ADR(nStatus) + 1, ADR(nInLength), 1);	]]></ST>
+	nStatus.0			:= _bTransmitAccepted;
+	nStatus.1			:= _bReceiveRequest;
+	nStatus.2			:= _bInitAccepted;
+	nStatus.3			:= _bBufferFull;
+	nStatus.4			:= _bParityError;
+	nStatus.5			:= _bFramingError;
+	nStatus.6			:= _bOverrunError;
+	memcpy(ADR(nStatus) + 1, ADR(_nInLength), 1);	]]></ST>
     </Implementation>
     <Property Name="BufferFull" Id="{54fc5f01-7ef6-0838-0de2-78c7b8e9dbbd}">
       <Declaration><![CDATA[PROPERTY INTERNAL BufferFull : BOOl]]></Declaration>
@@ -137,7 +140,7 @@ bBusy := eState <> E_Beckhoff_EL6001_State.READY;
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[BufferFull := bBufferFull;]]></ST>
+          <ST><![CDATA[BufferFull := _bBufferFull;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -159,7 +162,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[FramingError := bFramingError;]]></ST>
+          <ST><![CDATA[FramingError := _bFramingError;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -170,7 +173,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[InitAccepted := bInitAccepted;]]></ST>
+          <ST><![CDATA[InitAccepted := _bInitAccepted;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -181,7 +184,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[InitRequest := bInitRequest;]]></ST>
+          <ST><![CDATA[InitRequest := _bInitRequest;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -192,7 +195,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[OverrunError := bOverrunError;]]></ST>
+          <ST><![CDATA[OverrunError := _bOverrunError;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -203,7 +206,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[ParityError := bParityError;]]></ST>
+          <ST><![CDATA[ParityError := _bParityError;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -214,7 +217,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[ReceiveAccepted := bReceiveAccecpted;]]></ST>
+          <ST><![CDATA[ReceiveAccepted := _bReceiveAccecpted;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -225,7 +228,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[ReceiveRequest := bReceiveRequest;]]></ST>
+          <ST><![CDATA[ReceiveRequest := _bReceiveRequest;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -236,7 +239,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[SendContinuous := bSendContinuous;]]></ST>
+          <ST><![CDATA[SendContinuous := _bSendContinuous;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -247,7 +250,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[State := eState;]]></ST>
+          <ST><![CDATA[State := _eState;]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{d6f07111-7648-0d63-0143-425547e5ffb8}">
@@ -255,7 +258,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[eState := State;]]></ST>
+          <ST><![CDATA[_eState := State;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -266,7 +269,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[TransmitAccepted := bTransmitAccepted;]]></ST>
+          <ST><![CDATA[TransmitAccepted := _bTransmitAccepted;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -277,7 +280,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[TransmitRequest := bTransmitRequest;]]></ST>
+          <ST><![CDATA[TransmitRequest := _bTransmitRequest;]]></ST>
         </Implementation>
       </Get>
     </Property>

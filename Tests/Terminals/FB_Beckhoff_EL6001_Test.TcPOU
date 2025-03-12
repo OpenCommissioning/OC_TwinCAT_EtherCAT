@@ -3,9 +3,9 @@
   <POU Name="FB_Beckhoff_EL6001_Test" Id="{6ec7a068-08cf-0312-2173-c65c8073149f}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL6001_Test EXTENDS TcUnit.FB_TestSuite
 VAR
-	fbDevice : FB_Beckhoff_EL6001;
-	nExpected : UINT;
-	nResult : UINT;
+	_fbDevice 	: FB_Beckhoff_EL6001;
+	_nExpected 	: UINT;
+	_nResult 	: UINT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[TestProperties();
@@ -25,10 +25,10 @@ END_VAR
       <Implementation>
         <ST><![CDATA[TEST('TransmitRequest FALSE');
 bExpected := FALSE; 
-fbDevice();
-fbDevice.Control := 0;
-fbDevice();
-bResult := fbDevice.TransmitRequest;
+_fbDevice();
+_fbDevice.Control := 0;
+_fbDevice();
+bResult := _fbDevice.TransmitRequest;
 AssertEquals(Expected := bExpected,
              Actual := bResult,
              Message := 'TransmitRequest value is not correct');		
@@ -36,10 +36,10 @@ TEST_FINISHED();
 
 TEST('TransmitRequest TRUE');
 bExpected := TRUE; 
-fbDevice();
-fbDevice.Control := 1;
-fbDevice();
-bResult := fbDevice.TransmitRequest;
+_fbDevice();
+_fbDevice.Control := 1;
+_fbDevice();
+bResult := _fbDevice.TransmitRequest;
 AssertEquals(Expected := bExpected,
              Actual := bResult,
              Message := 'TransmitRequest value is not correct');		
@@ -47,10 +47,10 @@ TEST_FINISHED();
 
 TEST('ReceiveAccepted FALSE');
 bExpected := FALSE; 
-fbDevice();
-fbDevice.Control := 0;
-fbDevice();
-bResult := fbDevice.ReceiveAccepted;
+_fbDevice();
+_fbDevice.Control := 0;
+_fbDevice();
+bResult := _fbDevice.ReceiveAccepted;
 AssertEquals(Expected := bExpected,
              Actual := bResult,
              Message := 'ReceiveAccepted value is not correct');		
@@ -58,10 +58,10 @@ TEST_FINISHED();
 
 TEST('ReceiveAccepted TRUE');
 bExpected := TRUE; 
-fbDevice();
-fbDevice.Control := 2;
-fbDevice();
-bResult := fbDevice.ReceiveAccepted;
+_fbDevice();
+_fbDevice.Control := 2;
+_fbDevice();
+bResult := _fbDevice.ReceiveAccepted;
 AssertEquals(Expected := bExpected,
              Actual := bResult,
              Message := 'ReceiveAccepted value is not correct');		
@@ -69,10 +69,10 @@ TEST_FINISHED();
 
 TEST('InitRequest TRUE');
 bExpected := TRUE; 
-fbDevice();
-fbDevice.Control := 4;
-fbDevice();
-bResult := fbDevice.InitRequest;
+_fbDevice();
+_fbDevice.Control := 4;
+_fbDevice();
+bResult := _fbDevice.InitRequest;
 AssertEquals(Expected := bExpected,
              Actual := bResult,
              Message := 'InitRequest value is not correct');		
@@ -80,11 +80,11 @@ TEST_FINISHED();
 
 TEST('SendContinuous TRUE');
 bExpected := TRUE; 
-fbDevice.Control := 0;
-fbDevice();
-fbDevice.Control := 9;
-fbDevice();
-bResult := fbDevice.SendContinuous;
+_fbDevice.Control := 0;
+_fbDevice();
+_fbDevice.Control := 9;
+_fbDevice();
+bResult := _fbDevice.SendContinuous;
 AssertEquals(Expected := bExpected,
              Actual := bResult,
              Message := 'SendContinuous value is not correct');		
@@ -119,41 +119,41 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('Transition: INIT - READY');
-fbDevice.Control := 0;
-fbDevice.State := E_Beckhoff_EL6001_State.INIT;	
-fbDevice();
+_fbDevice.Control := 0;
+_fbDevice.State := E_Beckhoff_EL6001_State.INIT;	
+_fbDevice();
 
-AssertTRUE(fbDevice.State = E_Beckhoff_EL6001_State.READY, 'State value is not correct');
+AssertTRUE(_fbDevice.State = E_Beckhoff_EL6001_State.READY, 'State value is not correct');
 	
 TEST_FINISHED();
 
 TEST('Transition: READY - TRANSMIT');
-fbDevice.Control := 0;
-fbDevice.State := E_Beckhoff_EL6001_State.READY;	
-fbDevice();
+_fbDevice.Control := 0;
+_fbDevice.State := E_Beckhoff_EL6001_State.READY;	
+_fbDevice();
 
-fbDevice.Control := 257;
-fbDevice();
+_fbDevice.Control := 257;
+_fbDevice();
 
-AssertTRUE(fbDevice.State = E_Beckhoff_EL6001_State.TRANSMIT, 'State value is not correct');
+AssertTRUE(_fbDevice.State = E_Beckhoff_EL6001_State.TRANSMIT, 'State value is not correct');
 	
 TEST_FINISHED();
 
 TEST('Transition: READY - RECEIVE');
-fbDevice.Control := 0;
-fbDevice.State := E_Beckhoff_EL6001_State.READY;	
-fbDevice();
+_fbDevice.Control := 0;
+_fbDevice.State := E_Beckhoff_EL6001_State.READY;	
+_fbDevice();
 
-fbDevice.bSend := TRUE;
-fbDevice.pDataIn := ADR(nDataSend);
-fbDevice.nLength := 1;
-fbDevice.Control := 1;
-fbDevice();
+_fbDevice.bSend := TRUE;
+_fbDevice.pDataIn := ADR(nDataSend);
+_fbDevice.nLength := 1;
+_fbDevice.Control := 1;
+_fbDevice();
 
-fbDevice.bSend := FALSE;
-fbDevice.nLength := 0;
+_fbDevice.bSend := FALSE;
+_fbDevice.nLength := 0;
 
-AssertTRUE(fbDevice.State = E_Beckhoff_EL6001_State.RECEIVE, 'State value is not correct');
+AssertTRUE(_fbDevice.State = E_Beckhoff_EL6001_State.RECEIVE, 'State value is not correct');
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
