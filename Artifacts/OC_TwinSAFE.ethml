@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Ethercat>
+	<Device ProductDescription="EJ1918">
+		<Declaration>
+<![CDATA[{attribute 'TcLinkTo' := '
+.RxPDO := TIIB($BOXNO$)^RxPDO^FSOE;
+.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
+$NAME$ : FB_EJ1918;]]>
+		</Declaration>
+	</Device>
+	<Device ProductDescription="EL1904">
+		<Declaration>
+<![CDATA[{attribute 'TcLinkTo' := '
+.RxPDO := TIIB($BOXNO$)^RxPDO^FSOE;
+.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
+$NAME$ : FB_EL1904;]]>
+		</Declaration>
+	</Device>
+	<Device ProductDescription="EL1918">
+		<Declaration>
+<![CDATA[{attribute 'TcLinkTo' := '
+.RxPDO := TIIB($BOXNO$)^FSoE Outputs^FSOE;
+.TxPDO := TIIB($BOXNO$)^FSoE Inputs^FSOE'}
+$NAME$ : FB_EL1918;]]>
+		</Declaration>
+	</Device>
+	<Device ProductDescription="EL2904">
+		<Declaration>
+<![CDATA[{attribute 'TcLinkTo' := '
+.RxPDO := TIIB($BOXNO$)^RxPDO^FSOE;
+.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
+$NAME$ : FB_EL2904;]]>
+		</Declaration>
+	</Device>	
+</Ethercat>
