@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Sercos_FSM" Id="{7f95f292-984e-091b-0847-aa5a38c3d1a3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sercos_FSM
+VAR_INPUT
+	bPower						: BOOL;	
+	stControl					: ST_Sercos_ControlWord;
+END_VAR
+
+VAR_OUTPUT	
+	stStatus					: ST_Sercos_StatusWord;	
+END_VAR
+
+VAR	
+	_eState 					: E_Sercos_State := E_Sercos_State.S1_NotReadyToSwitchOn;
+	_rTrig_Reset 				: R_TRIG;
+	_bError						: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_rTrig_Reset(CLK := stControl.b13_Halt);
+
+CASE _eState OF
+	E_Sercos_State.S1_NotReadyToSwitchOn 	: S1_NotReadyToSwitchOn();
+	E_Sercos_State.S2_SwitchOnDisabled 		: S2_SwitchOnDisabled();
+	E_Sercos_State.S3_ReadyToSwitchOn 		: S3_ReadyToSwitchOn();
+	E_Sercos_State.S4_SwitchOn 				: S4_SwitchOn();
+	E_Sercos_State.S5a_DriveInOperation 	: S5a_DriveInOperation();
+	E_Sercos_State.S5b_Halt 				: S5b_Halt();	
+	E_Sercos_State.S6_QuickStop 			: S6_QuickStop();	
+	E_Sercos_State.S7_FaultReactionActive 	: S7_FaultReactionActive();
+	E_Sercos_State.S8_Fault 				: S8_Fault();
+END_CASE]]></ST>
+    </Implementation>
+    <Property Name="bError" Id="{7b8a265f-9ad4-0804-0115-e9471046cf77}">
+      <Declaration><![CDATA[PROPERTY PUBLIC bError : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b7b46c23-0930-0892-010e-da69aa4c5ab2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bError := _bError;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{49c17099-8dbf-005e-2a0f-6ddcb53cbedb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF bError AND NOT _bError THEN
+	_bError := TRUE;
+END_IF
+
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="eState" Id="{d9487ba3-5e0e-019f-3fe0-9b028425135d}">
+      <Declaration><![CDATA[PROPERTY eState : E_Sercos_State]]></Declaration>
+      <Get Name="Get" Id="{aa318b32-a986-0f67-27a4-0f634e118608}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[eState := _eState;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{231a9bfa-8104-0cae-3798-fa1e5b3f65cf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_eState := eState;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="IsEnableOperation" Id="{e8bb4846-55e2-0d1c-0720-b91bcf8d2576}">
+      <Declaration><![CDATA[METHOD PRIVATE IsEnableOperation : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsEnableOperation := NOT stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsEnableOperationHalt" Id="{4b6c4e5e-083c-0772-3e7c-feffa2e9e01b}">
+      <Declaration><![CDATA[METHOD PRIVATE IsEnableOperationHalt : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsEnableOperationHalt := stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsFaultReset" Id="{2c63319c-c77e-0f21-1bd8-75bb405eb4f2}">
+      <Declaration><![CDATA[METHOD PRIVATE IsFaultReset : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsFaultReset := _rTrig_Reset.Q;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsHalt" Id="{0a4ecbc5-ba3c-04af-070c-0b28a75ef4d8}">
+      <Declaration><![CDATA[METHOD PRIVATE IsHalt : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsHalt := NOT stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsQuickStop" Id="{95f0664e-c180-04da-12a7-a301256bd103}">
+      <Declaration><![CDATA[METHOD PRIVATE IsQuickStop : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsQuickStop := stControl.b14_Enable AND NOT stControl.b15_Start;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsRun" Id="{a3026c95-913b-0b0a-08ec-3092f2d1e70b}">
+      <Declaration><![CDATA[METHOD PRIVATE IsRun : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsRun := stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsShutdown" Id="{b3f99540-4ce7-036b-02b1-96951c6fe646}">
+      <Declaration><![CDATA[METHOD PRIVATE IsShutdown : BOOL
+
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsShutdown := NOT stControl.b14_Enable;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsSwitchOn" Id="{34269664-79ea-01ca-0e5b-488877dd9418}">
+      <Declaration><![CDATA[METHOD PRIVATE IsSwitchOn : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsSwitchOn := stControl.b14_Enable;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="nControl" Id="{ec175cb7-461e-0f96-2fad-c3ca4389ef29}">
+      <Declaration><![CDATA[PROPERTY nControl : WORD]]></Declaration>
+      <Get Name="Get" Id="{ddf930c2-e84b-0fa2-0183-fad26180c016}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nControl.0	:= stControl.b0_Reserved;					           
+nControl.1	:= stControl.b1_Reserved;						        	
+nControl.2	:= stControl.b2_Reserved;						           	
+nControl.3	:= stControl.b3_Reserved;						       	
+nControl.4	:= stControl.b4_Reserved;						    
+nControl.5	:= stControl.b5_Reserved;						    
+nControl.6	:= stControl.b6_Reserved;						    
+nControl.7	:= stControl.b7_Reserved;						          	
+nControl.8	:= stControl.b8_Reserved;						            	
+nControl.9	:= stControl.b9_Reserved;						            
+nControl.10	:= stControl.b10_OperationMode;				       	
+nControl.11	:= stControl.b11_Reserved;					           	
+nControl.12	:= stControl.b12_Reserved;
+nControl.13	:= stControl.b13_Halt;						              	
+nControl.14	:= stControl.b14_Enable;						            	
+nControl.15 := stControl.b15_Start;						             ]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a1199e42-0987-0698-08d3-57cd352214f0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stControl.b0_Reserved 					:= 	nControl.0;	
+stControl.b1_Reserved					:= 	nControl.1;		
+stControl.b2_Reserved					:= 	nControl.2;		
+stControl.b3_Reserved					:= 	nControl.3;		
+stControl.b4_Reserved					:= 	nControl.4;		
+stControl.b5_Reserved					:= 	nControl.5;		
+stControl.b6_Reserved					:= 	nControl.6;		
+stControl.b7_Reserved					:= 	nControl.7;		
+stControl.b8_Reserved					:= 	nControl.8;		
+stControl.b9_Reserved					:= 	nControl.9;		
+stControl.b10_OperationMode				:= 	nControl.10;		
+stControl.b11_Reserved					:= 	nControl.11;		
+stControl.b12_Reserved					:= 	nControl.12;		
+stControl.b13_Halt						:= 	nControl.13;		
+stControl.b14_Enable					:= 	nControl.14;		
+stControl.b15_Start						:= 	nControl.15;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="nStatus" Id="{a19d688f-7b13-0eab-1cf5-6393b0f7d808}">
+      <Declaration><![CDATA[PROPERTY nStatus : WORD]]></Declaration>
+      <Get Name="Get" Id="{b7a531bc-e06d-02ea-3d43-528f03287890}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nStatus.0 	:= stStatus.b0_Reserved;					      
+nStatus.1 	:= stStatus.b1_Reserved;						      
+nStatus.2 	:= stStatus.b2_Reserved;						      
+nStatus.3 	:= stStatus.b3_CommandProcessing;		
+nStatus.4 	:= stStatus.b4_Halt;							         
+nStatus.5 	:= stStatus.b5_PositionFeedback;		
+nStatus.6 	:= stStatus.b6_Reserved;					      
+nStatus.7 	:= stStatus.b7_QuickStop;					      
+nStatus.8 	:= stStatus.b8_Reserved;					      
+nStatus.9 	:= stStatus.b9_Reserved;					      
+nStatus.10 	:= stStatus.b10_OperationMode;		  
+nStatus.11 	:= stStatus.b11_Reserved;					      
+nStatus.12 	:= stStatus.b12_Warning;					      
+nStatus.13 	:= stStatus.b13_Error;					        
+nStatus.14 	:= stStatus.b14_ReadyToOperate;			 
+nStatus.15 	:= stStatus.b15_ReadyToOperate;			 ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ResetError" Id="{1473b187-d337-03c1-0106-eb63697e5f74}">
+      <Declaration><![CDATA[METHOD INTERNAL ResetError : BOOL
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_bError := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S1_NotReadyToSwitchOn" Id="{dc07ff7d-b2e9-0d4e-1eb0-11d9611a9f69}">
+      <Declaration><![CDATA[METHOD PRIVATE S1_NotReadyToSwitchOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= FALSE;
+stStatus.b14_ReadyToOperate 		:= FALSE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+_eState := E_Sercos_State.S2_SwitchOnDisabled;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S2_SwitchOnDisabled" Id="{b61d87b8-fd65-09d9-15bd-5204b0ae1493}">
+      <Declaration><![CDATA[METHOD PRIVATE S2_SwitchOnDisabled : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= FALSE;
+stStatus.b14_ReadyToOperate 		:= TRUE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF bPower THEN
+	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
+	RETURN;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S3_ReadyToSwitchOn" Id="{d44bd45d-564b-0d55-0c19-9ca7a0f11bb3}">
+      <Declaration><![CDATA[METHOD PRIVATE S3_ReadyToSwitchOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= FALSE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF NOT bPower THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF
+
+IF _bError THEN
+	_eState := E_Sercos_State.S7_FaultReactionActive;
+	RETURN;
+END_IF
+
+IF IsSwitchOn() THEN
+	_eState := E_Sercos_State.S4_SwitchOn;
+	RETURN;
+END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S4_SwitchOn" Id="{394d5a57-231a-07df-1660-920cd64e58a5}">
+      <Declaration><![CDATA[METHOD PRIVATE S4_SwitchOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= TRUE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF NOT bPower THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF
+
+IF _bError THEN
+	_eState := E_Sercos_State.S7_FaultReactionActive;
+	RETURN;
+END_IF
+
+IF IsShutdown() THEN 
+	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
+	RETURN;
+END_IF
+
+IF IsEnableOperationHalt() THEN
+	_eState := E_Sercos_State.S5b_Halt;
+	RETURN;
+END_IF
+
+IF IsEnableOperation() THEN
+	_eState := E_Sercos_State.S5a_DriveInOperation;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S5a_DriveInOperation" Id="{5a21fca7-75ee-0252-3d02-fd6ba32cf151}">
+      <Declaration><![CDATA[METHOD PRIVATE S5a_DriveInOperation : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= TRUE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= TRUE;
+
+IF NOT bPower THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF
+
+IF _bError THEN
+	_eState := E_Sercos_State.S7_FaultReactionActive;
+	RETURN;
+END_IF
+
+IF IsShutdown() THEN 
+	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
+	RETURN;
+END_IF
+
+IF IsQuickStop() THEN
+	_eState := E_Sercos_State.S6_QuickStop;
+	RETURN;
+END_IF
+
+IF IsHalt() THEN
+	_eState := E_Sercos_State.S5b_Halt;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S5b_Halt" Id="{1240d79f-dc0c-06e7-2dd7-74ce238c8218}">
+      <Declaration><![CDATA[METHOD PRIVATE S5b_Halt : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= TRUE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= TRUE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF NOT bPower THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF
+
+IF _bError THEN
+	_eState := E_Sercos_State.S7_FaultReactionActive;
+	RETURN;
+END_IF
+
+IF IsShutdown() THEN 
+	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
+	RETURN;
+END_IF
+
+IF IsQuickStop() THEN
+	_eState := E_Sercos_State.S6_QuickStop;
+	RETURN;
+END_IF
+
+IF IsRun() THEN
+	_eState := E_Sercos_State.S5a_DriveInOperation;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S6_QuickStop" Id="{fd45c765-c079-0b11-3aaf-9bda8719ec81}">
+      <Declaration><![CDATA[METHOD PRIVATE S6_QuickStop : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= TRUE;
+stStatus.b13_Error 					:= FALSE;
+stStatus.b7_QuickStop 				:= TRUE;
+stStatus.b4_Halt 					:= TRUE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF NOT bPower THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF
+
+IF _bError THEN
+	_eState := E_Sercos_State.S7_FaultReactionActive;
+	RETURN;
+END_IF
+
+IF IsShutdown() THEN 
+	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S7_FaultReactionActive" Id="{0660846f-dc37-08b3-272b-d999b61a3522}">
+      <Declaration><![CDATA[METHOD PRIVATE S7_FaultReactionActive : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= TRUE;
+stStatus.b13_Error 					:= TRUE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF NOT bPower THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="S8_Fault" Id="{5f59ecbf-7001-022e-3d07-a8f0ba95beef}">
+      <Declaration><![CDATA[METHOD PRIVATE S8_Fault : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+stStatus.b14_ReadyToOperate 		:= FALSE;
+stStatus.b13_Error 					:= TRUE;
+stStatus.b7_QuickStop 				:= FALSE;
+stStatus.b4_Halt 					:= FALSE;
+stStatus.b3_CommandProcessing 		:= FALSE;
+
+IF IsFaultReset() THEN
+	_eState := E_Sercos_State.S2_SwitchOnDisabled;
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
