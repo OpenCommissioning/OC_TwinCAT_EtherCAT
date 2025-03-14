@@ -1,0 +1,724 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_DS402_FSM_Test" Id="{86bb97cd-3f84-00c4-1337-bab270f4ab7b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DS402_FSM_Test EXTENDS TcUnit.FB_TestSuite
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TestStateS0();
+TestStateS1();
+TestStateS2();
+TestStateS3();
+TestStateS4();
+TestStateS5();
+TestStateS6();
+TestStateS7();
+TestEnableSequence();]]></ST>
+    </Implementation>
+    <Method Name="GetDisableCommand" Id="{9fcb4d56-0c11-0b9d-1847-dbd5c52719d5}">
+      <Declaration><![CDATA[METHOD PRIVATE GetDisableCommand : ST_DS402_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetDisableCommand.b0_SwitchOn := TRUE;
+GetDisableCommand.b1_EnableVoltage := TRUE;
+GetDisableCommand.b2_QuickStop := TRUE;
+GetDisableCommand.b3_EnableOperation := FALSE;
+GetDisableCommand.b7_FaultReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetDisableVoltageCommand" Id="{be79f04a-2a67-0fdf-2f3c-e75a07b4240b}">
+      <Declaration><![CDATA[METHOD PRIVATE GetDisableVoltageCommand : ST_DS402_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetDisableVoltageCommand.b1_EnableVoltage := FALSE;
+GetDisableVoltageCommand.b7_FaultReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetEnableCommand" Id="{ff4f80ef-aa89-016f-0c5b-0d278eac5224}">
+      <Declaration><![CDATA[METHOD PRIVATE GetEnableCommand : ST_DS402_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetEnableCommand.b0_SwitchOn := TRUE;
+GetEnableCommand.b1_EnableVoltage := TRUE;
+GetEnableCommand.b2_QuickStop := TRUE;
+GetEnableCommand.b3_EnableOperation := TRUE;
+GetEnableCommand.b7_FaultReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetQuickStopCommand" Id="{ad60e4a9-9002-0569-0304-8070d68b601c}">
+      <Declaration><![CDATA[METHOD PRIVATE GetQuickStopCommand : ST_DS402_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetQuickStopCommand.b2_QuickStop := FALSE;
+GetQuickStopCommand.b7_FaultReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetShotdownCommand" Id="{9f91e47d-e2a6-034f-0e18-6a6abd3acab4}">
+      <Declaration><![CDATA[METHOD PRIVATE GetShotdownCommand : ST_DS402_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetShotdownCommand.b0_SwitchOn := FALSE;
+GetShotdownCommand.b1_EnableVoltage := TRUE;
+GetShotdownCommand.b2_QuickStop := TRUE;
+GetShotdownCommand.b7_FaultReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetSwitchOnCommand" Id="{3f9b3a66-e9cf-010e-0dff-4a3e8db86ca3}">
+      <Declaration><![CDATA[METHOD PRIVATE GetSwitchOnCommand : ST_DS402_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetSwitchOnCommand.b0_SwitchOn := TRUE;
+GetSwitchOnCommand.b1_EnableVoltage := TRUE;
+GetSwitchOnCommand.b2_QuickStop := TRUE;
+GetSwitchOnCommand.b7_FaultReset := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestEnableSequence" Id="{3d2bc2cd-75bc-0edf-322d-6b55e6b78f51}">
+      <Declaration><![CDATA[METHOD TestEnableSequence : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Enable S1');
+
+fbDS402();
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S2');
+fbDS402.stControl.b1_EnableVoltage := TRUE;
+fbDS402.stControl.b2_QuickStop := TRUE;
+
+fbDS402();
+nExpectedState := E_DS402_State.S2_ReadyToSwitchOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S3');
+fbDS402.stControl.b0_SwitchOn := TRUE;
+
+fbDS402();
+nExpectedState := E_DS402_State.S3_SwitchedOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S4');
+fbDS402.stControl.b3_EnableOperation := TRUE;
+
+fbDS402();
+nExpectedState := E_DS402_State.S4_OperationEnabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Disable S4');
+fbDS402.stControl.b3_EnableOperation := FALSE;
+
+fbDS402();
+nExpectedState := E_DS402_State.S3_SwitchedOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Disable S3');
+fbDS402.stControl.b0_SwitchOn := FALSE;
+
+fbDS402();
+nExpectedState := E_DS402_State.S2_ReadyToSwitchOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Disable S2');
+fbDS402.stControl.b1_EnableVoltage := FALSE;
+fbDS402.stControl.b2_QuickStop := FALSE;
+
+fbDS402();
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS0" Id="{93ec2e84-8962-0053-2519-087393f66843}">
+      <Declaration><![CDATA[METHOD TestStateS0 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S0');
+fbDS402.eState := E_DS402_State.S0_NotReadyToSwitchOn;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= FALSE;
+stExpectedStatus.b1_SwitchedOn 				:= FALSE;
+stExpectedStatus.b2_OperationEnabled		:= FALSE;
+stExpectedStatus.b3_Fault					:= FALSE;
+stExpectedStatus.b4_VoltageEnabled			:= FALSE;
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01011111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S0>S1');
+fbDS402.eState := E_DS402_State.S0_NotReadyToSwitchOn;
+fbDS402();
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS1" Id="{b8fafed4-3f2a-0e3d-065f-d75bc370f53b}">
+      <Declaration><![CDATA[METHOD TestStateS1 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S1');
+fbDS402.eState := E_DS402_State.S1_SwitchOnDisabled;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= FALSE;
+stExpectedStatus.b1_SwitchedOn 				:= FALSE;
+stExpectedStatus.b2_OperationEnabled		:= FALSE;
+stExpectedStatus.b3_Fault					:= FALSE;
+stExpectedStatus.b4_VoltageEnabled			:= FALSE;
+stExpectedStatus.b6_SwitchOnDisabled 		:= TRUE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01011111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S1>S2');
+fbDS402.eState := E_DS402_State.S1_SwitchOnDisabled;
+fbDS402.stControl := GetShotdownCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S2_ReadyToSwitchOn;
+nActualState := fbDS402.eState;
+
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS2" Id="{0b7fba31-c0b7-08d8-0283-9624fb538aa6}">
+      <Declaration><![CDATA[METHOD TestStateS2 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S2');
+fbDS402.eState := E_DS402_State.S2_ReadyToSwitchOn;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= TRUE;
+stExpectedStatus.b1_SwitchedOn 				:= FALSE;
+stExpectedStatus.b2_OperationEnabled		:= FALSE;
+stExpectedStatus.b3_Fault					:= FALSE;
+stExpectedStatus.b4_VoltageEnabled			:= TRUE;
+stExpectedStatus.b5_QuickStop 				:= TRUE; 
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01111111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S2>S6');
+fbDS402.eState := E_DS402_State.S2_ReadyToSwitchOn;
+fbDS402.bError := TRUE;
+fbDS402();
+fbDS402.ResetError();
+
+nExpectedState := E_DS402_State.S6_FaultReactionActive;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S2>S1_1');
+fbDS402.eState := E_DS402_State.S2_ReadyToSwitchOn;
+fbDS402.stControl := GetDisableVoltageCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S2>S1_2');
+fbDS402.eState := E_DS402_State.S2_ReadyToSwitchOn;
+fbDS402.stControl := GetQuickStopCommand();
+fbDS402.stControl.b1_EnableVoltage := TRUE;
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S2>S3');
+fbDS402.eState := E_DS402_State.S2_ReadyToSwitchOn;
+fbDS402.stControl := GetSwitchOnCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S3_SwitchedOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS3" Id="{145d5be5-9308-0ffd-06e2-4bf69118b327}">
+      <Declaration><![CDATA[METHOD TestStateS3 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S3');
+fbDS402.eState := E_DS402_State.S3_SwitchedOn;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= TRUE;
+stExpectedStatus.b1_SwitchedOn 				:= TRUE;
+stExpectedStatus.b2_OperationEnabled		:= FALSE;
+stExpectedStatus.b3_Fault					:= FALSE;
+stExpectedStatus.b5_QuickStop 				:= TRUE; 
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01101111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S6');
+fbDS402.eState := E_DS402_State.S3_SwitchedOn;
+fbDS402.bError := TRUE;
+fbDS402();
+fbDS402.ResetError();
+
+nExpectedState := E_DS402_State.S6_FaultReactionActive;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S1_1');
+fbDS402.eState := E_DS402_State.S3_SwitchedOn;
+fbDS402.stControl := GetDisableVoltageCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S1_2');
+fbDS402.eState := E_DS402_State.S3_SwitchedOn;
+fbDS402.stControl := GetQuickStopCommand();
+fbDS402.stControl.b1_EnableVoltage := TRUE;
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S2');
+fbDS402.eState := E_DS402_State.S3_SwitchedOn;
+fbDS402.stControl := GetShotdownCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S2_ReadyToSwitchOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S4');
+fbDS402.eState := E_DS402_State.S3_SwitchedOn;
+fbDS402.stControl := GetEnableCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S4_OperationEnabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS4" Id="{44b98789-78ae-04da-2562-617d9e19cede}">
+      <Declaration><![CDATA[METHOD TestStateS4 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S4');
+fbDS402.eState := E_DS402_State.S4_OperationEnabled;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= TRUE;
+stExpectedStatus.b1_SwitchedOn 				:= TRUE;
+stExpectedStatus.b2_OperationEnabled		:= TRUE;
+stExpectedStatus.b3_Fault					:= FALSE;
+stExpectedStatus.b5_QuickStop 				:= TRUE; 
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01101111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S6');
+fbDS402.eState := E_DS402_State.S4_OperationEnabled;
+fbDS402.bError := TRUE;
+fbDS402();
+fbDS402.ResetError();
+
+nExpectedState := E_DS402_State.S6_FaultReactionActive;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S1');
+fbDS402.eState := E_DS402_State.S4_OperationEnabled;
+fbDS402.stControl := GetDisableVoltageCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S2');
+fbDS402.eState := E_DS402_State.S4_OperationEnabled;
+fbDS402.stControl := GetShotdownCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S2_ReadyToSwitchOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S3');
+fbDS402.eState := E_DS402_State.S4_OperationEnabled;
+fbDS402.stControl := GetDisableCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S3_SwitchedOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S7');
+fbDS402.eState := E_DS402_State.S4_OperationEnabled;
+fbDS402.stControl := GetQuickStopCommand();
+fbDS402.stControl.b1_EnableVoltage := TRUE;
+fbDS402();
+
+nExpectedState := E_DS402_State.S7_QuickStopActive;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS5" Id="{3c6bafa5-9a01-06c9-2162-5cd739978e6f}">
+      <Declaration><![CDATA[METHOD TestStateS5 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S5');
+fbDS402.eState := E_DS402_State.S5_Fault;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= FALSE;
+stExpectedStatus.b1_SwitchedOn 				:= FALSE;
+stExpectedStatus.b2_OperationEnabled		:= FALSE;
+stExpectedStatus.b3_Fault					:= TRUE;
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01001111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5>S1');
+fbDS402.eState := E_DS402_State.S5_Fault;
+fbDS402.stControl.b7_FaultReset := TRUE;
+fbDS402();
+fbDS402.stControl.b7_FaultReset := FALSE;
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS6" Id="{7468b89b-78a4-0073-0335-5ca2d4278750}">
+      <Declaration><![CDATA[METHOD TestStateS6 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S6');
+fbDS402.eState := E_DS402_State.S6_FaultReactionActive;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= TRUE;
+stExpectedStatus.b1_SwitchedOn 				:= TRUE;
+stExpectedStatus.b2_OperationEnabled		:= TRUE;
+stExpectedStatus.b3_Fault					:= TRUE;
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01001111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S6>S5');
+fbDS402.eState := E_DS402_State.S6_FaultReactionActive;
+fbDS402();
+
+nExpectedState := E_DS402_State.S5_Fault;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS7" Id="{39de336a-7d75-0c05-0832-05b21090a341}">
+      <Declaration><![CDATA[METHOD TestStateS7 : BOOL
+VAR
+	fbDS402 			: FB_DS402_FSM;
+	stExpectedStatus 	: ST_DS402_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S7');
+fbDS402.eState := E_DS402_State.S7_QuickStopActive;
+fbDS402();
+
+stExpectedStatus.b0_ReadyToSwitchOn 		:= TRUE;
+stExpectedStatus.b1_SwitchedOn 				:= TRUE;
+stExpectedStatus.b2_OperationEnabled		:= TRUE;
+stExpectedStatus.b3_Fault					:= FALSE;
+stExpectedStatus.b5_QuickStop				:= FALSE;
+stExpectedStatus.b6_SwitchOnDisabled 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#01101111 AND fbDS402.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S7>S1');
+fbDS402.eState := E_DS402_State.S7_QuickStopActive;
+fbDS402.stControl := GetDisableVoltageCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S7>S4');
+fbDS402.eState := E_DS402_State.S7_QuickStopActive;
+fbDS402.stControl := GetEnableCommand();
+fbDS402();
+
+nExpectedState := E_DS402_State.S4_OperationEnabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

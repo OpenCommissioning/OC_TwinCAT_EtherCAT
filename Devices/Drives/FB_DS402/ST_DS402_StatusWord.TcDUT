@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_DS402_StatusWord" Id="{35dc35a4-b4a1-079e-19bd-8f534ac6ff4e}">
+    <Declaration><![CDATA[(*
+	Object 6041h: Status word (DS402)
+*)
+{attribute 'pack_mode' := '1'}
+TYPE ST_DS402_StatusWord :
+STRUCT
+	b0_ReadyToSwitchOn 				: BIT; 
+	b1_SwitchedOn 					: BIT; 
+	b2_OperationEnabled 			: BIT; 
+	b3_Fault						: BIT; 
+	b4_VoltageEnabled				: BIT; 
+	b5_QuickStop					: BIT;
+	b6_SwitchOnDisabled				: BIT; 
+	b7_Warning						: BIT; 
+	b8_Synchranisation				: BIT; 
+	b9_Remote						: BIT;
+	b10_TargetReached				: BIT;
+	b11_InternalLimitActive			: BIT; 
+	b12_OperationModeSpecific		: BIT; 
+	b13_OperationModeSpecific		: BIT; 
+	b14_OperationModeSpecific		: BIT; 
+	b15_ClosedLoopActive			: BIT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

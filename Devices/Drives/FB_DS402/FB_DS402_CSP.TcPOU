@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_DS402_CSP" Id="{b8c3615d-cc8d-0a44-2a50-2229e2ffdc6a}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+	DS402 with Cyclic synchronous position mode(CSP)
+	SM2 PDO: 0x1600 (DS402 Controlword)	
+	SM2 PDO: 0x1606 (DS402 Target position)
+	SM3 PDO: 0x1A00 (DS402 Statusword)	
+	SM3 PDO: 0x1A01 (DS402 Position actual value)
+	SM3 PDO: 0x1A04 (DS402 Following error actual value)
+*)
+{attribute 'reflection'} 
+FUNCTION_BLOCK FB_DS402_CSP EXTENDS FB_LinkDataREAL 
+VAR_INPUT
+	bSTO 				: BOOL := TRUE;	
+	stControl	 		: ST_DS402_CSP_Control;
+	stConfig			: ST_DS402_CSP_Config;
+END_VAR
+
+VAR_OUTPUT
+	stStatus 			: ST_DS402_CSP_Status;	
+END_VAR
+
+VAR		
+	{attribute 'instance-path'} 
+    {attribute 'noinit'} 
+    _sPath 				: STRING;
+	_fbStateMachine 	: FB_DS402_FSM;
+	_fbEncoder 			: FB_Encoder;
+	
+	_pControlData		: POINTER TO BYTE; //Addr. Process Output (PO), 6 BYTES FROM FIELDBUS
+	_pStatusData		: POINTER TO BYTE; //Addr. Process Input (PI), 6 BYTES FROM FIELDBUS	
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+InitRun();
+
+GetControlData();
+ControlLogic();
+SetStatusData();
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="AssignProcessData" Id="{cc3efb43-c21f-0aa1-05d5-e35ae2abbf81}">
+      <Declaration><![CDATA[(*Assign Process Data Objects to device*)
+METHOD PUBLIC AssignProcessData
+VAR_INPUT
+	aControlData 		: ANY; //Addr. Process Output [6 BYTES]
+	aStatusData 		: ANY; //Addr. Process Input [10 BYTES]
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_pControlData := aControlData.pValue;
+_pStatusData := aStatusData.pValue;
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ControlLogic" Id="{3c0eef5e-1d39-0c6e-314b-f431e6b3bd0f}">
+      <Declaration><![CDATA[METHOD PRIVATE ControlLogic]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bSTO THEN RETURN; END_IF
+
+_fbStateMachine.stControl := stControl.nControlWord;
+_fbStateMachine();
+stStatus.nStatusWord := _fbStateMachine.stStatus;
+
+IF (_fbStateMachine._eState = E_DS402_State.S4_OperationEnabled) THEN	
+	
+	_fbEncoder.fValue :=  stConfig.fPositionOffset + _fbEncoder.INC_TO_LREAL(stControl.nTargetPosition, 1);
+	_fbEncoder();
+END_IF
+
+stStatus.nActualPosition := _fbEncoder.nResult;
+
+//Set Link Data
+ControlData := LREAL_TO_REAL(_fbEncoder.fResult);
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="eState" Id="{e19085ee-7bd1-0fcb-3dad-a1e9cdd03e4c}">
+      <Declaration><![CDATA[PROPERTY eState : E_DS402_State]]></Declaration>
+      <Get Name="Get" Id="{31e04846-484e-0786-2271-b8174d123993}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[eState := _fbStateMachine.eState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="fbEncoder" Id="{dd6a60f7-01b0-04b8-3f42-04f498e1db65}">
+      <Declaration><![CDATA[PROPERTY PUBLIC fbEncoder : REFERENCE TO FB_Encoder]]></Declaration>
+      <Get Name="Get" Id="{95164e25-abfd-018d-3d3f-de635301a92b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fbEncoder REF= _fbEncoder;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="GetControlData" Id="{b2e1659b-0161-0146-046b-9ef7beeaabb3}">
+      <Declaration><![CDATA[METHOD INTERNAL GetControlData]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _pControlData <= 0 THEN RETURN; END_IF
+
+(*Control Word*)
+F_Memcpy(ADR(stControl), _pControlData, 2, stConfig.bSwapProcessData);
+(*Target Value*)
+F_Memcpy(ADR(stControl) + 2, _pControlData + 2, 4, stConfig.bSwapProcessData);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitRun" Id="{61180d2c-c917-0beb-2072-461ac56b4988}">
+      <Declaration><![CDATA[METHOD PRIVATE InitRun
+VAR_INST
+	bInitRun : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInitRun THEN RETURN; END_IF
+bInitRun := FALSE;
+
+IF _pControlData = 0 OR _pStatusData = 0 THEN
+	ADSLOGSTR(ADSLOG_MSGTYPE_WARN, '%s', CONCAT(_sPath, ' PLC IO is not assigned!'));	
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetStatusData" Id="{cfa63c2d-b0ae-09ae-2f35-e0844aea99ba}">
+      <Declaration><![CDATA[METHOD INTERNAL SetStatusData]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _pStatusData <= 0 THEN RETURN; END_IF
+
+(*StatusWord*)
+F_Memcpy(_pStatusData, ADR(stStatus), 2, stConfig.bSwapProcessData);
+(*Actual Position*)
+F_Memcpy(_pStatusData + 2, ADR(stStatus) + 2, 4, stConfig.bSwapProcessData);
+(*Actual Position Error*)
+F_Memcpy(_pStatusData + 6, ADR(stStatus) + 6, 4, stConfig.bSwapProcessData);
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
