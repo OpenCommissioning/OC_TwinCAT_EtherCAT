@@ -63,10 +63,10 @@
     <Compile Include="Devices\Drives\DS402\ST_DS402_StatusWord.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Devices\Drives\FB_Encoder\FB_Encoder.TcPOU">
+    <Compile Include="Devices\Drives\Encoder\FB_Encoder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Devices\Drives\FB_Encoder\ST_Encoder_Config.TcDUT">
+    <Compile Include="Devices\Drives\Encoder\ST_Encoder_Config.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Drives\Sercos\E_Sercos_State.TcDUT">
@@ -150,6 +150,9 @@
     <Compile Include="Tests\Drives\FB_DS402_CSP_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\Drives\FB_Sercos_FSM_Test.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests\Drives\FB_Encoder_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -166,7 +169,7 @@
   <ItemGroup>
     <Folder Include="Devices\Drives" />
     <Folder Include="Devices\Drives\DS402" />
-    <Folder Include="Devices\Drives\FB_Encoder" />
+    <Folder Include="Devices\Drives\Encoder" />
     <Folder Include="Devices\Drives\Sercos" />
     <Folder Include="Devices\Terminals" />
     <Folder Include="Devices\Terminals\FB_Beckhoff_EL6001" />

@@ -47,9 +47,8 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[IF bError AND NOT _bError THEN
-	_bError := TRUE;
-END_IF
+          <ST><![CDATA[_bError := bError;
+
 
 ]]></ST>
         </Implementation>
@@ -102,7 +101,7 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IsHalt := NOT stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
+        <ST><![CDATA[IsHalt := stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
       </Implementation>
     </Method>
     <Method Name="IsQuickStop" Id="{95f0664e-c180-04da-12a7-a301256bd103}">
@@ -118,7 +117,7 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IsRun := stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
+        <ST><![CDATA[IsRun := NOT stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
       </Implementation>
     </Method>
     <Method Name="IsShutdown" Id="{b3f99540-4ce7-036b-02b1-96951c6fe646}">
@@ -213,14 +212,6 @@ nStatus.15 	:= stStatus.b15_ReadyToOperate;			 ]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="ResetError" Id="{1473b187-d337-03c1-0106-eb63697e5f74}">
-      <Declaration><![CDATA[METHOD INTERNAL ResetError : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_bError := FALSE;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="S1_NotReadyToSwitchOn" Id="{dc07ff7d-b2e9-0d4e-1eb0-11d9611a9f69}">
       <Declaration><![CDATA[METHOD PRIVATE S1_NotReadyToSwitchOn : BOOL
 VAR_INPUT
@@ -433,6 +424,16 @@ END_IF
 IF IsShutdown() THEN 
 	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
 	RETURN;
+END_IF
+
+IF IsEnableOperationHalt() THEN
+	_eState := E_Sercos_State.S5b_Halt;
+	RETURN;
+END_IF
+
+IF IsEnableOperation() THEN
+	_eState := E_Sercos_State.S5a_DriveInOperation;
+	RETURN;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -452,7 +453,9 @@ stStatus.b3_CommandProcessing 		:= FALSE;
 IF NOT bPower THEN
 	_eState := E_Sercos_State.S2_SwitchOnDisabled;
 	RETURN;
-END_IF]]></ST>
+END_IF
+
+_eState := E_Sercos_State.S8_Fault;]]></ST>
       </Implementation>
     </Method>
     <Method Name="S8_Fault" Id="{5f59ecbf-7001-022e-3d07-a8f0ba95beef}">
@@ -470,7 +473,8 @@ stStatus.b3_CommandProcessing 		:= FALSE;
 
 IF IsFaultReset() THEN
 	_eState := E_Sercos_State.S2_SwitchOnDisabled;
-	RETURN;
+	_bError := FALSE;
+	RETURN;	
 END_IF]]></ST>
       </Implementation>
     </Method>

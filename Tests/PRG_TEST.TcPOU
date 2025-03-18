@@ -9,6 +9,7 @@ VAR
 	FB_Encoder_Test : FB_Encoder_Test;	
 	FB_DS402_FSM_Test : FB_DS402_FSM_Test;	
 	FB_DS402_CSP_Test : FB_DS402_CSP_Test; 
+	FB_Sercos_FSM_Test : FB_Sercos_FSM_Test;
 END_VAR
 ]]></Declaration>
     <Implementation>
