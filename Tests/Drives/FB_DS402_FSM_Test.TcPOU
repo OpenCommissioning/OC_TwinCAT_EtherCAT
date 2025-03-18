@@ -219,7 +219,6 @@ fbDS402();
 nExpectedState := E_DS402_State.S1_SwitchOnDisabled;
 nActualState := fbDS402.eState;
 
-
 AssertEquals(Expected := nExpectedState,
              Actual := nActualState,
              Message := 'State is not correct');	 

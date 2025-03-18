@@ -4,7 +4,7 @@
     <Declaration><![CDATA[(*
 	Object 6041h: Status word (DS402)
 *)
-{attribute 'pack_mode' := '1'}
+{attribute 'pack_mode' := '0'}
 TYPE ST_DS402_StatusWord :
 STRUCT
 	b0_ReadyToSwitchOn 				: BIT; 

@@ -7,7 +7,7 @@
 	0x1A01 (DS402 Position actual value)
 	0x1A04 (DS402 Following error actual value)
 *)
-{attribute 'pack_mode' := '1'}
+{attribute 'pack_mode' := '0'}
 TYPE ST_DS402_CSP_Status :
 STRUCT
 	nStatusWord 		: ST_DS402_StatusWord; //0x1A00 (DS402 Statusword)

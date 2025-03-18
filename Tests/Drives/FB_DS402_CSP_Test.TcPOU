@@ -120,7 +120,8 @@ END_VAR
         <ST><![CDATA[TEST(sName);
 
 fbDS402_CSP.stConfig.bSwapProcessData := bSwap;
-fbDS402_CSP.AssignProcessData(aControlData, aStatusData);
+fbDS402_CSP.pControl := ADR(aControlData);
+fbDS402_CSP.pStatus := ADR(aStatusData);
 
 nControlWordExpected := 156;
 nTargetExpected := 15674;
@@ -200,7 +201,8 @@ END_VAR
         <ST><![CDATA[TEST(sName);
 
 fbDS402_CSP.stConfig.bSwapProcessData := bSwap;
-fbDS402_CSP.AssignProcessData(aControlData, aStatusData);
+fbDS402_CSP.pControl := ADR(aControlData);
+fbDS402_CSP.pStatus := ADR(aStatusData);
 
 nStatusWordExpected := 156;
 nActualExpected := 15674;

@@ -6,7 +6,7 @@
 	0x1600 (DS402 Controlword)
 	0x1606 (DS402 Target position)
 *)
-{attribute 'pack_mode' := '1'}
+{attribute 'pack_mode' := '0'}
 TYPE ST_DS402_CSP_Control :
 STRUCT
 	nControlWord 		: ST_DS402_ControlWord; //0x1600 (DS402 Controlword)
