@@ -19,7 +19,7 @@
     <Released>false</Released>
     <Company>Open Commissioning</Company>
     <Title>OC_EtherCAT</Title>
-    <ProjectVersion>1.0.1</ProjectVersion>
+    <ProjectVersion>1.1.0</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{41661a1f-00b4-4855-90c5-5a3bdd03b62b}</Id>
@@ -37,6 +37,7 @@
     <PreserveCompiledLibComments>true</PreserveCompiledLibComments>
     <CombineIds>true</CombineIds>
     <DocFormat>reStructuredText</DocFormat>
+    <CompilerDefines />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Devices\Drives\DS402\E_DS402_State.TcDUT">
@@ -194,7 +195,9 @@
     <Folder Include="Devices\Terminals" />
     <Folder Include="Devices\Terminals\FB_Beckhoff_EL6001" />
     <Folder Include="Devices" />
-    <Folder Include="Tests" />
+    <Folder Include="Tests">
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Folder>
     <Folder Include="Tests\Drives" />
     <Folder Include="Tests\Terminals" />
   </ItemGroup>
@@ -232,6 +235,29 @@
     <None Include="OC_EtherCAT.tmc">
       <SubType>Content</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderResolution Include="OC_Core">
+      <Resolution>OC_Core, 1.3.1 (Open Commissioning)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="OC_TwinSAFE">
+      <Resolution>OC_TwinSAFE, 1.0.2 (Open Commissioning)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_Math">
+      <Resolution>Tc2_Math, 3.4.4.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_Standard">
+      <Resolution>Tc2_Standard, 3.4.5.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc2_System">
+      <Resolution>Tc2_System, 3.6.4.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="Tc3_Module">
+      <Resolution>Tc3_Module, 3.4.5.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="TcUnit">
+      <Resolution>TcUnit, 1.3.0.0 (www.tcunit.org)</Resolution>
+    </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
