@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Sercos_VC_Test" Id="{7173d236-4df9-017d-2e4f-6abff7cf3266}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sercos_VC_Test EXTENDS TcUnit.FB_TestSuite
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TestEnable();
+TestEnableSTO();
+
+TestGetProccesData('Get Process Data', FALSE);
+TestGetProccesData('Get Process Data Swap', TRUE);
+TestSetProccesData('Set Process Data', FALSE);
+TestSetProccesData('Set Process Data Swap', TRUE);
+
+TestCaseGetVelocity('Get Velocity 1', 80000, 2000, 80000, 2000);
+TestCaseGetVelocity('Get Velocity 2', 40000, 2000, 80000, 1000);
+TestCaseGetVelocity('Get Velocity 3', 0, 2000, 80000, 0);
+TestCaseGetVelocity('Get Velocity 4', -40000, 2000, 80000, -1000);
+TestCaseGetVelocity('Get Velocity 5', -80000, 2000, 80000, -2000);
+TestCaseGetVelocity('Get Velocity 6', 80000, 500, 80000, 500);
+TestCaseGetVelocity('Get Velocity 7', -80000, 500, 80000, -500);
+
+]]></ST>
+    </Implementation>
+    <Method Name="EnableSequence" Id="{a7ed356a-7aac-0be5-2b5e-cfcb1586ec17}">
+      <Declaration><![CDATA[METHOD PRIVATE EnableSequence : REFERENCE TO FB_Test
+VAR_INPUT
+	fbDrive : REFERENCE TO FB_Sercos_VC;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbDrive.stControl.nControlWord.b13_Halt := FALSE;
+fbDrive.stControl.nControlWord.b14_Start := TRUE;
+fbDrive.stControl.nControlWord.b15_Enable := TRUE;
+
+fbDrive();
+fbDrive();
+fbDrive();
+fbDrive();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestCaseGetVelocity" Id="{91ff576f-2d27-02fb-0dc5-9886c2de66a6}">
+      <Declaration><![CDATA[METHOD TestCaseGetVelocity
+VAR_INPUT
+	sName : T_MaxString;	
+	nVelocityCommand 			: DINT;
+	fReferenceVelocity			: REAL;
+	nNormalizationFactor 		: REAL;	
+	fExpected 					: LREAL;
+END_VAR
+
+VAR	
+	fbDrive		: FB_Sercos_VC;
+	fResult 	: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST(sName);
+	
+
+fResult := fbDrive.GetTargetVelocity(nVelocityCommand, fReferenceVelocity, nNormalizationFactor);
+AssertEquals(Expected := fExpected,
+             Actual := fResult,
+             Message := 'Result value is not correct');	
+	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestEnable" Id="{ec57ea54-2340-0f8a-3508-e2d012993a32}">
+      <Declaration><![CDATA[METHOD TestEnable : BOOL
+VAR
+	fbDrive 			: FB_Sercos_VC;	
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Enable STO FALSE');
+fbDrive.bSTO := FALSE;
+
+EnableSequence(fbDrive);
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbDrive.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestEnableSTO" Id="{7513d89c-8c81-0908-29b1-02ffb315ab62}">
+      <Declaration><![CDATA[METHOD TestEnableSTO : BOOL
+VAR
+	fbDrive 			: FB_Sercos_VC;	
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Enable STO TRUE');
+fbDrive.bSTO := TRUE;
+EnableSequence(fbDrive);
+
+nExpectedState := E_Sercos_State.S5a_DriveInOperation;
+nActualState := fbDrive.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestGetProccesData" Id="{b1420fe7-7a0a-07db-2c80-ed7150403c25}">
+      <Declaration><![CDATA[METHOD TestGetProccesData : REFERENCE TO FB_Test
+VAR_INPUT
+	sName 					: T_MaxString;
+	bSwap					: BOOL;
+END_VAR
+
+VAR
+	fbDrive 				: FB_Sercos_VC;
+	
+	aControlData			: ARRAY [0..12] OF BYTE;
+	aStatusData				: ARRAY [0..12] OF BYTE;
+	
+	nControlWordExpected	: WORD; 
+	nControlWordActual		: WORD; 
+	nTargetExpected			: DINT; 
+	nTargetActual			: DINT;	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST(sName);
+
+fbDrive.stConfig.bSwapProcessData := bSwap;
+fbDrive.pControl := ADR(aControlData);
+fbDrive.pStatus := ADR(aStatusData);
+
+nControlWordExpected := 156;
+nTargetExpected := 15674;
+F_Memcpy(ADR(aControlData), ADR(nControlWordExpected), SIZEOF(nControlWordExpected), bSwap);
+F_Memcpy(ADR(aControlData) + 2, ADR(nTargetExpected), SIZEOF(nTargetExpected), bSwap);
+
+fbDrive.GetControlData();
+
+F_Memcpy(ADR(nControlWordActual), ADR(fbDrive.stControl.nControlWord), SIZEOF(fbDrive.stControl.nControlWord), FALSE);
+nTargetActual := fbDrive.stControl.nVelocityCommand;
+
+AssertEquals_WORD(Expected := nControlWordExpected,
+             Actual := nControlWordActual,
+             Message := 'nControlWord is not correct');	
+
+AssertEquals_DINT(Expected := nTargetExpected,
+             Actual := nTargetActual,
+             Message := '.nVelocityCommand is not correct');	
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestSetProccesData" Id="{f12ddb41-e5f7-0bf3-1735-43b98734986c}">
+      <Declaration><![CDATA[METHOD TestSetProccesData : REFERENCE TO FB_Test
+VAR_INPUT
+	sName 					: T_MaxString;
+	bSwap					: BOOL;
+END_VAR
+
+VAR
+	fbDrive 				: FB_Sercos_VC;
+	
+	aControlData			: ARRAY [0..12] OF BYTE;
+	aStatusData				: ARRAY [0..12] OF BYTE;
+	
+	nStatusWordExpected		: WORD; 
+	nStatusWordActual		: WORD; 
+	nActualExpected			: DINT; 
+	nActualActual			: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST(sName);
+
+fbDrive.stConfig.bSwapProcessData := bSwap;
+fbDrive.pControl := ADR(aControlData);
+fbDrive.pStatus := ADR(aStatusData);
+
+nStatusWordExpected := 156;
+nActualExpected := 15674;
+
+F_Memcpy(ADR(fbDrive.stStatus), ADR(nStatusWordExpected), SIZEOF(nStatusWordExpected), FALSE);
+F_Memcpy(ADR(fbDrive.stStatus) + 2, ADR(nActualExpected), SIZEOF(nActualExpected), FALSE);
+
+fbDrive.SetStatusData();
+
+F_Memcpy(ADR(nStatusWordActual), ADR(aStatusData), SIZEOF(nStatusWordActual), bSwap);
+F_Memcpy(ADR(nActualActual), ADR(aStatusData) + 2, SIZEOF(nActualActual), bSwap);
+
+
+AssertEquals_WORD(Expected := nStatusWordExpected,
+             Actual := nStatusWordActual,
+             Message := 'nStatusWord is not correct');	
+
+AssertEquals_DINT(Expected := nActualExpected,
+             Actual := nActualActual,
+             Message := '.nActualPosition is not correct');	
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

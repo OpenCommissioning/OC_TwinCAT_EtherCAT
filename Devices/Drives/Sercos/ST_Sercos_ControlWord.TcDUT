@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Sercos_ControlWord" Id="{48564c2c-c6bc-0308-1b19-355b12ce7d75}">
+    <Declaration><![CDATA[(*
+	S-0-0134 Drive Control
+	https://product-help.schneider-electric.com/Machine%20Expert/V1.2/en/ATV340SUG/ATV340SUG/STI_Software_Setup/STI_Software_Setup-21.htm#XREF_D_SE_0083221_1
+*)
+{attribute 'pack_mode' := '1'}
+TYPE ST_Sercos_ControlWord :
+STRUCT
+	b0_Reserved 					: BIT;
+	b1_Reserved						: BIT;
+	b2_Reserved						: BIT;
+	b3_Reserved						: BIT;
+	b4_Reserved						: BIT;
+	b5_Reserved						: BIT;
+	b6_Reserved						: BIT;
+	b7_Reserved						: BIT;
+	b8_Reserved						: BIT; //Reserved (=0)
+	b9_Reserved						: BIT; //Reserved (=0)
+	b10_OperationMode				: BIT; //0 = Primary operation mode
+	b11_Reserved					: BIT;
+	b12_Reserved					: BIT; 
+	b13_Halt						: BIT; //Drive halt, 1 --> 0 = halt, 0 --> 1 = restart
+	b14_Start						: BIT; //Drive start, 1 --> 0 = Stop, 0 -> 1 = Start 
+	b15_Enable						: BIT; //Drive enable, 1 --> 0 = drive disabled, 0 -> 1 = drive enabled
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

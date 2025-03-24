@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_DS402_CSP_Control" Id="{466ef8fe-9dd6-06ce-2aff-bfa7feafdeae}">
+    <Declaration><![CDATA[(*
+	Control struct for Cyclic synchronous position mode(CSP)
+	0x1600 (DS402 Controlword)
+	0x1606 (DS402 Target position)
+*)
+{attribute 'pack_mode' := '0'}
+TYPE ST_DS402_CSP_Control :
+STRUCT
+	nControlWord 		: ST_DS402_ControlWord; //0x1600 (DS402 Controlword)
+	nTargetPosition		: DINT;	//DS402 Target position [INC]	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Sercos_FSM_Test" Id="{e2d93bb2-8db7-065e-0371-9c388aae7b6c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sercos_FSM_Test EXTENDS TcUnit.FB_TestSuite
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TestStateS1();
+TestStateS2();
+TestStateS3();
+TestStateS4();
+TestStateS5a();
+TestStateS5b();
+TestStateS6();
+TestStateS7();
+TestStateS8();
+TestEnableSequence();]]></ST>
+    </Implementation>
+    <Method Name="GetEnableCommand" Id="{5de932be-52cc-0f39-05bc-ec07a41466a5}">
+      <Declaration><![CDATA[METHOD PRIVATE GetEnableCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetEnableCommand.b13_Halt := FALSE;
+GetEnableCommand.b14_Start := TRUE;
+GetEnableCommand.b15_Enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetEnableHaltCommand" Id="{3de8d8af-49a1-05b6-2ffb-18e21b0d70b7}">
+      <Declaration><![CDATA[METHOD PRIVATE GetEnableHaltCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetEnableHaltCommand.b13_Halt := TRUE;
+GetEnableHaltCommand.b14_Start := TRUE;
+GetEnableHaltCommand.b15_Enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetErrorResetCommand" Id="{3a9661e4-58ec-091e-1035-d08ad5253a8b}">
+      <Declaration><![CDATA[METHOD PRIVATE GetErrorResetCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetErrorResetCommand.b13_Halt := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetHaltCommand" Id="{e0e1aba9-b928-06bb-13ea-1ba116a1a445}">
+      <Declaration><![CDATA[METHOD PRIVATE GetHaltCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetHaltCommand.b13_Halt := FALSE;
+GetHaltCommand.b14_Start := TRUE;
+GetHaltCommand.b15_Enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetQuickStopCommand" Id="{e766e34a-9dd7-00a8-2e9e-48997c85dedf}">
+      <Declaration><![CDATA[METHOD PRIVATE GetQuickStopCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetQuickStopCommand.b14_Start := FALSE;
+GetQuickStopCommand.b15_Enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetRunCommand" Id="{08dcdec4-46cf-05d9-0d20-322cd750613e}">
+      <Declaration><![CDATA[METHOD PRIVATE GetRunCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetRunCommand.b13_Halt := FALSE;
+GetRunCommand.b14_Start := TRUE;
+GetRunCommand.b15_Enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetShutdownCommand" Id="{f5d673d5-ac1d-096c-216f-9ec726cbde62}">
+      <Declaration><![CDATA[METHOD PRIVATE GetShutdownCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetShutdownCommand.b15_Enable := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetSwitchOnCommand" Id="{03275183-f8ee-06c5-3e42-61c0ee012bd6}">
+      <Declaration><![CDATA[METHOD PRIVATE GetSwitchOnCommand : ST_Sercos_ControlWord
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetSwitchOnCommand.b15_Enable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestEnableSequence" Id="{d8c371ba-e014-0996-1a03-d3a15eb80fd8}">
+      <Declaration><![CDATA[METHOD TestEnableSequence : BOOL
+VAR
+	fbSercosFSM 			: FB_Sercos_FSM;
+	stExpectedStatus 		: ST_Sercos_StatusWord; 
+	nMask 					: WORD;
+	nResult 				: WORD;
+	bResult 				: BOOL;
+	nActualState			: INT;
+	nExpectedState			: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Enable S1');
+
+nExpectedState := E_Sercos_State.S1_NotReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S2');
+fbSercosFSM();
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S3');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM();
+nExpectedState := E_Sercos_State.S3_ReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S4');
+fbSercosFSM.stControl := GetSwitchOnCommand();
+
+fbSercosFSM();
+nExpectedState := E_Sercos_State.S4_SwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Enable S5a');
+fbSercosFSM.stControl := GetEnableCommand();
+
+fbSercosFSM();
+nExpectedState := E_Sercos_State.S5a_DriveInOperation;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS1" Id="{3bc78463-bff2-0672-2100-2c0792a00ca4}">
+      <Declaration><![CDATA[METHOD TestStateS1 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S1');
+fbSercosFSM.eState := E_Sercos_State.S1_NotReadyToSwitchOn;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= FALSE;
+stExpectedStatus.b14_ReadyToOperate 		:= FALSE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S1>S2');
+fbSercosFSM.eState := E_Sercos_State.S1_NotReadyToSwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS2" Id="{84a637f2-5728-08bf-2613-c5e1569edc81}">
+      <Declaration><![CDATA[METHOD TestStateS2 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S2');
+fbSercosFSM.eState := E_Sercos_State.S2_SwitchOnDisabled;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= FALSE;
+stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Still State S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S2_SwitchOnDisabled;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S2>S3');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S2_SwitchOnDisabled;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S3_ReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS3" Id="{8d0b5a15-c593-09ec-00e8-18ae6f2ad90d}">
+      <Declaration><![CDATA[METHOD TestStateS3 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S3');
+fbSercosFSM.eState := E_Sercos_State.S3_ReadyToSwitchOn;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b14_ReadyToOperate 		:= FALSE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S3_ReadyToSwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S7');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.bError := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S3_ReadyToSwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S7_FaultReactionActive;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S3>S4');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.stControl := GetSwitchOnCommand();
+fbSercosFSM.eState := E_Sercos_State.S3_ReadyToSwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S4_SwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS4" Id="{5cf18472-704a-0647-2a38-a4b08f399007}">
+      <Declaration><![CDATA[METHOD TestStateS4 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S4');
+fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= FALSE;
+stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
+fbSercosFSM();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S3');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
+fbSercosFSM.stControl := GetShutdownCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S3_ReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S7');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.bError := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S7_FaultReactionActive;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S5b');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.stControl := GetEnableHaltCommand();
+fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S5b_Halt;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S4>S5a');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.stControl := GetEnableCommand();
+fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S5a_DriveInOperation;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS5a" Id="{741205e9-622a-0fc8-2a85-021e628e757c}">
+      <Declaration><![CDATA[METHOD TestStateS5a : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S5a');
+fbSercosFSM.eState := E_Sercos_State.S5a_DriveInOperation;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= TRUE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5a>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S5a_DriveInOperation;
+fbSercosFSM();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5a>S7');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.bError := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S5a_DriveInOperation;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S7_FaultReactionActive;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5a>S3');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S5a_DriveInOperation;
+fbSercosFSM.stControl := GetShutdownCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S3_ReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5a>S6');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S5a_DriveInOperation;
+fbSercosFSM.stControl := GetQuickStopCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S6_QuickStop;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5a>S5b');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.stControl := GetEnableHaltCommand();
+fbSercosFSM.eState := E_Sercos_State.S5a_DriveInOperation;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S5b_Halt;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS5b" Id="{4ec04249-868d-0ea0-07fc-71985e93ffae}">
+      <Declaration><![CDATA[METHOD TestStateS5b : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S5b');
+fbSercosFSM.eState := E_Sercos_State.S5b_Halt;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= TRUE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5b>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S5b_Halt;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5b>S7');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.bError := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S5b_Halt;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S7_FaultReactionActive;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5b>S3');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S5b_Halt;
+fbSercosFSM.stControl := GetShutdownCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S3_ReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5b>S6');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S5b_Halt;
+fbSercosFSM.stControl := GetQuickStopCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S6_QuickStop;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S5b>S5a');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.stControl := GetEnableCommand();
+fbSercosFSM.eState := E_Sercos_State.S5b_Halt;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S5a_DriveInOperation;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS6" Id="{57b40535-3ec2-0d01-1f67-a5fa7f5a1498}">
+      <Declaration><![CDATA[METHOD TestStateS6 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S6');
+fbSercosFSM.eState := E_Sercos_State.S6_QuickStop;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b13_Error 					:= FALSE;
+stExpectedStatus.b7_QuickStop 				:= TRUE;
+stExpectedStatus.b4_Halt 					:= TRUE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S6>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S6_QuickStop;
+fbSercosFSM();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S6>S3');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S6_QuickStop;
+fbSercosFSM.stControl := GetShutdownCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S3_ReadyToSwitchOn;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S6>S7');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.bError := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S6_QuickStop;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S7_FaultReactionActive;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S6>S5b');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.stControl := GetEnableHaltCommand();
+fbSercosFSM.eState := E_Sercos_State.S6_QuickStop;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S5b_Halt;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S6>S5a');
+fbSercosFSM.bError := FALSE;
+fbSercosFSM.stControl := GetEnableCommand();
+fbSercosFSM.eState := E_Sercos_State.S6_QuickStop;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S5a_DriveInOperation;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS7" Id="{99db4e42-849b-0bcb-271e-052486b3270e}">
+      <Declaration><![CDATA[METHOD TestStateS7 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S7');
+fbSercosFSM.eState := E_Sercos_State.S7_FaultReactionActive;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b13_Error 					:= TRUE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S7>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S7_FaultReactionActive;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S7>S8');
+fbSercosFSM.bPower := TRUE;
+fbSercosFSM.eState := E_Sercos_State.S7_FaultReactionActive;
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S8_Fault;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestStateS8" Id="{2e830f06-f3cd-0c0d-26f0-f946e1d46979}">
+      <Declaration><![CDATA[METHOD TestStateS8 : BOOL
+VAR
+	fbSercosFSM 		: FB_Sercos_FSM;
+	stExpectedStatus 	: ST_Sercos_StatusWord; 
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Set State S8');
+fbSercosFSM.eState := E_Sercos_State.S8_Fault;
+fbSercosFSM();
+
+stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b14_ReadyToOperate 		:= FALSE;
+stExpectedStatus.b13_Error 					:= TRUE;
+stExpectedStatus.b7_QuickStop 				:= FALSE;
+stExpectedStatus.b4_Halt 					:= FALSE;
+stExpectedStatus.b3_CommandProcessing 		:= FALSE;
+
+MEMCPY(ADR(nMask), ADR(stExpectedStatus), 2);
+nResult := (2#1110000011011000 AND fbSercosFSM.nStatus);
+
+AssertEquals(Expected := nMask,
+             Actual := nResult,
+             Message := 'Value is not correct');	 
+TEST_FINISHED();
+
+TEST('Transition S8>S2');
+fbSercosFSM.bPower := FALSE;
+fbSercosFSM.eState := E_Sercos_State.S8_Fault;
+fbSercosFSM.stControl := GetErrorResetCommand();
+fbSercosFSM();
+
+nExpectedState := E_Sercos_State.S2_SwitchOnDisabled;
+nActualState := fbSercosFSM.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

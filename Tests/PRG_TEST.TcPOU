@@ -3,12 +3,18 @@
   <POU Name="PRG_TEST" Id="{bd0cd056-c9be-07e2-1020-9a5696ebe527}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM PRG_TEST
 VAR	
+	FB_System	: FB_System;
 	FB_Beckhoff_EL5152_Test : FB_Beckhoff_EL5152_Test;
 	FB_Beckhoff_EL6001_Test : FB_Beckhoff_EL6001_Test;
+	FB_DS402_FSM_Test : FB_DS402_FSM_Test;	
+	FB_DS402_CSP_Test : FB_DS402_CSP_Test; 
+	FB_Sercos_FSM_Test : FB_Sercos_FSM_Test;
+	FB_Sercos_VC_Test : FB_Sercos_VC_Test;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[TcUnit.RUN();]]></ST>
+      <ST><![CDATA[FB_System();
+TcUnit.RUN();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

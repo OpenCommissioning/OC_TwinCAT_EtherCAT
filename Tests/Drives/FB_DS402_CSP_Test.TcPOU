@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_DS402_CSP_Test" Id="{3cfd3bf9-a846-0548-34de-76d999266d0d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DS402_CSP_Test EXTENDS TcUnit.FB_TestSuite
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TestEnable();
+TestEnableSTO();
+
+TestPositionMode('Set Target Position_1', 0, 0, 0);
+TestPositionMode('Set Target Position_2', 1000, 0, 1000);
+TestPositionMode('Set Target Position_3', -1000, 0, -1000);
+TestPositionMode('Set Target Position_4', 1000, 100, 1100);
+TestPositionMode('Set Target Position_5', 1000, -100, 900);
+
+TestGetProccesData('Get Process Data', FALSE);
+TestGetProccesData('Get Process Data Swap', TRUE);
+TestSetProccesData('Set Process Data', FALSE);
+TestSetProccesData('Set Process Data Swap', TRUE);
+
+]]></ST>
+    </Implementation>
+    <Method Name="EnableSequence" Id="{924409a5-b7e1-0fcf-357b-1865e8209b13}">
+      <Declaration><![CDATA[METHOD PRIVATE EnableSequence : REFERENCE TO FB_Test
+VAR_INPUT
+	fbDS402 : REFERENCE TO FB_DS402_CSP;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbDS402.stControl.nControlWord.b0_SwitchOn := FALSE;
+fbDS402.stControl.nControlWord.b1_EnableVoltage := FALSE;
+fbDS402.stControl.nControlWord.b2_QuickStop := FALSE;
+fbDS402.stControl.nControlWord.b3_EnableOperation := FALSE;
+fbDS402();
+
+fbDS402.stControl.nControlWord.b1_EnableVoltage := TRUE;
+fbDS402.stControl.nControlWord.b2_QuickStop := TRUE;
+fbDS402();
+fbDS402.stControl.nControlWord.b0_SwitchOn := TRUE;
+fbDS402();
+fbDS402.stControl.nControlWord.b3_EnableOperation := TRUE;
+fbDS402();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestEnable" Id="{54be5496-44ec-009c-3853-760b4eabde97}">
+      <Declaration><![CDATA[METHOD TestEnable : BOOL
+VAR
+	fbDS402 			: FB_DS402_CSP;
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Enable STO FALSE');
+fbDS402.bSTO := FALSE;
+
+EnableSequence(fbDS402);
+
+nExpectedState := E_DS402_State.S0_NotReadyToSwitchOn;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestEnableSTO" Id="{8352ec27-b2e4-0922-2262-f7db6ce74b5f}">
+      <Declaration><![CDATA[METHOD TestEnableSTO : BOOL
+VAR
+	fbDS402 			: FB_DS402_CSP;
+	nMask 				: WORD;
+	nResult 			: WORD;
+	bResult 			: BOOL;
+	nActualState		: INT;
+	nExpectedState		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('Enable STO TRUE');
+fbDS402.bSTO := TRUE;
+EnableSequence(fbDS402);
+
+nExpectedState := E_DS402_State.S4_OperationEnabled;
+nActualState := fbDS402.eState;
+
+AssertEquals(Expected := nExpectedState,
+             Actual := nActualState,
+             Message := 'State is not correct');	 
+TEST_FINISHED();
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestGetProccesData" Id="{87888c57-eb13-0243-095a-b9be2a62c1c1}">
+      <Declaration><![CDATA[METHOD TestGetProccesData : REFERENCE TO FB_Test
+VAR_INPUT
+	sName 					: T_MaxString;
+	bSwap					: BOOL;
+END_VAR
+
+VAR
+	fbDS402_CSP 			: FB_DS402_CSP;
+	
+	aControlData			: ARRAY [0..12] OF BYTE;
+	aStatusData				: ARRAY [0..12] OF BYTE;
+	
+	nControlWordExpected	: WORD; 
+	nControlWordActual		: WORD; 
+	nTargetExpected			: DINT; 
+	nTargetActual			: DINT;	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST(sName);
+
+fbDS402_CSP.stConfig.bSwapProcessData := bSwap;
+fbDS402_CSP.pControl := ADR(aControlData);
+fbDS402_CSP.pStatus := ADR(aStatusData);
+
+nControlWordExpected := 156;
+nTargetExpected := 15674;
+F_Memcpy(ADR(aControlData), ADR(nControlWordExpected), SIZEOF(nControlWordExpected), bSwap);
+F_Memcpy(ADR(aControlData) + 2, ADR(nTargetExpected), SIZEOF(nTargetExpected), bSwap);
+
+fbDS402_CSP.GetControlData();
+
+F_Memcpy(ADR(nControlWordActual), ADR(fbDS402_CSP.stControl.nControlWord), SIZEOF(fbDS402_CSP.stControl.nControlWord), FALSE);
+nTargetActual := fbDS402_CSP.stControl.nTargetPosition;
+
+AssertEquals_WORD(Expected := nControlWordExpected,
+             Actual := nControlWordActual,
+             Message := 'nControlWord is not correct');	
+
+AssertEquals_DINT(Expected := nTargetExpected,
+             Actual := nTargetActual,
+             Message := '.nTargetPosition is not correct');	
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestPositionMode" Id="{6ebf231a-bd1d-0918-130e-398dbd108bb4}">
+      <Declaration><![CDATA[METHOD TestPositionMode : BOOL
+VAR_INPUT
+	sName 				: T_MaxString;
+	fTarget				: LREAL;
+	fOffset				: LREAL;
+	fExpected			: LREAL;	
+END_VAR
+
+VAR
+	fbDS402 			: FB_DS402_CSP;	
+	fActual 			: LREAL;
+	fTolerance 			: LREAL := 1E-6;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST(sName);
+fbDS402.bSTO := TRUE;
+EnableSequence(fbDS402);
+
+fbDS402.stConfig.fPositionOffset := fOffset;
+fbDS402.stControl.nTargetPosition := fbDS402.fbEncoder.LREAL_TO_INC(fTarget, 1);
+
+fbDS402();
+fActual := fbDS402.fbEncoder.fResult;
+
+AssertEquals_LREAL(Expected := fExpected,
+             Actual := fActual,
+			 fTolerance,
+             Message := 'fbDS402.fbEncoder.fResult is not correct'); 
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestSetProccesData" Id="{3a0fc5eb-28cf-00dc-0e3d-154bb617f1cd}">
+      <Declaration><![CDATA[METHOD TestSetProccesData : REFERENCE TO FB_Test
+VAR_INPUT
+	sName 					: T_MaxString;
+	bSwap					: BOOL;
+END_VAR
+
+VAR
+	fbDS402_CSP 			: FB_DS402_CSP;
+	
+	aControlData			: ARRAY [0..12] OF BYTE;
+	aStatusData				: ARRAY [0..12] OF BYTE;
+	
+	nStatusWordExpected		: WORD; 
+	nStatusWordActual		: WORD; 
+	nActualExpected			: DINT; 
+	nActualActual			: DINT;	
+	nErrorExpected			: DINT; 
+	nErrorActual			: DINT; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST(sName);
+
+fbDS402_CSP.stConfig.bSwapProcessData := bSwap;
+fbDS402_CSP.pControl := ADR(aControlData);
+fbDS402_CSP.pStatus := ADR(aStatusData);
+
+nStatusWordExpected := 156;
+nActualExpected := 15674;
+nErrorExpected := 6453;
+
+F_Memcpy(ADR(fbDS402_CSP.stStatus), ADR(nStatusWordExpected), SIZEOF(nStatusWordExpected), FALSE);
+F_Memcpy(ADR(fbDS402_CSP.stStatus) + 2, ADR(nActualExpected), SIZEOF(nActualExpected), FALSE);
+F_Memcpy(ADR(fbDS402_CSP.stStatus) + 6, ADR(nErrorExpected), SIZEOF(nErrorExpected), FALSE);
+
+fbDS402_CSP.SetStatusData();
+
+F_Memcpy(ADR(nStatusWordActual), ADR(aStatusData), SIZEOF(nStatusWordActual), bSwap);
+F_Memcpy(ADR(nActualActual), ADR(aStatusData) + 2, SIZEOF(nActualActual), bSwap);
+F_Memcpy(ADR(nErrorActual), ADR(aStatusData) + 6, SIZEOF(nErrorActual), bSwap);
+
+
+AssertEquals_WORD(Expected := nStatusWordExpected,
+             Actual := nStatusWordActual,
+             Message := 'nStatusWord is not correct');	
+
+AssertEquals_DINT(Expected := nActualExpected,
+             Actual := nActualActual,
+             Message := '.nActualPosition is not correct');	
+			 
+AssertEquals_DINT(Expected := nErrorExpected,
+             Actual := nErrorActual,
+             Message := '.nErrorActual is not correct');	
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Sercos_VC" Id="{4e1be750-4bc0-0f17-135b-3f116004be34}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Sercos_VC :
+STRUCT
+	stControl		AT %I* : ST_Sercos_VC_Control;
+	stStatus		AT %Q* : ST_Sercos_VC_Status;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

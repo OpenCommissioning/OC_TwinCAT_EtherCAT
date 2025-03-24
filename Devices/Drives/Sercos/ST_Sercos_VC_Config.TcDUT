@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Sercos_VC_Config" Id="{306c967c-4920-0f9e-309a-eae812938c7c}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '0'}
+TYPE ST_Sercos_VC_Config :
+STRUCT	
+	bForceMode				: BOOL; //Ignore process data from fieldbus.	
+	bSwapProcessData		: BOOL; //Reverse process data byte order from/to fieldbus.	
+	bIsLinkOutputVelocity	: BOOL; //If TRUE, link output is velocity value
+	fReferenceVelocity 		: REAL := 1000.0;
+	fNormalizationFactor	: REAL := 80000;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

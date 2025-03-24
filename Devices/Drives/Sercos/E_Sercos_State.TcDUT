@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_Sercos_State" Id="{d5e3742d-3ac1-0247-2fc9-6919d1b47c45}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+{attribute 'conditionalshow'}
+TYPE E_Sercos_State :
+(
+	S1_NotReadyToSwitchOn,
+	S2_SwitchOnDisabled,
+	S3_ReadyToSwitchOn,
+	S4_SwitchOn,
+	S5a_DriveInOperation,
+	S5b_Halt,
+	S6_QuickStop,
+	S7_FaultReactionActive,
+	S8_Fault
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

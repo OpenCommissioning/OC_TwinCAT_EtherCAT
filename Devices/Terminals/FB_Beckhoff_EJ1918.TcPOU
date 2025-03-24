@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Beckhoff_EJ1918" Id="{c64c4fbd-b631-07c3-1447-b4a6dc3fd0ac}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EJ1918
+VAR_INPUT
+	bIn1			: BOOL;
+	bIn2			: BOOL;
+	bIn3			: BOOL;
+	bIn4			: BOOL;
+END_VAR
+VAR
+	RxPDO			AT %I* : FSOE_6;
+	TxPDO			AT %Q* : FSOE_7;	
+	fbFsoeSlave		: FB_FsoeSlave;
+	nMasterData		: BYTE := 0;
+	nSlaveData		: WORD := 0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nSlaveData.0 := bIn1;
+nSlaveData.1 := bIn1;
+nSlaveData.3 := bIn2;
+nSlaveData.4 := bIn2;
+nSlaveData.6 := bIn3;
+nSlaveData.7 := bIn3;
+nSlaveData.9 := bIn4;
+nSlaveData.10 := bIn4;
+
+fbFsoeSlave();]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{f94c9910-58b3-03d7-2758-c9ff9534d327}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbFsoeSlave.stConfig.nSlaveAddress := 0;
+fbFsoeSlave.stConfig.pFromBus := ADR(RxPDO);
+fbFsoeSlave.stConfig.pToBus := ADR(TxPDO);
+fbFsoeSlave.stConfig.nSizeMaster := 6;
+fbFsoeSlave.stConfig.nSizeSlave := 7;
+fbFsoeSlave.stConfig.pMasterData := ADR(nMasterData);
+fbFsoeSlave.stConfig.pSlaveData := ADR(nSlaveData);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

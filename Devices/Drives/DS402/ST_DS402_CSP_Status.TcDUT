@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_DS402_CSP_Status" Id="{635af2ba-ab28-0685-257a-42b4bbe9d8af}">
+    <Declaration><![CDATA[(*
+	Status struct for Cyclic synchronous position mode(CSP)
+	0x1A00 (DS402 Statusword)
+	0x1A01 (DS402 Position actual value)
+	0x1A04 (DS402 Following error actual value)
+*)
+{attribute 'pack_mode' := '0'}
+TYPE ST_DS402_CSP_Status :
+STRUCT
+	nStatusWord 		: ST_DS402_StatusWord; //0x1A00 (DS402 Statusword)
+	nActualPosition		: DINT;	//0x1A01 (DS402 Position actual value) [INC]
+	nErrorPosition		: DINT;	//0x1A04 (DS402 Following error actual value) [INC]	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

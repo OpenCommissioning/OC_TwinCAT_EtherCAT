@@ -374,6 +374,16 @@ $NAME$ : FB_Beckhoff_4AI;]]>
 			$NAME$ : ST_CoE402;]]>
 		</Declaration>
 	</Device>
+	<Device ProductDescription="AX5101">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.stControl.nControlWord := TIIB($BOXNO$)^MDT^Master control word;
+			.stControl.nVelocityCommand := TIIB($BOXNO$)^MDT^Velocity command value;
+			.stStatus.nStatusWord := TIIB($BOXNO$)^AT^Drive status word;
+			.stStatus.nPositionFeedback := TIIB($BOXNO$)^AT^Position feedback 1 value'}
+			$NAME$ : ST_Sercos_VC;]]>
+		</Declaration>
+	</Device>
 	<Device ProductDescription="GFX4">
 		<Declaration>
 			<![CDATA[{attribute 'TcLinkTo' := '
@@ -396,4 +406,36 @@ $NAME$ : FB_Beckhoff_4AI;]]>
 			$NAME$ : ST_Gefran_GFX4;]]>
 		</Declaration>
 	</Device>
+	<Device ProductDescription="EJ1918">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.RxPDO := TIIB($BOXNO$)^RxPDO^FSOE;
+			.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
+			$NAME$ : FB_Beckhoff_EJ1918;]]>
+		</Declaration>
+	</Device>
+	<Device ProductDescription="EL1904">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.RxPDO := TIIB($BOXNO$)^RxPDO^FSOE;
+			.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
+			$NAME$ : FB_Beckhoff_EL1904;]]>
+		</Declaration>
+	</Device>
+	<Device ProductDescription="EL1918">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.RxPDO := TIIB($BOXNO$)^FSoE Outputs^FSOE;
+			.TxPDO := TIIB($BOXNO$)^FSoE Inputs^FSOE'}
+			$NAME$ : FB_Beckhoff_EL1918;]]>
+		</Declaration>
+	</Device>
+	<Device ProductDescription="EL2904">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.RxPDO := TIIB($BOXNO$)^RxPDO^FSOE;
+			.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
+			$NAME$ : FB_Beckhoff_EL2904;]]>
+		</Declaration>
+	</Device>	
 </Ethercat>
