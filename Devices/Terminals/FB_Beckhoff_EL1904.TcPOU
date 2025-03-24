@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Beckhoff_EL1904" Id="{aafd63a5-ed8a-039a-2822-39f7e77e0d7c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EL1904
+VAR_INPUT
+	bIn1			: BOOL;
+	bIn2			: BOOL;
+	bIn3			: BOOL;
+	bIn4			: BOOL;
+END_VAR
+VAR
+	RxPDO			AT %I* : FSOE_6;
+	TxPDO			AT %Q* : FSOE_6;	
+	fbFsoeSlave		: FB_FsoeSlave;
+	nMasterData		: BYTE := 0;
+	nSlaveData		: BYTE := 0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nSlaveData.0 := bIn1;
+nSlaveData.1 := bIn2;
+nSlaveData.2 := bIn3;
+nSlaveData.3 := bIn4;
+
+fbFsoeSlave();]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{db5e95b9-09c8-0b27-3e86-ed83d990378e}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbFsoeSlave.stConfig.nSlaveAddress := 0;
+fbFsoeSlave.stConfig.pFromBus := ADR(RxPDO);
+fbFsoeSlave.stConfig.pToBus := ADR(TxPDO);
+fbFsoeSlave.stConfig.nSizeMaster := 6;
+fbFsoeSlave.stConfig.nSizeSlave := 6;
+fbFsoeSlave.stConfig.pMasterData := ADR(nMasterData);
+fbFsoeSlave.stConfig.pSlaveData := ADR(nSlaveData);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

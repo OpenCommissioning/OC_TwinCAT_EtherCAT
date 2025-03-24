@@ -99,6 +99,18 @@
     <Compile Include="Devices\Terminals\FB_Beckhoff_EL6001\FB_Beckhoff_EL6001.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Devices\Terminals\FB_Beckhoff_EJ1918.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Terminals\FB_Beckhoff_EL1904.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Terminals\FB_Beckhoff_EL1918.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Terminals\FB_Beckhoff_EL2904.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Devices\Terminals\ST_Baumer_Encoder.TcDUT">
       <SubType>Code</SubType>
     </Compile>
