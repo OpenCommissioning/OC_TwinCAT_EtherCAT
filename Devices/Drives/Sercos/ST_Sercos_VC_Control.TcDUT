@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Sercos_VC_Control" Id="{353bba18-3b28-0760-1d63-1c91355222d3}">
+    <Declaration><![CDATA[(*
+	Sercos Velocity Control
+	MDT: S-0-0134 Master control word
+	MDT: S-0-0036 Velocity command value
+*)
+{attribute 'pack_mode' := '0'}
+TYPE ST_Sercos_VC_Control :
+STRUCT
+	nControlWord 			: ST_Sercos_ControlWord; //S-0-0134 Master control word
+	nVelocityCommand		: DINT;	//S-0-0036 Velocity command value
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

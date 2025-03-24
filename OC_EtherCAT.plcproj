@@ -30,7 +30,7 @@
     <SelectedLibraryCategories>
       <Id xmlns="">{41661a1f-00b4-4855-90c5-5a3bdd03b62b}</Id>
     </SelectedLibraryCategories>
-    <DefaultNamespace>OC_Core</DefaultNamespace>
+    <DefaultNamespace>OC_EtherCAT</DefaultNamespace>
     <Placeholder>OC_EtherCAT</Placeholder>
     <Author>SpiraTec AG</Author>
     <Description>Open Commissioning TwinCAT EtherCAT Library</Description>
@@ -63,16 +63,25 @@
     <Compile Include="Devices\Drives\DS402\ST_DS402_StatusWord.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Devices\Drives\Encoder\FB_Encoder.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Devices\Drives\Encoder\ST_Encoder_Config.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Devices\Drives\Sercos\E_Sercos_State.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Drives\Sercos\FB_Sercos_FSM.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Sercos\FB_Sercos_VC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Sercos\ST_Sercos_VC.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Sercos\ST_Sercos_VC_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Sercos\ST_Sercos_VC_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Sercos\ST_Sercos_VC_Status.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Drives\Sercos\ST_Sercos_StatusWord.TcDUT">
@@ -144,6 +153,9 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\Drives\FB_Sercos_VC_Test.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests\Drives\FB_DS402_FSM_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -151,9 +163,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Drives\FB_Sercos_FSM_Test.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Drives\FB_Encoder_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Terminals\FB_Beckhoff_EL5152_Test.TcPOU">
@@ -169,7 +178,6 @@
   <ItemGroup>
     <Folder Include="Devices\Drives" />
     <Folder Include="Devices\Drives\DS402" />
-    <Folder Include="Devices\Drives\Encoder" />
     <Folder Include="Devices\Drives\Sercos" />
     <Folder Include="Devices\Terminals" />
     <Folder Include="Devices\Terminals\FB_Beckhoff_EL6001" />

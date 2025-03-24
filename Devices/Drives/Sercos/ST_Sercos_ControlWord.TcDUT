@@ -22,8 +22,8 @@ STRUCT
 	b11_Reserved					: BIT;
 	b12_Reserved					: BIT; 
 	b13_Halt						: BIT; //Drive halt, 1 --> 0 = halt, 0 --> 1 = restart
-	b14_Enable						: BIT; //Drive enable, 1 --> 0 = drive disabled, 0 -> 1 = drive enabled
-	b15_Start						: BIT; //Drive start, 1 --> 0 = Stop, 0 -> 1 = Start
+	b14_Start						: BIT; //Drive start, 1 --> 0 = Stop, 0 -> 1 = Start 
+	b15_Enable						: BIT; //Drive enable, 1 --> 0 = drive disabled, 0 -> 1 = drive enabled
 END_STRUCT
 END_TYPE
 ]]></Declaration>

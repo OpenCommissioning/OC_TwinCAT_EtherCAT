@@ -22,8 +22,8 @@ TestEnableSequence();]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[GetEnableCommand.b13_Halt := FALSE;
-GetEnableCommand.b14_Enable := TRUE;
-GetEnableCommand.b15_Start := TRUE;]]></ST>
+GetEnableCommand.b14_Start := TRUE;
+GetEnableCommand.b15_Enable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetEnableHaltCommand" Id="{3de8d8af-49a1-05b6-2ffb-18e21b0d70b7}">
@@ -32,8 +32,8 @@ GetEnableCommand.b15_Start := TRUE;]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[GetEnableHaltCommand.b13_Halt := TRUE;
-GetEnableHaltCommand.b14_Enable := TRUE;
-GetEnableHaltCommand.b15_Start := TRUE;]]></ST>
+GetEnableHaltCommand.b14_Start := TRUE;
+GetEnableHaltCommand.b15_Enable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetErrorResetCommand" Id="{3a9661e4-58ec-091e-1035-d08ad5253a8b}">
@@ -50,8 +50,8 @@ GetEnableHaltCommand.b15_Start := TRUE;]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[GetHaltCommand.b13_Halt := FALSE;
-GetHaltCommand.b14_Enable := TRUE;
-GetHaltCommand.b15_Start := TRUE;]]></ST>
+GetHaltCommand.b14_Start := TRUE;
+GetHaltCommand.b15_Enable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetQuickStopCommand" Id="{e766e34a-9dd7-00a8-2e9e-48997c85dedf}">
@@ -59,8 +59,8 @@ GetHaltCommand.b15_Start := TRUE;]]></ST>
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GetQuickStopCommand.b14_Enable := TRUE;
-GetQuickStopCommand.b15_Start := FALSE;]]></ST>
+        <ST><![CDATA[GetQuickStopCommand.b14_Start := FALSE;
+GetQuickStopCommand.b15_Enable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetRunCommand" Id="{08dcdec4-46cf-05d9-0d20-322cd750613e}">
@@ -69,8 +69,8 @@ GetQuickStopCommand.b15_Start := FALSE;]]></ST>
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[GetRunCommand.b13_Halt := FALSE;
-GetRunCommand.b14_Enable := TRUE;
-GetRunCommand.b15_Start := TRUE;]]></ST>
+GetRunCommand.b14_Start := TRUE;
+GetRunCommand.b15_Enable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetShutdownCommand" Id="{f5d673d5-ac1d-096c-216f-9ec726cbde62}">
@@ -78,7 +78,7 @@ GetRunCommand.b15_Start := TRUE;]]></ST>
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GetShutdownCommand.b14_Enable := FALSE;]]></ST>
+        <ST><![CDATA[GetShutdownCommand.b15_Enable := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetSwitchOnCommand" Id="{03275183-f8ee-06c5-3e42-61c0ee012bd6}">
@@ -86,7 +86,7 @@ GetRunCommand.b15_Start := TRUE;]]></ST>
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GetSwitchOnCommand.b14_Enable := TRUE;]]></ST>
+        <ST><![CDATA[GetSwitchOnCommand.b15_Enable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TestEnableSequence" Id="{d8c371ba-e014-0996-1a03-d3a15eb80fd8}">
@@ -354,7 +354,7 @@ END_VAR
 fbSercosFSM.eState := E_Sercos_State.S4_SwitchOn;
 fbSercosFSM();
 
-stExpectedStatus.b15_ReadyToOperate 		:= TRUE;
+stExpectedStatus.b15_ReadyToOperate 		:= FALSE;
 stExpectedStatus.b14_ReadyToOperate 		:= TRUE;
 stExpectedStatus.b13_Error 					:= FALSE;
 stExpectedStatus.b7_QuickStop 				:= FALSE;

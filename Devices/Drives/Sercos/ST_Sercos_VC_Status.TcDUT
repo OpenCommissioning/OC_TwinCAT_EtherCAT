@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ST_Sercos_VC_Status" Id="{8d23faf4-0ac9-014b-1366-64403f6ab7d2}">
+    <Declaration><![CDATA[(*
+	Sercos Velocity Control
+	AT: S-0-0135 Drive Status word
+	AT: S-0-0051 Position feedback 1 value
+*)
+{attribute 'pack_mode' := '0'}
+TYPE ST_Sercos_VC_Status :
+STRUCT
+	nStatusWord 			: ST_Sercos_StatusWord; //S-0-0135 Drive Status word
+	nPositionFeedback		: DINT;	//S-0-0051 Position feedback 1 value
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

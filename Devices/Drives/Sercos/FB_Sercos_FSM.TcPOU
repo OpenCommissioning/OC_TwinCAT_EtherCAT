@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="FB_Sercos_FSM" Id="{7f95f292-984e-091b-0847-aa5a38c3d1a3}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Sercos_FSM
+    <Declaration><![CDATA[(*
+	Sercos Finite State Machine General
+*)
+FUNCTION_BLOCK FB_Sercos_FSM
 VAR_INPUT
-	bPower						: BOOL;	
+	bPower						: BOOL := TRUE;	
 	stControl					: ST_Sercos_ControlWord;
 END_VAR
 
@@ -73,70 +76,6 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="IsEnableOperation" Id="{e8bb4846-55e2-0d1c-0720-b91bcf8d2576}">
-      <Declaration><![CDATA[METHOD PRIVATE IsEnableOperation : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsEnableOperation := NOT stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsEnableOperationHalt" Id="{4b6c4e5e-083c-0772-3e7c-feffa2e9e01b}">
-      <Declaration><![CDATA[METHOD PRIVATE IsEnableOperationHalt : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsEnableOperationHalt := stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsFaultReset" Id="{2c63319c-c77e-0f21-1bd8-75bb405eb4f2}">
-      <Declaration><![CDATA[METHOD PRIVATE IsFaultReset : BOOL
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsFaultReset := _rTrig_Reset.Q;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsHalt" Id="{0a4ecbc5-ba3c-04af-070c-0b28a75ef4d8}">
-      <Declaration><![CDATA[METHOD PRIVATE IsHalt : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsHalt := stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsQuickStop" Id="{95f0664e-c180-04da-12a7-a301256bd103}">
-      <Declaration><![CDATA[METHOD PRIVATE IsQuickStop : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsQuickStop := stControl.b14_Enable AND NOT stControl.b15_Start;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsRun" Id="{a3026c95-913b-0b0a-08ec-3092f2d1e70b}">
-      <Declaration><![CDATA[METHOD PRIVATE IsRun : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsRun := NOT stControl.b13_Halt AND stControl.b14_Enable AND stControl.b15_Start;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsShutdown" Id="{b3f99540-4ce7-036b-02b1-96951c6fe646}">
-      <Declaration><![CDATA[METHOD PRIVATE IsShutdown : BOOL
-
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsShutdown := NOT stControl.b14_Enable;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="IsSwitchOn" Id="{34269664-79ea-01ca-0e5b-488877dd9418}">
-      <Declaration><![CDATA[METHOD PRIVATE IsSwitchOn : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IsSwitchOn := stControl.b14_Enable;]]></ST>
-      </Implementation>
-    </Method>
     <Property Name="nControl" Id="{ec175cb7-461e-0f96-2fad-c3ca4389ef29}">
       <Declaration><![CDATA[PROPERTY nControl : WORD]]></Declaration>
       <Get Name="Get" Id="{ddf930c2-e84b-0fa2-0183-fad26180c016}">
@@ -158,8 +97,8 @@ nControl.10	:= stControl.b10_OperationMode;
 nControl.11	:= stControl.b11_Reserved;					           	
 nControl.12	:= stControl.b12_Reserved;
 nControl.13	:= stControl.b13_Halt;						              	
-nControl.14	:= stControl.b14_Enable;						            	
-nControl.15 := stControl.b15_Start;						             ]]></ST>
+nControl.14	:= stControl.b14_Start;						            	
+nControl.15 := stControl.b15_Enable;						             ]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{a1199e42-0987-0698-08d3-57cd352214f0}">
@@ -181,8 +120,8 @@ stControl.b10_OperationMode				:= 	nControl.10;
 stControl.b11_Reserved					:= 	nControl.11;		
 stControl.b12_Reserved					:= 	nControl.12;		
 stControl.b13_Halt						:= 	nControl.13;		
-stControl.b14_Enable					:= 	nControl.14;		
-stControl.b15_Start						:= 	nControl.15;]]></ST>
+stControl.b14_Start					:= 	nControl.14;		
+stControl.b15_Enable						:= 	nControl.15;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -272,7 +211,7 @@ IF _bError THEN
 	RETURN;
 END_IF
 
-IF IsSwitchOn() THEN
+IF stControl.b15_Enable THEN
 	_eState := E_Sercos_State.S4_SwitchOn;
 	RETURN;
 END_IF
@@ -287,7 +226,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= TRUE;
+        <ST><![CDATA[stStatus.b15_ReadyToOperate 		:= FALSE;
 stStatus.b14_ReadyToOperate 		:= TRUE;
 stStatus.b13_Error 					:= FALSE;
 stStatus.b7_QuickStop 				:= FALSE;
@@ -304,17 +243,17 @@ IF _bError THEN
 	RETURN;
 END_IF
 
-IF IsShutdown() THEN 
+IF NOT stControl.b15_Enable THEN 
 	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
 	RETURN;
 END_IF
 
-IF IsEnableOperationHalt() THEN
+IF stControl.b13_Halt AND stControl.b14_Start THEN
 	_eState := E_Sercos_State.S5b_Halt;
 	RETURN;
 END_IF
 
-IF IsEnableOperation() THEN
+IF NOT stControl.b13_Halt AND stControl.b14_Start THEN
 	_eState := E_Sercos_State.S5a_DriveInOperation;
 	RETURN;
 END_IF]]></ST>
@@ -343,17 +282,17 @@ IF _bError THEN
 	RETURN;
 END_IF
 
-IF IsShutdown() THEN 
+IF NOT stControl.b15_Enable THEN 
 	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
 	RETURN;
 END_IF
 
-IF IsQuickStop() THEN
+IF NOT stControl.b14_Start THEN
 	_eState := E_Sercos_State.S6_QuickStop;
 	RETURN;
 END_IF
 
-IF IsHalt() THEN
+IF stControl.b13_Halt THEN
 	_eState := E_Sercos_State.S5b_Halt;
 	RETURN;
 END_IF]]></ST>
@@ -382,17 +321,17 @@ IF _bError THEN
 	RETURN;
 END_IF
 
-IF IsShutdown() THEN 
+IF NOT stControl.b15_Enable THEN 
 	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
 	RETURN;
 END_IF
 
-IF IsQuickStop() THEN
+IF NOT stControl.b14_Start THEN
 	_eState := E_Sercos_State.S6_QuickStop;
 	RETURN;
 END_IF
 
-IF IsRun() THEN
+IF NOT stControl.b13_Halt THEN
 	_eState := E_Sercos_State.S5a_DriveInOperation;
 	RETURN;
 END_IF]]></ST>
@@ -421,17 +360,17 @@ IF _bError THEN
 	RETURN;
 END_IF
 
-IF IsShutdown() THEN 
+IF NOT stControl.b15_Enable THEN 
 	_eState := E_Sercos_State.S3_ReadyToSwitchOn;
 	RETURN;
 END_IF
 
-IF IsEnableOperationHalt() THEN
+IF stControl.b13_Halt AND stControl.b14_Start THEN
 	_eState := E_Sercos_State.S5b_Halt;
 	RETURN;
 END_IF
 
-IF IsEnableOperation() THEN
+IF NOT stControl.b13_Halt AND stControl.b14_Start THEN
 	_eState := E_Sercos_State.S5a_DriveInOperation;
 	RETURN;
 END_IF]]></ST>
@@ -471,7 +410,7 @@ stStatus.b7_QuickStop 				:= FALSE;
 stStatus.b4_Halt 					:= FALSE;
 stStatus.b3_CommandProcessing 		:= FALSE;
 
-IF IsFaultReset() THEN
+IF _rTrig_Reset.Q THEN
 	_eState := E_Sercos_State.S2_SwitchOnDisabled;
 	_bError := FALSE;
 	RETURN;	
