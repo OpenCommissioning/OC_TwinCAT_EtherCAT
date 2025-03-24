@@ -2,8 +2,7 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <DUT Name="ST_DS402_ControlWord" Id="{b02c0f2d-f6f8-05a9-12ee-03474f550937}">
     <Declaration><![CDATA[(*
-	Object 6040h: Control word (DS402)
-	
+	Object 6040h: Control word (DS402)	
 *)
 {attribute 'pack_mode' := '0'}
 TYPE ST_DS402_ControlWord :

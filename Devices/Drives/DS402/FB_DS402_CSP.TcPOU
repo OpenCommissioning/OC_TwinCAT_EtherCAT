@@ -10,7 +10,7 @@
 	SM3 PDO: 0x1A04 (DS402 Following error actual value)
 *)
 {attribute 'reflection'} 
-FUNCTION_BLOCK FB_DS402_CSP EXTENDS FB_LinkDataREAL 
+FUNCTION_BLOCK FB_DS402_CSP EXTENDS FB_LinkDataReal 
 VAR_INPUT
 	pControl			: PVOID; //Pocess data from fieldbus, 6 BYTES FROM FIELDBUS
 	pStatus				: PVOID; //Pocess data to fieldbus, 6 BYTES FROM FIELDBUS		
@@ -35,14 +35,14 @@ END_VAR]]></Declaration>
 InitRun();
 
 GetControlData();
-ControlLogic();
+Cycle();
 SetStatusData();
 
 
 ]]></ST>
     </Implementation>
-    <Method Name="ControlLogic" Id="{3c0eef5e-1d39-0c6e-314b-f431e6b3bd0f}">
-      <Declaration><![CDATA[METHOD PRIVATE ControlLogic]]></Declaration>
+    <Method Name="Cycle" Id="{3c0eef5e-1d39-0c6e-314b-f431e6b3bd0f}">
+      <Declaration><![CDATA[METHOD PRIVATE Cycle]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT bSTO THEN RETURN; END_IF
 

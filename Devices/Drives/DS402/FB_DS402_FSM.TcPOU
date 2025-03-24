@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="FB_DS402_FSM" Id="{a0dc8ba2-6d90-0721-10b8-a5af0408b39b}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_DS402_FSM
+    <Declaration><![CDATA[(*
+	DS402 Finite State Machine General
+*)
+FUNCTION_BLOCK FB_DS402_FSM
 VAR_INPUT	
 	stControl					: ST_DS402_ControlWord;
 END_VAR
