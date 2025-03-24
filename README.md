@@ -62,7 +62,7 @@ Once the GVL is generated, it can be utilized in the Open Commissioning TwinCAT 
 ![EtherCAT_Project_Mapping.png](Documentation%2FImages%2FEtherCAT_Project_Mapping.png)
 
 ### 4. Components
-* 
+* [Sercos Drives](Documentation%2FSercos.md)
 
 ## Support
 If you create your own module or encounter specific challenges, we encourage you to:
