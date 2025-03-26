@@ -9,7 +9,7 @@
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>OC_TwinCAT_EtherCAT</Name>
-    <ProgramVersion>3.1.4024.0</ProgramVersion>
+    <ProgramVersion>3.1.4026.14</ProgramVersion>
     <Application>{52d9fafe-5c40-4358-a753-57e4e4a019ca}</Application>
     <TypeSystem>{abee9198-d0e1-414d-9099-4d43b5bfe35d}</TypeSystem>
     <Implicit_Task_Info>{73234332-547e-4369-91ba-0c948364385e}</Implicit_Task_Info>
@@ -110,6 +110,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Terminals\FB_Beckhoff_EL2904.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Terminals\FB_FSOE_19.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Terminals\ST_Baumer_Encoder.TcDUT">
