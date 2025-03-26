@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.0...v1.1.1) (2025-03-26)
+
+
+### Bug Fixes
+
+* add FB_FSOE_19 (moved from TwinSAFE library) ([da08e35](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/da08e35edf02cd77ccdfb952c1164e48e47bc1c7))
+* update OC_EtherCAT.ethml ([5a35cb1](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/5a35cb10a7235f66934fec7a6ad0c1b33683a6ae))
+* upgrade TwinSAFE artifact to 1.0.2 ([e2d8dec](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/e2d8dec76467a3e63b2ee90c2f1f1e4e6bab4609))
+
 # [1.1.0](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.0.1...v1.1.0) (2025-03-24)
 
 
