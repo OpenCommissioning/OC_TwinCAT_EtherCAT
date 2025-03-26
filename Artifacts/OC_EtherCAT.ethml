@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Ethercat>
+	<Ignore>
+		<Device ProductDescription="EK1100"/>
+		<Device ProductDescription="EK1122"/>
+		<Device ProductDescription="EL6900"/>
+		<Device ProductDescription="EL6910"/>
+		<Device ProductDescription="EL6631"/>
+	</Ignore>
 	<Device ProductDescription="EL1008">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
-.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
-.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
-.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
-.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
-.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
-.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
-.bIn8 := TIIB($BOXNO$)^Channel 8^Input'}
-$NAME$ : ST_Beckhoff_8DI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
+			.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
+			.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
+			.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
+			.bIn8 := TIIB($BOXNO$)^Channel 8^Input'}
+			$NAME$ : ST_Beckhoff_8DI;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL2008">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.bOut1 := TIIB($BOXNO$)^Channel 1^Output;
-.bOut2 := TIIB($BOXNO$)^Channel 2^Output;
-.bOut3 := TIIB($BOXNO$)^Channel 3^Output;
-.bOut4 := TIIB($BOXNO$)^Channel 4^Output;
-.bOut5 := TIIB($BOXNO$)^Channel 5^Output;
-.bOut6 := TIIB($BOXNO$)^Channel 6^Output;
-.bOut7 := TIIB($BOXNO$)^Channel 7^Output;
-.bOut8 := TIIB($BOXNO$)^Channel 8^Output'}
-$NAME$ : ST_Beckhoff_8DO;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bOut1 := TIIB($BOXNO$)^Channel 1^Output;
+			.bOut2 := TIIB($BOXNO$)^Channel 2^Output;
+			.bOut3 := TIIB($BOXNO$)^Channel 3^Output;
+			.bOut4 := TIIB($BOXNO$)^Channel 4^Output;
+			.bOut5 := TIIB($BOXNO$)^Channel 5^Output;
+			.bOut6 := TIIB($BOXNO$)^Channel 6^Output;
+			.bOut7 := TIIB($BOXNO$)^Channel 7^Output;
+			.bOut8 := TIIB($BOXNO$)^Channel 8^Output'}
+			$NAME$ : ST_Beckhoff_8DO;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL3054">
 		<Declaration>
-<![CDATA[{attribute 'TcLinkTo' := '
-.nStatus1 := TIIB($BOXNO$)^AI Standard Channel 1^Status;
-.nValue1 := TIIB($BOXNO$)^AI Standard Channel 1^Value;
-.nStatus2 := TIIB($BOXNO$)^AI Standard Channel 2^Status;
-.nValue2 := TIIB($BOXNO$)^AI Standard Channel 2^Value;
-.nStatus3 := TIIB($BOXNO$)^AI Standard Channel 3^Status;
-.nValue3 := TIIB($BOXNO$)^AI Standard Channel 3^Value;
-.nStatus4 := TIIB($BOXNO$)^AI Standard Channel 4^Status;
-.nValue4 := TIIB($BOXNO$)^AI Standard Channel 4^Value'}
-$NAME$ : FB_Beckhoff_4AI;]]>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nStatus1 := TIIB($BOXNO$)^AI Standard Channel 1^Status;
+			.nValue1 := TIIB($BOXNO$)^AI Standard Channel 1^Value;
+			.nStatus2 := TIIB($BOXNO$)^AI Standard Channel 2^Status;
+			.nValue2 := TIIB($BOXNO$)^AI Standard Channel 2^Value;
+			.nStatus3 := TIIB($BOXNO$)^AI Standard Channel 3^Status;
+			.nValue3 := TIIB($BOXNO$)^AI Standard Channel 3^Value;
+			.nStatus4 := TIIB($BOXNO$)^AI Standard Channel 4^Status;
+			.nValue4 := TIIB($BOXNO$)^AI Standard Channel 4^Value'}
+			$NAME$ : FB_Beckhoff_4AI;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EP3314">

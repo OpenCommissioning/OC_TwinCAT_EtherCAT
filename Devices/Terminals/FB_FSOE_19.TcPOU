@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.11">
+  <POU Name="FB_FSOE_19" Id="{27925277-bb6e-081e-1e15-412959cec404}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_FSOE_19
+VAR_INPUT
+	SafetyIn				: ULINT;
+END_VAR
+VAR_OUTPUT
+	SafetyOut				: ULINT;
+END_VAR
+VAR
+	RxPDO			AT %I* 	: FSOE_19;
+	TxPDO			AT %Q* 	: FSOE_19;
+	fbFsoeSlave				: FB_FsoeSlave;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbFsoeSlave();]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{332faea8-0367-070d-3b36-b7739bbc66e6}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbFsoeSlave.stConfig.nSlaveAddress := 0;
+fbFsoeSlave.stConfig.pFromBus := ADR(RxPDO);
+fbFsoeSlave.stConfig.pToBus := ADR(TxPDO);
+fbFsoeSlave.stConfig.nSizeMaster := 19;
+fbFsoeSlave.stConfig.nSizeSlave := 19;
+fbFsoeSlave.stConfig.pMasterData := ADR(SafetyOut);
+fbFsoeSlave.stConfig.pSlaveData := ADR(SafetyIn);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
