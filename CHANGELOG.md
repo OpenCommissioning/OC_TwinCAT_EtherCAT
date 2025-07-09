@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.1...v1.1.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* Compatibility with 4024 Build ([eba253f](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/eba253fb02e2f3034323c9aeeab8076a8f953b17))
+
 ## [1.1.1](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.0...v1.1.1) (2025-03-26)
 
 
