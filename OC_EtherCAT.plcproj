@@ -19,7 +19,7 @@
     <Released>false</Released>
     <Company>Open Commissioning</Company>
     <Title>OC_EtherCAT</Title>
-    <ProjectVersion>1.1.1</ProjectVersion>
+    <ProjectVersion>1.1.2</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{41661a1f-00b4-4855-90c5-5a3bdd03b62b}</Id>
