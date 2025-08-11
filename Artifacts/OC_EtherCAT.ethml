@@ -46,7 +46,7 @@
 			.nValue3 := TIIB($BOXNO$)^AI Standard Channel 3^Value;
 			.nStatus4 := TIIB($BOXNO$)^AI Standard Channel 4^Status;
 			.nValue4 := TIIB($BOXNO$)^AI Standard Channel 4^Value'}
-			$NAME$ : FB_Beckhoff_4AI;]]>
+			$NAME$ : ST_Beckhoff_4AI;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EP3314">
@@ -60,7 +60,7 @@
 			.nValue3 := TIIB($BOXNO$)^TC Inputs Channel 3^Value;
 			.nStatus4 := TIIB($BOXNO$)^TC Inputs Channel 4^Status;
 			.nValue4 := TIIB($BOXNO$)^TC Inputs Channel 4^Value'}
-			$NAME$ : FB_Beckhoff_4AI;]]>
+			$NAME$ : ST_Beckhoff_4AI;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL3202">
@@ -70,7 +70,7 @@
 			.nValue1 := TIIB($BOXNO$)^RTD Inputs Channel 1^Value;
 			.nStatus2 := TIIB($BOXNO$)^RTD Inputs Channel 2^Status;
 			.nValue2 := TIIB($BOXNO$)^RTD Inputs Channel 2^Value'}
-			$NAME$ : FB_Beckhoff_2AI;]]>
+			$NAME$ : ST_Beckhoff_2AI;]]>
 		</Declaration>
 	</Device>	
 	<Device ProductDescription="EL3403">
@@ -251,7 +251,7 @@
 			.nValue3 := TIIB($BOXNO$)^AI Standard Channel 3^Value;
 			.nStatus4 := TIIB($BOXNO$)^AI Standard Channel 4^Status;
 			.nValue4 := TIIB($BOXNO$)^AI Standard Channel 4^Value'}
-			$NAME$ : FB_Beckhoff_4AI;]]>
+			$NAME$ : ST_Beckhoff_4AI;]]>
 		</Declaration>
 	</Device>
 	<Device ProductDescription="EL1809">
