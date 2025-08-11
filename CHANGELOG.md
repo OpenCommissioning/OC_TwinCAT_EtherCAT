@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.2...v1.1.3) (2025-08-11)
+
+
+### Bug Fixes
+
+* terminal link structs ([7198832](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/7198832bfbedc145bcb8ebe98901046498ea0666))
+
 ## [1.1.2](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.1...v1.1.2) (2025-07-09)
 
 
