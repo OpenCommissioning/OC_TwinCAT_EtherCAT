@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="FB_DS402_CSP" Id="{b8c3615d-cc8d-0a44-2a50-2229e2ffdc6a}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 	DS402 with Cyclic synchronous position mode(CSP)
@@ -55,6 +55,13 @@ IF (_fbStateMachine._eState = E_DS402_State.S4_OperationEnabled) THEN
 	_fbEncoder.fValue :=  stConfig.fPositionOffset + _fbEncoder.INC_TO_LREAL(stControl.nTargetPosition, 1);
 	_fbEncoder();
 END_IF
+
+IF stConfig.bSyncOpMode THEN
+	stStatus.nStatusWord.b12_OperationModeSpecific := stControl.nControlWord.b4_OperationModeSpecific;
+	stStatus.nStatusWord.b13_OperationModeSpecific := stControl.nControlWord.b5_OperationModeSpecific;
+	stStatus.nStatusWord.b14_OperationModeSpecific := stControl.nControlWord.b6_OperationModeSpecific;
+END_IF
+
 
 stStatus.nActualPosition := _fbEncoder.nResult;
 
