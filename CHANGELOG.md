@@ -1,3 +1,14 @@
+## [1.1.4](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.3...v1.1.4) (2025-11-17)
+
+
+### Bug Fixes
+
+* DS402 OpMode sync ([1664333](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/1664333533a6e9fab9d5e903cefbe4aeb8dea7c2))
+* folder exclude ([850b279](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/850b27966dece488676c607719731f3ac9df1fc4))
+* twincat version upgrade ([5ad668e](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/5ad668e0a778653e256a156efe1898724b654d5d))
+* twincat version upgrade ([7765922](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/77659224699f6084a7b87f9db8f3f4177be19d0d))
+* verison diff ([2b68edb](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/2b68edbf8028e8fe51dc468444736a8c1b5f4ab2))
+
 ## [1.1.3](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.2...v1.1.3) (2025-08-11)
 
 
