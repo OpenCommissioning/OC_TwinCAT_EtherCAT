@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <DUT Name="ST_DS402_CSP_Config" Id="{f0920dfb-66da-09df-2181-42a4491a31ab}">
     <Declaration><![CDATA[{attribute 'pack_mode' := '0'}
 TYPE ST_DS402_CSP_Config :
@@ -7,6 +7,7 @@ STRUCT
 	bForceMode			: BOOL; //Ignore process data from fieldbus.	
 	bSwapProcessData	: BOOL; //Reverse process data byte order from/to fieldbus.
 	fPositionOffset		: LREAL := 0.0;	
+	bSyncOpMode			: BOOL := TRUE;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

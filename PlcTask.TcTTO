@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
   <Task Name="PlcTask" Id="{c3d0ff96-70f8-08bf-1c75-a4d2b3abb6d1}">
     <!--CycleTime in micro seconds.-->
     <CycleTime>1000</CycleTime>
-    <Priority>1</Priority>
+    <Priority>30</Priority>
     <PouCall>
       <Name>PRG_TEST</Name>
     </PouCall>
