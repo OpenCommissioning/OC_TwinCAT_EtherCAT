@@ -200,7 +200,7 @@
     <Folder Include="Devices\Terminals\FB_Beckhoff_EL6001" />
     <Folder Include="Devices" />
     <Folder Include="Tests">
-      <ExcludeFromBuild>false</ExcludeFromBuild>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Folder>
     <Folder Include="Tests\Drives" />
     <Folder Include="Tests\Terminals" />
