@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.4...v1.1.5) (2025-11-18)
+
+
+### Bug Fixes
+
+* Mitsunishi MR-J4-TM ([a15a963](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/a15a9634a24242e7b53f0402fbd19ada1087a823))
+
 ## [1.1.4](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.3...v1.1.4) (2025-11-17)
 
 
