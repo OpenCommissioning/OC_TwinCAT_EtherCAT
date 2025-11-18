@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <DUT Name="ST_Mitsubishi_MRJ4TM" Id="{5da99c28-7742-03e9-07de-f556f91030b3}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Mitsubishi_MRJ4TM :
+STRUCT
+	nModesOfOperation 				AT %I* : SINT;
+	nControlWord					AT %I* : UINT;
+	nControlID1						AT %I* : UINT;
+	nControlID2						AT %I* : UINT;
+	nControlID3						AT %I* : UINT;
+	nTargetPosit					AT %I* : DINT;
+	nTargetVeloc					AT %I* : DINT;
+	nVelocityLimitValue				AT %I* : UDINT;
+	nTargetTorque					AT %I* : INT;
+	nPositiveTorqueLimitValue		AT %I* : UINT;
+	nNegativeTorqueLimitValue 		AT %I* : UINT;
+	nTouchProbeFunction				AT %I* : UINT;
+	
+	nModesOfOperationDisplay 		AT %Q* : SINT;
+	nStatusWord						AT %Q* : UINT;
+	nStatusDO1						AT %Q* : UINT;
+	nStatusDO2						AT %Q* : UINT;
+	nStatusDO3						AT %Q* : UINT;
+	nPositionActualValue			AT %Q* : DINT;
+	nVelocityActualValue			AT %Q* : DINT;
+	nFollowingErrorActualValue		AT %Q* : DINT;
+	nTorqueActualValue				AT %Q* : INT;
+	nTouchProbeStatus				AT %Q* : UINT;
+	nTouchProbePos1PosValue			AT %Q* : DINT;
+	nTouchProbePos1NegValue			AT %Q* : DINT;
+	nTouchProbePos2PosValue			AT %Q* : DINT;
+	nTouchProbePos2NegValue			AT %Q* : DINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

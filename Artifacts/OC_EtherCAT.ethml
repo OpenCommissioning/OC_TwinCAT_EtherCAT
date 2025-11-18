@@ -413,6 +413,38 @@
 			$NAME$ : ST_Gefran_GFX4;]]>
 		</Declaration>
 	</Device>
+	<Device ProductDescription="MR-J4-TM">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.nModesOfOperation := TIIB($BOXNO$)^Receive PDO Mapping^Modes of operation;
+			.nControlWord := TIIB($BOXNO$)^Receive PDO Mapping^Controlword;
+			.nControlID1 := TIIB($BOXNO$)^Receive PDO Mapping^Control DI 1;
+			.nControlID2 := TIIB($BOXNO$)^Receive PDO Mapping^Control DI 2;
+			.nControlID3 := TIIB($BOXNO$)^Receive PDO Mapping^Control DI 3;
+			.nTargetPosit := TIIB($BOXNO$)^Receive PDO Mapping^Target position;
+			.nTargetVeloc := TIIB($BOXNO$)^Receive PDO Mapping^Target velocity;
+			.nVelocityLimitValue := TIIB($BOXNO$)^Receive PDO Mapping^Velocity limit value;
+			.nTargetTorque := TIIB($BOXNO$)^Receive PDO Mapping^Target torque;
+			.nPositiveTorqueLimitValue := TIIB($BOXNO$)^Receive PDO Mapping^Positive torque limit value;
+			.nNegativeTorqueLimitValue := TIIB($BOXNO$)^Receive PDO Mapping^Negative torque limit value;
+			.nTouchProbeFunction := TIIB($BOXNO$)^Receive PDO Mapping^Touch probe function;
+			.nModesOfOperationDisplay := TIIB($BOXNO$)^Transmit PDO mapping^Modes of operation display;
+			.nStatusWord := TIIB($BOXNO$)^Transmit PDO mapping^Statusword;
+			.nStatusDO1 := TIIB($BOXNO$)^Transmit PDO mapping^Status DO 1;
+			.nStatusDO2 := TIIB($BOXNO$)^Transmit PDO mapping^Status DO 2;
+			.nStatusDO3 := TIIB($BOXNO$)^Transmit PDO mapping^Status DO 3;
+			.nPositionActualValue := TIIB($BOXNO$)^Transmit PDO mapping^Position actual value;
+			.nVelocityActualValue := TIIB($BOXNO$)^Transmit PDO mapping^Velocity actual value;
+			.nFollowingErrorActualValue := TIIB($BOXNO$)^Transmit PDO mapping^Following error actual value;
+			.nTorqueActualValue := TIIB($BOXNO$)^Transmit PDO mapping^Torque actual value;
+			.nTouchProbeStatus := TIIB($BOXNO$)^Transmit PDO mapping^Touch probe status;
+			.nTouchProbePos1PosValue := TIIB($BOXNO$)^Transmit PDO mapping^Touch probe pos1 pos value;
+			.nTouchProbePos1NegValue := TIIB($BOXNO$)^Transmit PDO mapping^Touch probe pos1 neg value;
+			.nTouchProbePos2PosValue := TIIB($BOXNO$)^Transmit PDO mapping^Touch probe pos2 pos value;
+			.nTouchProbePos2NegValue := TIIB($BOXNO$)^Transmit PDO mapping^Touch probe pos2 neg value'}
+			$NAME$ : ST_Mitsubishi_MRJ4TM;]]>
+		</Declaration>
+	</Device>
 	<Device ProductDescription="EJ1918">
 		<Declaration>
 			<![CDATA[{attribute 'TcLinkTo' := '

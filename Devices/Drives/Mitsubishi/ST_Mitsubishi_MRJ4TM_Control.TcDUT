@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <DUT Name="ST_Mitsubishi_MRJ4TM_Control" Id="{44a24bad-54b4-0c82-2092-8dcb440a7e55}">
+    <Declaration><![CDATA[(*
+	
+*)
+{attribute 'pack_mode' := '0'}
+TYPE ST_Mitsubishi_MRJ4TM_Control :
+STRUCT
+	nModesOfOperation 				: SINT;
+	nControlWord 					: ST_DS402_ControlWord; //0x1600 (DS402 Controlword)
+	nControlID1						: UINT;
+	nControlID2						: UINT;
+	nControlID3						: UINT;
+	nTargetPosit					: DINT;
+	nTargetVeloc					: DINT;
+	nVelocityLimitValue				: UDINT;
+	nTargetTorque					: INT;
+	nPositiveTorqueLimitValue		: UINT;
+	nNegativeTorqueLimitValue 		: UINT;
+	nTouchProbeFunction				: UINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -65,6 +65,18 @@
     <Compile Include="Devices\Drives\DS402\ST_DS402_StatusWord.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Devices\Drives\Mitsubishi\FB_Mitsubishi_MRJ4TM.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Mitsubishi\ST_Mitsubishi_MRJ4TM_Config.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Mitsubishi\ST_Mitsubishi_MRJ4TM_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Drives\Mitsubishi\ST_Mitsubishi_MRJ4TM_Status.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Devices\Drives\Sercos\E_Sercos_State.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -164,6 +176,9 @@
     <Compile Include="Devices\Terminals\ST_Gefran_GFX4.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Devices\Terminals\ST_Mitsubishi_MRJ4TM.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Devices\Terminals\ST_SEW_SimMovitrac.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -195,6 +210,7 @@
   <ItemGroup>
     <Folder Include="Devices\Drives" />
     <Folder Include="Devices\Drives\DS402" />
+    <Folder Include="Devices\Drives\Mitsubishi" />
     <Folder Include="Devices\Drives\Sercos" />
     <Folder Include="Devices\Terminals" />
     <Folder Include="Devices\Terminals\FB_Beckhoff_EL6001" />
