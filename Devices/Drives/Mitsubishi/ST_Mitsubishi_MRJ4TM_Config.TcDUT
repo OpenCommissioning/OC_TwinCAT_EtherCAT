@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <DUT Name="ST_Mitsubishi_MRJ4TM_Config" Id="{6e717561-f2fd-0840-16cb-7ead506dc2dc}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '0'}
+TYPE ST_Mitsubishi_MRJ4TM_Config :
+STRUCT	
+	bForceMode			: BOOL; //Ignore process data from fieldbus.	
+	bSwapProcessData	: BOOL; //Reverse process data byte order from/to fieldbus.
+	fPositionOffset		: LREAL := 0.0;	
+	bSyncOpMode			: BOOL := TRUE;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

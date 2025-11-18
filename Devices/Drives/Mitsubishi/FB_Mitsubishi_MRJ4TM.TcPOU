@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <POU Name="FB_Mitsubishi_MRJ4TM" Id="{a6f0773f-3af1-0a52-398e-f1632bd3cb30}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+	
+*)
+{attribute 'reflection'} 
+FUNCTION_BLOCK FB_Mitsubishi_MRJ4TM EXTENDS FB_LinkDataReal 
+VAR_INPUT
+	pControl			: PVOID; //Pocess data from fieldbus, 29 BYTES FROM FIELDBUS
+	pStatus				: PVOID; //Pocess data to fieldbus, 41 BYTES FROM FIELDBUS		
+	stControl	 		: ST_Mitsubishi_MRJ4TM_Control;
+	stConfig			: ST_Mitsubishi_MRJ4TM_Config;
+	bSTO 				: BOOL := TRUE;
+END_VAR
+
+VAR_OUTPUT
+	stStatus 			: ST_Mitsubishi_MRJ4TM_Status;	
+END_VAR
+
+VAR		
+	{attribute 'instance-path'} 
+    {attribute 'noinit'} 
+    _sPath 				: STRING;
+	_fbStateMachine 	: FB_DS402_FSM;
+	_fbEncoder 			: FB_Encoder;	
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+InitRun();
+
+GetControlData();
+Cycle();
+SetStatusData();]]></ST>
+    </Implementation>
+    <Method Name="Cycle" Id="{15c0fe33-e4b3-0e87-1592-487c0012264b}">
+      <Declaration><![CDATA[METHOD PRIVATE Cycle]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bSTO THEN RETURN; END_IF
+
+_fbStateMachine.stControl := stControl.nControlWord;
+_fbStateMachine();
+stStatus.nStatusWord := _fbStateMachine.stStatus;
+
+IF (_fbStateMachine._eState = E_DS402_State.S4_OperationEnabled) THEN	
+	
+	_fbEncoder.fValue :=  stConfig.fPositionOffset + _fbEncoder.INC_TO_LREAL(stControl.nTargetPosit, 1);
+	_fbEncoder();
+END_IF
+
+IF stConfig.bSyncOpMode THEN
+	stStatus.nStatusWord.b12_OperationModeSpecific := stControl.nControlWord.b4_OperationModeSpecific;
+	stStatus.nStatusWord.b13_OperationModeSpecific := stControl.nControlWord.b5_OperationModeSpecific;
+	stStatus.nStatusWord.b14_OperationModeSpecific := stControl.nControlWord.b6_OperationModeSpecific;
+END_IF
+
+
+stStatus.nPositionActualValue := _fbEncoder.nResult;
+stStatus.nModesOfOperationDisplay := stControl.nModesOfOperation;
+
+//Set Link Data
+ControlData := LREAL_TO_REAL(_fbEncoder.fResult);
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="eState" Id="{1a614a77-0251-0cac-180e-c55f5a05cedd}">
+      <Declaration><![CDATA[PROPERTY eState : E_DS402_State]]></Declaration>
+      <Get Name="Get" Id="{28253fac-33ea-0c42-12a0-06bcd9d60157}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[eState := _fbStateMachine.eState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="fbEncoder" Id="{b95f0d29-c37a-0f4b-254e-a278b8abf093}">
+      <Declaration><![CDATA[PROPERTY PUBLIC fbEncoder : REFERENCE TO FB_Encoder]]></Declaration>
+      <Get Name="Get" Id="{c816de97-3265-0263-0185-395dddcebd23}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fbEncoder REF= _fbEncoder;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="GetControlData" Id="{64b0b4c2-8123-083d-2693-ca2ef9580932}">
+      <Declaration><![CDATA[METHOD INTERNAL GetControlData]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pControl <= 0 OR stConfig.bForceMode THEN RETURN; END_IF
+
+(*nModesOfOperation*) 			F_Memcpy(ADR(stControl), pControl, 1, stConfig.bSwapProcessData);
+(*nControlWord*)				F_Memcpy(ADR(stControl)+ 1, pControl + 1, 2, stConfig.bSwapProcessData);
+(*nControlID1*)					F_Memcpy(ADR(stControl) + 3, pControl + 3, 2, stConfig.bSwapProcessData);
+(*nControlID2*)					F_Memcpy(ADR(stControl) + 5, pControl + 5, 2, stConfig.bSwapProcessData);
+(*nControlID3*)					F_Memcpy(ADR(stControl) + 7, pControl + 7, 2, stConfig.bSwapProcessData);
+(*nTargetPosit*)				F_Memcpy(ADR(stControl) + 9, pControl + 9, 4, stConfig.bSwapProcessData);
+(*nTargetVeloc*)				F_Memcpy(ADR(stControl) + 13, pControl + 13, 4, stConfig.bSwapProcessData);
+(*nVelocityLimitValue*)			F_Memcpy(ADR(stControl) + 17, pControl + 17, 4, stConfig.bSwapProcessData);
+(*nTargetTorque*)				F_Memcpy(ADR(stControl) + 21, pControl + 21, 2, stConfig.bSwapProcessData);
+(*nPositiveTorqueLimitValue*)	F_Memcpy(ADR(stControl) + 23, pControl + 23, 2, stConfig.bSwapProcessData);
+(*nNegativeTorqueLimitValue*)	F_Memcpy(ADR(stControl) + 25, pControl + 25, 2, stConfig.bSwapProcessData);
+(*nTouchProbeFunction*)			F_Memcpy(ADR(stControl) + 27, pControl + 27, 2, stConfig.bSwapProcessData);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitRun" Id="{8aa268cc-90a3-0844-23e1-6a01632a5d78}">
+      <Declaration><![CDATA[METHOD PRIVATE InitRun
+VAR_INST
+	bInitRun : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bInitRun THEN RETURN; END_IF
+bInitRun := FALSE;
+
+IF pControl = 0 OR pStatus = 0 THEN
+	ADSLOGSTR(ADSLOG_MSGTYPE_WARN, '%s', CONCAT(_sPath, ' PLC IO is not assigned!'));	
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetStatusData" Id="{2f40e4bf-b2ae-0eea-35b5-b878a5986de4}">
+      <Declaration><![CDATA[METHOD INTERNAL SetStatusData]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pStatus <= 0 THEN RETURN; END_IF
+
+(*nModesOfOperationDisplay*) 	F_Memcpy(pStatus, ADR(stStatus), 1, stConfig.bSwapProcessData);
+(*nStatusWord*) 				F_Memcpy(pStatus + 1, ADR(stStatus) + 1, 2, stConfig.bSwapProcessData);
+(*nStatusDO1*) 					F_Memcpy(pStatus + 3, ADR(stStatus) + 3, 2, stConfig.bSwapProcessData);
+(*nStatusDO2*) 					F_Memcpy(pStatus + 5, ADR(stStatus) + 5, 2, stConfig.bSwapProcessData);
+(*nStatusDO3*) 					F_Memcpy(pStatus + 7, ADR(stStatus) + 7, 2, stConfig.bSwapProcessData);
+(*nPositionActualValue*) 		F_Memcpy(pStatus + 9, ADR(stStatus) + 9, 4, stConfig.bSwapProcessData);
+(*nVelocityActualValue*) 		F_Memcpy(pStatus + 13, ADR(stStatus) + 13, 4, stConfig.bSwapProcessData);
+(*nFollowingErrorActualValue*) 	F_Memcpy(pStatus + 17, ADR(stStatus) + 17, 4, stConfig.bSwapProcessData);
+(*nTorqueActualValue*) 			F_Memcpy(pStatus + 21, ADR(stStatus) + 21, 2, stConfig.bSwapProcessData);
+(*nTouchProbeStatus*) 			F_Memcpy(pStatus + 23, ADR(stStatus) + 23, 2, stConfig.bSwapProcessData);
+(*nTouchProbePos1PosValue*) 	F_Memcpy(pStatus + 25, ADR(stStatus) + 25, 4, stConfig.bSwapProcessData);
+(*nTouchProbePos1NegValue*) 	F_Memcpy(pStatus + 29, ADR(stStatus) + 29, 4, stConfig.bSwapProcessData);
+(*nTouchProbePos2PosValue*) 	F_Memcpy(pStatus + 33, ADR(stStatus) + 33, 4, stConfig.bSwapProcessData);
+(*nTouchProbePos2NegValue*) 	F_Memcpy(pStatus + 37, ADR(stStatus) + 37, 4, stConfig.bSwapProcessData);
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

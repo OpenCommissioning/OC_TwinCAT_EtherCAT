@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <DUT Name="ST_Mitsubishi_MRJ4TM_Status" Id="{a153f774-30df-029d-23ac-9f80a6083004}">
+    <Declaration><![CDATA[(*
+	
+*)
+{attribute 'pack_mode' := '0'}
+TYPE ST_Mitsubishi_MRJ4TM_Status :
+STRUCT
+	nModesOfOperationDisplay 		: SINT;
+	nStatusWord 					: ST_DS402_StatusWord; //0x1A00 (DS402 Statusword)
+	nStatusDO1						: UINT;
+	nStatusDO2						: UINT;
+	nStatusDO3						: UINT;
+	nPositionActualValue			: DINT;
+	nVelocityActualValue			: DINT;
+	nFollowingErrorActualValue		: DINT;
+	nTorqueActualValue				: INT;
+	nTouchProbeStatus				: UINT;
+	nTouchProbePos1PosValue			: DINT;
+	nTouchProbePos1NegValue			: DINT;
+	nTouchProbePos2PosValue			: DINT;
+	nTouchProbePos2NegValue			: DINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
