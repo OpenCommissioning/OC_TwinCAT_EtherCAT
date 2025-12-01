@@ -494,5 +494,27 @@
 			.bInputDIO3 := TIIB($BOXNO$)^DIO Inputs^Input 3'}
 			$NAME$ : FB_Beckhoff_EK1914;]]>
 		</Declaration>
+	</Device>
+	<Device ProductDescription="EL1859">		
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input;
+			.bIn5 := TIIB($BOXNO$)^Channel 5^Input;
+			.bIn6 := TIIB($BOXNO$)^Channel 6^Input;
+			.bIn7 := TIIB($BOXNO$)^Channel 7^Input;
+			.bIn8 := TIIB($BOXNO$)^Channel 8^Input;
+			.bOut1 := TIIB($BOXNO$)^Channel 9^Output;
+			.bOut2 := TIIB($BOXNO$)^Channel 10^Output;
+			.bOut3 := TIIB($BOXNO$)^Channel 11^Output;
+			.bOut4 := TIIB($BOXNO$)^Channel 12^Output;
+			.bOut5 := TIIB($BOXNO$)^Channel 13^Output;
+			.bOut6 := TIIB($BOXNO$)^Channel 14^Output;
+			.bOut7 := TIIB($BOXNO$)^Channel 15^Output;
+			.bOut8 := TIIB($BOXNO$)^Channel 16^Output'}
+			$NAME$ : ST_Beckhoff_8DI_8DO;]]>
+		</Declaration>
 	</Device>	
 </Ethercat>
