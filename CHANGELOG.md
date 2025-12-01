@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.6...v1.1.7) (2025-12-01)
+
+
+### Bug Fixes
+
+* EL1859 term ([ded6d52](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/ded6d5210d0ff91875851720593f213faddc71c2))
+
 ## [1.1.6](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.5...v1.1.6) (2025-12-01)
 
 
