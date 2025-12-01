@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <POU Name="FB_Beckhoff_EK1914" Id="{ee3e9bec-150f-064b-0dfb-8262f6a99d11}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Beckhoff_EK1914
+VAR_INPUT
+	bSafetyIn1		: BOOL;
+	bSafetyIn2		: BOOL;
+	bInput0			: BOOL;
+	bInput1			: BOOL;
+	bInput2			: BOOL;
+	bInput3			: BOOL;
+END_VAR
+VAR_OUTPUT
+	bSafetyOut1		: BOOL;
+	bSafetyOut2		: BOOL;
+	bOutput0		: BOOL;
+	bOutput1		: BOOL;
+	bOutput2		: BOOL;
+	bOutput3		: BOOL;
+	bOSafetyLinkedOutput0 : BOOL;
+	bOSafetyLinkedOutput1 : BOOL;
+END_VAR
+VAR
+	RxPDO			AT %I* : FSOE_6;
+	TxPDO			AT %Q* : FSOE_6;	
+	fbFsoeSlave		: FB_FsoeSlave;
+	nMasterData		: BYTE := 0;
+	nSlaveData		: BYTE := 0;
+	
+	bOutputDIO0		AT %I* : BOOL;
+	bOutputDIO1		AT %I* : BOOL;
+	bOutputDIO2		AT %I* : BOOL;
+	bOutputDIO3		AT %I* : BOOL;
+	bOutputDIOSafetyLinkedOutput0		AT %I* : BOOL;
+	bOutputDIOSafetyLinkedOutput1		AT %I* : BOOL;
+	bInputDIO0		AT %Q* : BOOL;
+	bInputDIO1		AT %Q* : BOOL;
+	bInputDIO2		AT %Q* : BOOL;
+	bInputDIO3		AT %Q* : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nSlaveData.0 := bSafetyIn1;
+nSlaveData.1 := bSafetyIn2;
+bInputDIO0 := bInput0;
+bInputDIO1 := bInput1;
+bInputDIO2 := bInput2;
+bInputDIO3 := bInput3;
+
+fbFsoeSlave();
+
+bSafetyOut1 := nMasterData.0;
+bSafetyOut2 := nMasterData.1;
+bOutput0 := bOutputDIO0;
+bOutput1 := bOutputDIO1;
+bOutput2 := bOutputDIO2;
+bOutput3 := bOutputDIO3;
+bOSafetyLinkedOutput0 := bOutputDIOSafetyLinkedOutput0;
+bOSafetyLinkedOutput1 := bOutputDIOSafetyLinkedOutput1;]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{f8d4c283-c105-0343-04d3-250d70427101}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbFsoeSlave.stConfig.nSlaveAddress := 0;
+fbFsoeSlave.stConfig.pFromBus := ADR(RxPDO);
+fbFsoeSlave.stConfig.pToBus := ADR(TxPDO);
+fbFsoeSlave.stConfig.nSizeMaster := 6;
+fbFsoeSlave.stConfig.nSizeSlave := 6;
+fbFsoeSlave.stConfig.pMasterData := ADR(nMasterData);
+fbFsoeSlave.stConfig.pSlaveData := ADR(nSlaveData);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

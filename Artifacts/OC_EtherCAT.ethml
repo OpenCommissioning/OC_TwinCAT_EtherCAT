@@ -476,5 +476,23 @@
 			.TxPDO := TIIB($BOXNO$)^TxPDO^FSOE'}
 			$NAME$ : FB_Beckhoff_EL2904;]]>
 		</Declaration>
+	</Device>
+	<Device ProductDescription="EK1914">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.RxPDO := TIIB($BOXNO$)^Outputs^FSOE;
+			.bOutputDIO0 := TIIB($BOXNO$)^DIO Outputs^Output 0;
+			.bOutputDIO1 := TIIB($BOXNO$)^DIO Outputs^Output 1;
+			.bOutputDIO2 := TIIB($BOXNO$)^DIO Outputs^Output 2;
+			.bOutputDIO3 := TIIB($BOXNO$)^DIO Outputs^Output 3;
+			.bOutputDIOSafetyLinkedOutput0 := TIIB($BOXNO$)^DIO Outputs^Safety Linked Output 0;
+			.bOutputDIOSafetyLinkedOutput1 := TIIB($BOXNO$)^DIO Outputs^Safety Linked Output 1;
+			.TxPDO := TIIB($BOXNO$)^Inputs^FSOE;
+			.bInputDIO0 := TIIB($BOXNO$)^DIO Inputs^Input 0;
+			.bInputDIO1 := TIIB($BOXNO$)^DIO Inputs^Input 1;
+			.bInputDIO2 := TIIB($BOXNO$)^DIO Inputs^Input 2;
+			.bInputDIO3 := TIIB($BOXNO$)^DIO Inputs^Input 3'}
+			$NAME$ : FB_Beckhoff_EK1914;]]>
+		</Declaration>
 	</Device>	
 </Ethercat>
