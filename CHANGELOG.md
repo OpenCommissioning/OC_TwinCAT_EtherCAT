@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.5...v1.1.6) (2025-12-01)
+
+
+### Bug Fixes
+
+* EK1914 term ([b0cc136](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/b0cc1364e86863eda116682e17618eee80362dd7))
+
 ## [1.1.5](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.4...v1.1.5) (2025-11-18)
 
 
