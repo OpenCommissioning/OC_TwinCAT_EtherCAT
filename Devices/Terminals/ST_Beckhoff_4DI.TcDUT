@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.13">
+  <DUT Name="ST_Beckhoff_4DI" Id="{737f44b3-4a70-053f-24c5-7288dc67582c}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '1'} 
+TYPE ST_Beckhoff_4DI :
+STRUCT
+	bIn1	AT %Q* : BIT;
+	bIn2	AT %Q* : BIT;
+	bIn3	AT %Q* : BIT;
+	bIn4	AT %Q* : BIT;	
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

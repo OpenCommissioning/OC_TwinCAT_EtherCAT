@@ -19,7 +19,7 @@
     <Released>false</Released>
     <Company>Open Commissioning</Company>
     <Title>OC_EtherCAT</Title>
-    <ProjectVersion>1.1.7</ProjectVersion>
+    <ProjectVersion>1.1.8</ProjectVersion>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{41661a1f-00b4-4855-90c5-5a3bdd03b62b}</Id>
@@ -155,10 +155,16 @@
     <Compile Include="Devices\Terminals\ST_Beckhoff_8DI.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Devices\Terminals\ST_Beckhoff_4DI.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Devices\Terminals\ST_Beckhoff_8DI_8DO.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Terminals\ST_Beckhoff_8DO.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Terminals\ST_Beckhoff_4DO.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Terminals\ST_Beckhoff_EL3403.TcDUT">
