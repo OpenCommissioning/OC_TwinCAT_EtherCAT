@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.7...v1.1.8) (2025-12-11)
+
+
+### Bug Fixes
+
+* EL1004 + EL2004 ([4fe4b10](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/commit/4fe4b10b3849e7a5fac76c0be12b9ed9e9a38641))
+
 ## [1.1.7](https://github.com/OpenCommissioning/OC_TwinCAT_EtherCAT/compare/v1.1.6...v1.1.7) (2025-12-01)
 
 
