@@ -7,6 +7,16 @@
 		<Device ProductDescription="EL6910"/>
 		<Device ProductDescription="EL6631"/>
 	</Ignore>
+	<Device ProductDescription="EL1004">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bIn1 := TIIB($BOXNO$)^Channel 1^Input;
+			.bIn2 := TIIB($BOXNO$)^Channel 2^Input;
+			.bIn3 := TIIB($BOXNO$)^Channel 3^Input;
+			.bIn4 := TIIB($BOXNO$)^Channel 4^Input'}
+			$NAME$ : ST_Beckhoff_4DI;]]>
+		</Declaration>
+	</Device>
 	<Device ProductDescription="EL1008">
 		<Declaration>
 			<![CDATA[{attribute 'TcLinkTo' := '
@@ -21,6 +31,16 @@
 			$NAME$ : ST_Beckhoff_8DI;]]>
 		</Declaration>
 	</Device>	
+	<Device ProductDescription="EL2004">
+		<Declaration>
+			<![CDATA[{attribute 'TcLinkTo' := '
+			.bOut1 := TIIB($BOXNO$)^Channel 1^Output;
+			.bOut2 := TIIB($BOXNO$)^Channel 2^Output;
+			.bOut3 := TIIB($BOXNO$)^Channel 3^Output;
+			.bOut4 := TIIB($BOXNO$)^Channel 4^Output'}
+			$NAME$ : ST_Beckhoff_4DO;]]>
+		</Declaration>
+	</Device>
 	<Device ProductDescription="EL2008">
 		<Declaration>
 			<![CDATA[{attribute 'TcLinkTo' := '

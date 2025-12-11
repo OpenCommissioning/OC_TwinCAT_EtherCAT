@@ -155,10 +155,16 @@
     <Compile Include="Devices\Terminals\ST_Beckhoff_8DI.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Devices\Terminals\ST_Beckhoff_4DI.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Devices\Terminals\ST_Beckhoff_8DI_8DO.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Terminals\ST_Beckhoff_8DO.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Devices\Terminals\ST_Beckhoff_4DO.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Devices\Terminals\ST_Beckhoff_EL3403.TcDUT">
